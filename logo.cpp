@@ -196,21 +196,19 @@ GLuint obstacleVao;
 GLuint obstacleVbo;
 GLuint obstacleShader;
 
-// called by the main function to do initial setup, such as uploading vertex
-// arrays, shader programs, etc.; returns true if successful, false otherwise
-bool setup()
-{
-    // MAIN SHADER
+// Helper function to setup multiple vaos and vbos
+bool setupVO(GLuint vao, GLuint vbo, GLuint shader, float vertices[]){
+// MAIN SHADER
     // generate the VAO and VBO objects and store their IDs in vao and vbo, respectively
-    glGenVertexArrays(1, &mainVao);
-    glGenBuffers(1, &mainVbo);
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
 
     // bind the newly-created VAO to make it the current one that OpenGL will apply state changes to
-    glBindVertexArray(mainVao);
+    glBindVertexArray(vao);
 
     // upload our vertex array data to the newly-created VBO
-    glBindBuffer(GL_ARRAY_BUFFER, mainVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(mainVertices), mainVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // on the VAO, register the current VBO with the following vertex attribute layout:
     // - the stride length of the vertex array is 6 floats (6 * sizeof(float))
@@ -227,30 +225,17 @@ bool setup()
     // with unique VAO and VBO IDs, and follow the same process above to upload them to the GPU
 
     // load our shader program
-    mainShader = gdevLoadShader("logo.vs", "logo.fs");
-    if (! mainShader)
+    shader = gdevLoadShader("logo.vs", "logo.fs");
+    if (! shader)
         return false;
+}
 
-    // OBSTACLE SHADER
-    glGenVertexArrays(1, &obstacleVao);
-    glGenBuffers(1, &obstacleVbo);
-
-    glBindVertexArray(obstacleVao);
-
-    glBindBuffer(GL_ARRAY_BUFFER, obstacleVbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(obstacleVertices), obstacleVertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) 0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-
-    obstacleShader = gdevLoadShader("obstacle.vs", "obstacle.fs");
-    if (!obstacleShader)
-        return false;
-
-    return true;
+// called by the main function to do initial setup, such as uploading vertex
+// arrays, shader programs, etc.; returns true if successful, false otherwise
+bool setup()
+{
+    setupVO(mainVao, mainVbo, mainShader, mainVertices);
+    setupVO(obstacleVao, obstacleVbo, obstacleShader, obstacleVertices)
 }
 
 // called by the main function to do rendering per frame
