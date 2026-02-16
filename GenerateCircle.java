@@ -46,14 +46,14 @@ class GenerateCircle {
     }
 
     public static void main(String[] args) {
-        double x = -0.1348;
-        double y = 0.2;
-        double red = 0;
-        double green = 0;
-        double blue = 0;
-        double radiusX = 0.1;
+        double x = -0.125;
+        double y = 0.25;
+        double red = 0.047;
+        double green = 0.753;
+        double blue = 0.875;
+        double radiusX = 0.07;
         double radiusY = 0.1;
-        int triangleAmount = 30;
+        int triangleAmount = 20;
         double[] vertices = generateCircleVertex(x, y, red, green, blue, radiusX, radiusY, triangleAmount);
         // print
         StringBuilder sb = new StringBuilder();
