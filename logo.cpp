@@ -236,8 +236,12 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
 // arrays, shader programs, etc.; returns true if successful, false otherwise
 bool setup()
 {
-    setupVO(mainVao, mainVbo, mainShader, mainVertices, sizeof(mainVertices), "logo.vs", "logo.fs");
-    setupVO(obstacleVao, obstacleVbo, obstacleShader, obstacleVertices, sizeof(obstacleVertices), "obstacle.vs", "obstacle.fs");
+    if(!setupVO(mainVao, mainVbo, mainShader, mainVertices, sizeof(mainVertices), "logo.vs", "logo.fs")) {
+        return false;
+    }
+    if(!setupVO(obstacleVao, obstacleVbo, obstacleShader, obstacleVertices, sizeof(obstacleVertices), "obstacle.vs", "obstacle.fs")) {
+        return false;
+    }
     return true;
 }
 
