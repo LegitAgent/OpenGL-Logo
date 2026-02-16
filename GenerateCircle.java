@@ -1,4 +1,8 @@
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
 class GenerateCircle {
 
     final static double PI = 3.14159265359;
@@ -34,6 +38,13 @@ class GenerateCircle {
         return res;
     }
 
+    // FROM: https://www.baeldung.com/java-clipboard-copy-paste-text
+    public static void copyTextToClipboard(String text) {
+        StringSelection stringSelection = new StringSelection(text);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
     public static void main(String[] args) {
         double x = -0.2;
         double y = -0.85;
@@ -45,9 +56,21 @@ class GenerateCircle {
         int triangleAmount = 10;
         double[] vertices = generateCircleVertex(x, y, red, green, blue, radiusX, radiusY, triangleAmount);
         // print
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < vertices.length; i += 6) {
-            System.out.println(vertices[i] + "f, " + vertices[i + 1] + "f, " + vertices[i + 2] + "f, "
-                    + vertices[i + 3] + "f, " + vertices[i + 4] + "f, " + vertices[i + 5] + "f,");
+            sb.append(vertices[i]).append("f, ")
+                    .append(vertices[i + 1]).append("f, ")
+                    .append(vertices[i + 2]).append("f, ")
+                    .append(vertices[i + 3]).append("f, ")
+                    .append(vertices[i + 4]).append("f, ")
+                    .append(vertices[i + 5]).append("f,").append("\n");
+        }
+        String content = sb.toString();
+        try {
+            copyTextToClipboard(content);
+            System.out.println("Copied: " + content);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }
