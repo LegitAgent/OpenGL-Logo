@@ -1,7 +1,4 @@
 
-import java.util.Scanner;
-
-
 class GenerateCircle {
 
     final static double PI = 3.14159265359;
@@ -38,22 +35,13 @@ class GenerateCircle {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter x: ");
-        double x = sc.nextDouble();
-        System.out.println("Enter y: ");
-        double y = sc.nextDouble();
-        System.out.println("Enter red: ");
-        double red = sc.nextDouble();
-        System.out.println("Enter green: ");
-        double green = sc.nextDouble();
-        System.out.println("Enter blue: ");
-        double blue = sc.nextDouble();
-        System.out.println("Enter radius: ");
-        double radius = sc.nextDouble();
-        System.out.println("Enter amount of triangles: ");
-        int triangleAmount = sc.nextInt();
-        sc.close();
+        double x = 0.5;
+        double y = 0.5;
+        double red = 1;
+        double green = 0;
+        double blue = 0;
+        double radius = 0.5;
+        int triangleAmount = 30;
 
         double[] vertices = generateCircleVertex(x, y, red, green, blue, radius, triangleAmount);
         // print
