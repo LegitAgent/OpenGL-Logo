@@ -25,7 +25,7 @@ GLFWwindow *pWindow;
 // define a vertex array to hold our vertices
 /** SHAPES DIMENSIONS AND VERTICES
 - MAIN KETTLEBELL CIRCLE -- 
- */
+*/
 
 float mainVertices[] = {
     // main kettlebell circle -- r
@@ -197,7 +197,7 @@ GLuint obstacleVbo;
 GLuint obstacleShader;
 
 // Helper function to setup multiple vaos and vbos
-bool setupVO(GLuint vao, GLuint vbo, GLuint shader, float vertices[]){
+bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
 // MAIN SHADER
     // generate the VAO and VBO objects and store their IDs in vao and vbo, respectively
     glGenVertexArrays(1, &vao);
@@ -208,7 +208,7 @@ bool setupVO(GLuint vao, GLuint vbo, GLuint shader, float vertices[]){
 
     // upload our vertex array data to the newly-created VBO
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 
     // on the VAO, register the current VBO with the following vertex attribute layout:
     // - the stride length of the vertex array is 6 floats (6 * sizeof(float))
@@ -225,17 +225,20 @@ bool setupVO(GLuint vao, GLuint vbo, GLuint shader, float vertices[]){
     // with unique VAO and VBO IDs, and follow the same process above to upload them to the GPU
 
     // load our shader program
-    shader = gdevLoadShader("logo.vs", "logo.fs");
+    shader = gdevLoadShader(vs, fs);
     if (! shader)
         return false;
+
+    return true;
 }
 
 // called by the main function to do initial setup, such as uploading vertex
 // arrays, shader programs, etc.; returns true if successful, false otherwise
 bool setup()
 {
-    setupVO(mainVao, mainVbo, mainShader, mainVertices);
-    setupVO(obstacleVao, obstacleVbo, obstacleShader, obstacleVertices)
+    setupVO(mainVao, mainVbo, mainShader, mainVertices, sizeof(mainVertices), "logo.vs", "logo.fs");
+    setupVO(obstacleVao, obstacleVbo, obstacleShader, obstacleVertices, sizeof(obstacleVertices), "obstacle.vs", "obstacle.fs");
+    return true;
 }
 
 // called by the main function to do rendering per frame
