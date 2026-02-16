@@ -46,14 +46,14 @@ class GenerateCircle {
     }
 
     public static void main(String[] args) {
-        double x = -0.2;
-        double y = -0.85;
+        double x = -0.1348;
+        double y = 0.2;
         double red = 0;
-        double green = 0.29;
-        double blue = 0.678;
-        double radiusX = 0.05;
-        double radiusY = 0.05;
-        int triangleAmount = 10;
+        double green = 0;
+        double blue = 0;
+        double radiusX = 0.1;
+        double radiusY = 0.1;
+        int triangleAmount = 30;
         double[] vertices = generateCircleVertex(x, y, red, green, blue, radiusX, radiusY, triangleAmount);
         // print
         StringBuilder sb = new StringBuilder();
@@ -63,7 +63,10 @@ class GenerateCircle {
                     .append(vertices[i + 2]).append("f, ")
                     .append(vertices[i + 3]).append("f, ")
                     .append(vertices[i + 4]).append("f, ")
-                    .append(vertices[i + 5]).append("f,").append("\n");
+                    .append(vertices[i + 5]).append("f,");
+            if (i + 6 < vertices.length - 1) {
+                sb.append("\n");
+            }
         }
         String content = sb.toString();
         try {
