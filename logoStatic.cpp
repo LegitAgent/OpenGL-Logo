@@ -1865,7 +1865,7 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
 // arrays, shader programs, etc.; returns true if successful, false otherwise
 bool setup()
 {
-    if(!setupVO(backgroundVao, backgroundVbo, backgroundShader, backgroundVertices, sizeof(backgroundVertices), "vertex/background.vs", "fragment/background.fs")) {
+    if(!setupVO(backgroundVao, backgroundVbo, backgroundShader, backgroundVertices, sizeof(backgroundVertices), "vertex/backgroundStatic.vs", "fragment/backgroundStatic.fs")) {
         return false;
     }
     if(!setupVO(mainVao, mainVbo, mainShader, mainVertices, sizeof(mainVertices), "vertex/logo.vs", "fragment/logo.fs")) {
