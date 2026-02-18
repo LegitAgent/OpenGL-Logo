@@ -17,8 +17,8 @@ out vec4 fragmentColor;
 
 void main()
 {
-    vec3 color1 = vec3(0.0f, 0.8f, 0.8f);
-    vec3 color2 = vec3(0.0f, 0.3f, 0.6f);
+    vec3 color1 = vec3(0.5f, 0.3f, 0.0f);
+    vec3 color2 = vec3(0.8f, 0.6f, 0.0f);
     float t = 2.0 * uv.y;
     vec3 mixedColors = color1 * (1.0 - t) + color2 * t;
     fragmentColor = vec4(mixedColors, 1.0f);
