@@ -15,6 +15,7 @@ layout (location = 0) in vec3 vertexPosition;
 layout (location = 1) in vec3 vertexColor;
 
 out vec3 shaderColor;
+out vec2 uv;
 
 void main()
 {
@@ -31,5 +32,9 @@ void main()
     newPos.y += offsetY;
 
     gl_Position = vec4(newPos, 1.0);
+
+    uv.x = gl_Position.x;
+    uv.y = gl_Position.y;
+    
     shaderColor = vertexColor;
 }

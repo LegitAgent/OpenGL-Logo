@@ -12,10 +12,14 @@
 #version 330 core
 
 in vec3 shaderColor;
+in vec2 uv;
 out vec4 fragmentColor;
 
 void main()
 {
-    fragmentColor = vec4(shaderColor, 1.0f);
-    fragmentColor.rgb = vec3(0.0f, 0.8f, 0.8f);
+    vec3 color1 = vec3(0.0f, 0.8f, 0.8f);
+    vec3 color2 = vec3(0.0f, 0.3f, 0.6f);
+    float t = 2.0 * uv.y;
+    vec3 mixedColors = color1 * (1.0 - t) + color2 * t;
+    fragmentColor = vec4(mixedColors, 1.0f);
 }
