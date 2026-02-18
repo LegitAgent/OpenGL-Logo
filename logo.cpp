@@ -4,8 +4,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <gdev.h>
 
-#define WINDOW_WIDTH  1280
-#define WINDOW_HEIGHT 1280
+#define WINDOW_WIDTH  720
+#define WINDOW_HEIGHT 720
 #define WINDOW_TITLE  "FitRepo Logo"
 GLFWwindow *pWindow;
 
@@ -1087,6 +1087,7 @@ float obstacleVertices[] = {
     0.1348f, 0.2f, 0.0f, 0.0f, 0.0f, 0.0f,
     0.23261476007338883f, 0.17920883091826287f, 0.0f, 0.0f, 0.0f, 0.0f,
     0.2348f, 0.20000000000004103f, 0.0f, 0.0f, 0.0f, 0.0f,
+    
     /** left circle
         double x = -0.1348;
         double y = 0.2;

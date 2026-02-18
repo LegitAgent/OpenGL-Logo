@@ -8,16 +8,27 @@
 
 #version 330 core
 
+uniform float time;
+uniform float speed;
+
 layout (location = 0) in vec3 vertexPosition;
 layout (location = 1) in vec3 vertexColor;
 
 out vec3 shaderColor;
-out vec2 uv;
 
 void main()
 {
-    gl_Position = vec4(vertexPosition, 1.0f);
-    uv.x = gl_Position.x;
-    uv.y = gl_Position.y;
+    float amplitude = 0.1;
+    float height = 0.2;
+
+    float angle = time * speed;
+
+    float offsetX = sin(angle) * amplitude;
+
+    vec3 newPos = vertexPosition;
+    newPos.x += offsetX;
+
+    gl_Position = vec4(newPos, 1.0);
+    gl_Position.y -= 0.3f;
     shaderColor = vertexColor;
 }
