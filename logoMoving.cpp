@@ -9,8 +9,6 @@
 #define WINDOW_TITLE  "FitRepo Logo"
 GLFWwindow *pWindow;
 
-// TOTAL TRIANGLE COUNT = 515
-
 float backgroundVertices[] = {
     /** top left corner circle
         double x = -0.7;
@@ -1419,8 +1417,8 @@ bool setup()
         backgroundShader, 
         backgroundVertices, 
         sizeof(backgroundVertices), 
-        "vertex/background.vs", 
-        "fragment/background.fs"
+        "vertex/backgroundMove.vs", 
+        "fragment/backgroundMove.fs"
     )) {
         return false;
     }
