@@ -13,27 +13,14 @@ uniform float speed;
 
 layout (location = 0) in vec3 vertexPosition;
 layout (location = 1) in vec3 vertexColor;
+layout (location = 2) in vec2 vertexTexCoord;   
 
 out vec3 shaderColor;
-out vec2 uv;
+out vec2 shaderTexCoord;
 
 void main()
 {
-    float amplitude = 0.1;
-    float height = 0.2;
-
-    float angle = time * speed;
-
-    float offsetX = sin(angle) * amplitude;
-    float offsetY = abs(cos(angle)) * height; // makes it bounce up
-
-    vec3 newPos = vertexPosition;
-    newPos.x += offsetX;
-    newPos.y += offsetY;
-
-    gl_Position = vec4(newPos, 1.0);
-    gl_Position.y += 0.4f;
-    uv.x = gl_Position.x;
-    uv.y = gl_Position.y;
+    gl_Position = vec4(vertexPosition, 1.0);
     shaderColor = vertexColor;
+    shaderTexCoord = vertexTexCoord;
 }

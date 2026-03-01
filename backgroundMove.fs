@@ -29,6 +29,6 @@ void main()
     
     // exponential average!
     vec3 color = darkSilver * (1.0 - t) + darkViolet * t;
-
+    
     fragmentColor = vec4(color, 1.0);
 }
