@@ -9,19 +9,32 @@
 #define WINDOW_TITLE  "Exercise 2"
 GLFWwindow *pWindow;
 
-// PIECE 1 
+// PIECE 1 - top left piece
+#define BLACK 0.3f, 0.3f, 0.3f
 float piece1[] = {
-
+    0.2f, 1.0f, 0.0f, BLACK, 0.2f, 1.0f, // top right
+    0.0f, 1.0f, 0.0f, BLACK, 0.0f, 1.0f, // top left
+    0.0f, 0.5f, 0.0f, BLACK, 0.0f, 0.5f, // bottom left
+    0.3f, 0.8f, 0.0f, BLACK, 0.3f, 0.8f  // bottom right
 };
 
-// PIECE 2
+// PIECE 2 - middle top
+#define CYAN 0.0f, 1.0f, 1.0f
 float piece2[] = {
-
+    0.5f, 1.0f, 0.0f, CYAN, 0.5f, 1.0f,  // top right
+    0.15f, 0.65f, 0.0f, CYAN, 0.15f, 0.65f, // bottom left
+    0.4f, 0.5f, 0.0f,  CYAN, 0.40f, 0.5f, // peak bottom
+    0.55f, 0.7f, 0.0f, CYAN,  0.55f, 0.7f, // bottom right
+    0.6f, 0.8f, 0.0f,  CYAN,  0.6f, 0.8f,  // mid right
+    0.6f, 1.0f, 0.0f, CYAN,  0.6f, 1.0f, // top right
 };
 
-// PIECE 3
+// PIECE 3 - triangle at top left
+#define GREEN 0.0f, 1.0f, 0.0f
 float piece3[] = {
-
+    0.2f, 1.0f, 0.0f, GREEN, 0.2f, 1.0f, // top left
+    0.3f, 0.8f, 0.0f, GREEN, 0.3f, 0.8f, // bottom
+    0.5f, 1.0f, 0.0f, GREEN, 0.5f, 1.0f  // top right
 };
 
 
@@ -31,7 +44,11 @@ float piece4[] = {
 };
 
 // PIECE 5
+#define WHITE 0.8f, 1.0f, 1.0f
 float piece5[] = {
+    0.4f, 0.5f, 0.0f,  WHITE, 0.40f, 0.5f, // bottom left
+    0.63f, 0.6f, 0.0f, WHITE, 0.63f, 0.6f, // bottom right
+    0.55f, 0.7f, 0.0f, WHITE,  0.55f, 0.7f  // top part
 
 };
 
@@ -41,8 +58,9 @@ float piece6[] = {
 
 };
 
+
+// PIECE 7 - big piece at the top right
 #define BLUE 0.0f, 0.0f, 1.0f
-// piece 7
 float piece7[] = {
     1.0f, 0.0f, 0.0f,  BLUE,  1.0f, 0.0f, // bottom right
     1.0f, 0.8f, 0.0f,  BLUE,  1.0f, 0.8f, // top right
@@ -50,8 +68,9 @@ float piece7[] = {
     0.55f, 0.7f, 0.0f, BLUE,  0.55f, 0.7f  // bottom left
 };
 
+
+// PIECE 8 - rectangle at top right
 #define RED 1.0f, 0.0f, 0.0f
-// PIECE 8
 float piece8[] = {
     1.0f, 0.8f, 0.0f, RED,  1.0f, 0.8f, // bottom right
     1.0f, 1.0f, 0.0f, RED,  1.0f, 1.0f, // top right
@@ -258,7 +277,7 @@ bool setup()
         return false;
     }
 
-    texture = gdevLoadTexture("OIP.jpg", GL_REPEAT, true, true);
+    texture = gdevLoadTexture("OIP.png", GL_REPEAT, true, true);
     if (! texture) return false;
     
     return true;
