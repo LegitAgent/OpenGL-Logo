@@ -11,119 +11,58 @@ GLFWwindow *pWindow;
 
 // PIECE 1 
 float piece1[] = {
-    -1.0f,  1.0f,  0.0f,  0.75f,0.10f,0.15f,  0.0f,  1.0f,  
-    -0.45f, 1.0f,  0.0f,  0.75f,0.10f,0.15f,  0.275f,1.0f,  
-    -0.30f, 0.40f, 0.0f,  0.75f,0.10f,0.15f,  0.35f, 0.70f, 
-    -1.0f,  0.40f, 0.0f,  0.75f,0.10f,0.15f,  0.0f,  0.70f, 
+
 };
 
 // PIECE 2
 float piece2[] = {
-    -1.0f,  0.40f, 0.0f,  0.10f,0.20f,0.75f,  0.0f,  0.70f,
-    -0.30f, 0.40f, 0.0f,  0.10f,0.20f,0.75f,  0.35f, 0.70f,
-    -0.10f, 0.10f, 0.0f,  0.10f,0.20f,0.75f,  0.45f, 0.55f,
-    -0.10f,-0.30f, 0.0f,  0.10f,0.20f,0.75f,  0.45f, 0.35f,
-    -0.70f,-0.30f, 0.0f,  0.10f,0.20f,0.75f,  0.15f, 0.35f,
-    -1.0f,  0.0f,  0.0f,  0.10f,0.20f,0.75f,  0.0f,  0.50f,
+
 };
 
 // PIECE 3
 float piece3[] = {
-    -0.45f, 1.0f,  0.0f,  0.10f,0.60f,0.25f,  0.275f,1.0f,
-     0.50f, 1.0f,  0.0f,  0.10f,0.60f,0.25f,  0.75f, 1.0f,
-    -0.10f, 0.10f, 0.0f,  0.10f,0.60f,0.25f,  0.45f, 0.55f,
+
 };
 
-#define AMBER_R 0.80f
-#define AMBER_G 0.45f
-#define AMBER_B 0.05f
 
 // PIECE 4
 float piece4[] = {
-    -0.55f,-0.20f, 0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.225f,0.40f,
-    -1.0f,  0.0f,  0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.0f,  0.50f,
-    -1.0f, -0.30f, 0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.0f,  0.35f,
-    -0.921f,-0.408f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.040f,0.296f,
-    -0.844f,-0.492f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.078f,0.254f,
-    -0.769f,-0.552f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.116f,0.224f,
-    -0.696f,-0.588f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.152f,0.206f,
-    -0.625f,-0.600f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.188f,0.200f,
-    -0.556f,-0.588f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.222f,0.206f,
-    -0.489f,-0.552f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.256f,0.224f,
-    -0.424f,-0.492f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.288f,0.254f,
-    -0.361f,-0.408f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.320f,0.296f,
-    -0.10f, -0.30f, 0.0f, AMBER_R,AMBER_G,AMBER_B,  0.45f, 0.35f,
-    -0.10f,  0.10f, 0.0f, AMBER_R,AMBER_G,AMBER_B,  0.45f, 0.55f,
-    -1.0f,  0.0f,  0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.0f,  0.50f,
+
 };
 
 // PIECE 5
 float piece5[] = {
-    -0.10f, 0.10f, 0.0f,  0.55f,0.20f,0.70f,  0.45f, 0.55f,
-     0.50f, 1.0f,  0.0f,  0.55f,0.20f,0.70f,  0.75f, 1.0f,
-     1.0f,  0.10f, 0.0f,  0.55f,0.20f,0.70f,  1.0f,  0.55f,
+
 };
 
 // PIECE 6
-#define TEAL_R 0.05f
-#define TEAL_G 0.55f
-#define TEAL_B 0.60f
+
 float piece6[] = {
-     0.10f, 0.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.55f,0.50f,
-    -1.0f,  1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.0f, 1.0f,
-     0.50f, 1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.75f,1.0f,
-     1.0f,  0.10f, 0.0f,  TEAL_R,TEAL_G,TEAL_B,  1.0f, 0.55f,
-     1.0f, -1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  1.0f, 0.0f,
-    -1.0f, -1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.0f, 0.0f,
-    -0.938f,-0.897f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.031f,0.052f,
-    -0.856f,-0.776f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.072f,0.112f,
-    -0.757f,-0.637f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.122f,0.182f,
-    -0.645f,-0.488f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.178f,0.256f,
-    -0.525f,-0.250f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.238f,0.375f,
-    -0.432f, 0.008f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.284f,0.504f,
-    -0.370f, 0.237f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.315f,0.619f,
-    -0.352f, 0.424f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.324f,0.712f,
-    -0.389f, 0.657f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.306f,0.829f,
-    -1.0f,  1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.0f, 1.0f,
+
 };
 
+#define BLUE 0.0f, 0.0f, 1.0f
 // piece 7
 float piece7[] = {
-    -0.10f,-0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.45f,0.35f,
-     1.0f, -0.30f, 0.0f,  0.50f,0.05f,0.10f,  1.0f, 0.35f,
-     1.0f, -1.0f,  0.0f,  0.50f,0.05f,0.10f,  1.0f, 0.0f,
-    -1.0f, -1.0f,  0.0f,  0.50f,0.05f,0.10f,  0.0f, 0.0f,
-    -1.0f, -0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.0f, 0.35f,
-    -0.10f,-0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.45f,0.35f,
+    1.0f, 0.0f, 0.0f,  BLUE,  1.0f, 0.0f, // bottom right
+    1.0f, 0.8f, 0.0f,  BLUE,  1.0f, 0.8f, // top right
+    0.6f, 0.8f, 0.0f,  BLUE,  0.6f, 0.8f,  // top left
+    0.55f, 0.7f, 0.0f, BLUE,  0.55f, 0.7f  // bottom left
 };
 
+#define RED 1.0f, 0.0f, 0.0f
 // PIECE 8
 float piece8[] = {
-     0.50f, 1.0f,  0.0f,  0.90f,0.75f,0.15f,  0.75f,1.0f,
-     1.0f,  1.0f,  0.0f,  0.90f,0.75f,0.15f,  1.0f, 1.0f,
-     1.0f, -0.30f, 0.0f,  0.90f,0.75f,0.15f,  1.0f, 0.35f,
-    -0.10f,-0.30f, 0.0f,  0.90f,0.75f,0.15f,  0.45f,0.35f,
-     1.0f,  0.10f, 0.0f,  0.90f,0.75f,0.15f,  1.0f, 0.55f,
+    1.0f, 0.8f, 0.0f, RED,  1.0f, 0.8f, // bottom right
+    1.0f, 1.0f, 0.0f, RED,  1.0f, 1.0f, // top right
+    0.6f, 1.0f, 0.0f, RED,  0.6f, 1.0f, // top left
+    0.6f, 0.8f, 0.0f, RED,  0.6f, 0.8f  // bottom left
 };
 
 // PIECE 9
-#define CYAN_R 0.10f
-#define CYAN_G 0.75f
-#define CYAN_B 0.80f
+
 float piece9[] = {
-    -0.325f,0.375f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.338f,0.688f,
-    -0.55f, 0.65f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.225f,0.825f,
-    -0.10f, 0.65f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.45f, 0.825f,
-    -0.076f,0.593f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.462f,0.797f,
-    -0.009f,0.531f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.496f,0.766f,
-     0.046f,0.475f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.523f,0.738f,
-     0.075f,0.375f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.538f,0.688f,
-     0.046f,0.275f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.523f,0.638f,
-    -0.009f,0.219f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.496f,0.610f,
-    -0.076f,0.157f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.462f,0.579f,
-    -0.10f, 0.10f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.45f, 0.55f,
-    -0.55f, 0.10f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.225f,0.55f,
-    -0.55f, 0.65f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.225f,0.825f,
+    
 };
 
 GLuint RubyVao;
