@@ -46,13 +46,13 @@ public class GenerateBezierCurve {
     }
 
     public static void main(String[] args) {
-        Point2D p0 = new Point2D(0.23, 0); // start
+        Point2D p0 = new Point2D(0.25, 0.27); // start
         Point2D p1 = new Point2D(0.24, 0.05); // control point 1
         Point2D p2 = new Point2D(0.245, 0.2); // control point 2
-        Point2D p3 = new Point2D(0.277, 0.27); // end
+        Point2D p3 = new Point2D(0.4, 0.5); // end
         Point2D center = new Point2D(0, 0);
         double incSegments = 0.1;
-        String color = "PURPLE";
+        String color = "YELLOW";
 
         Object[] res = generateBezierCurve(p0, p1, p2, p3, center, incSegments, color);
         StringBuilder sb = new StringBuilder();
