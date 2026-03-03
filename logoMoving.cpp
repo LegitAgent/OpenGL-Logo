@@ -6,23 +6,19 @@
 
 #define WINDOW_WIDTH  720
 #define WINDOW_HEIGHT 720
-#define WINDOW_TITLE  "Thing"
+#define WINDOW_TITLE  "Exercise 2"
 GLFWwindow *pWindow;
 
-// =================== PIECE 1 – Ruby (top-left, 4-sided) ===========
-// Corners: top-left, top-right, bottom-right, bottom-left  (quad)
+// PIECE 1 
 float piece1[] = {
-    //  X       Y      Z     R     G     B      U      V
-    -1.0f,  1.0f,  0.0f,  0.75f,0.10f,0.15f,  0.0f,  1.0f,   // TL
-    -0.45f, 1.0f,  0.0f,  0.75f,0.10f,0.15f,  0.275f,1.0f,   // TR
-    -0.30f, 0.40f, 0.0f,  0.75f,0.10f,0.15f,  0.35f, 0.70f,  // BR
-    -1.0f,  0.40f, 0.0f,  0.75f,0.10f,0.15f,  0.0f,  0.70f,  // BL
+    -1.0f,  1.0f,  0.0f,  0.75f,0.10f,0.15f,  0.0f,  1.0f,  
+    -0.45f, 1.0f,  0.0f,  0.75f,0.10f,0.15f,  0.275f,1.0f,  
+    -0.30f, 0.40f, 0.0f,  0.75f,0.10f,0.15f,  0.35f, 0.70f, 
+    -1.0f,  0.40f, 0.0f,  0.75f,0.10f,0.15f,  0.0f,  0.70f, 
 };
 
-// =================== PIECE 2 – Sapphire (6-sided) =================   
-// Upper-left column, hexagonal shape
+// PIECE 2
 float piece2[] = {
-    //  X       Y      Z     R     G     B      U      V
     -1.0f,  0.40f, 0.0f,  0.10f,0.20f,0.75f,  0.0f,  0.70f,
     -0.30f, 0.40f, 0.0f,  0.10f,0.20f,0.75f,  0.35f, 0.70f,
     -0.10f, 0.10f, 0.0f,  0.10f,0.20f,0.75f,  0.45f, 0.55f,
@@ -31,50 +27,22 @@ float piece2[] = {
     -1.0f,  0.0f,  0.0f,  0.10f,0.20f,0.75f,  0.0f,  0.50f,
 };
 
-// =================== PIECE 3 – Emerald (triangle, top-centre) =====
+// PIECE 3
 float piece3[] = {
-    //  X       Y      Z     R     G     B      U      V
     -0.45f, 1.0f,  0.0f,  0.10f,0.60f,0.25f,  0.275f,1.0f,
      0.50f, 1.0f,  0.0f,  0.10f,0.60f,0.25f,  0.75f, 1.0f,
     -0.10f, 0.10f, 0.0f,  0.10f,0.60f,0.25f,  0.45f, 0.55f,
 };
 
-// =================== PIECE 4 – Amber (pentagon, curved bottom) ====
-// The bottom edge (from BL to BR) is a downward Bézier arc.
-// Arc: from (-1,-0.30) curving down to (-0.10,-0.30) via (-0.55,-0.90)
-// Pre-tessellated with 10 segments → 11 points on the arc.
-// TRIANGLE_FAN centre = centroid of the piece ~ (-0.55, -0.30)
-// We build the fan: centre, then outline CCW.
-//
-// Straight outline vertices (top part):
-//   TL (-1.0, 0.0)  →  (-1.0,-0.30)  →  [curve]  →  (-0.10,-0.30)  →  (-0.10, 0.10)
-//
-// For a TRIANGLE_FAN the first vertex is the hub.
 #define AMBER_R 0.80f
 #define AMBER_G 0.45f
 #define AMBER_B 0.05f
 
-// Arc from P0=(-1.0,-0.30) to P2=(-0.10,-0.30), control P1=(-0.55,-0.90)
-// Quadratic Bézier, 10 steps:
-// B(t) = (1-t)^2*P0 + 2(1-t)t*P1 + t^2*P2
-// t=0.0: (-1.000, -0.300)
-// t=0.1: (-0.921, -0.408)
-// t=0.2: (-0.844, -0.492)
-// t=0.3: (-0.769, -0.552)
-// t=0.4: (-0.696, -0.588)
-// t=0.5: (-0.625, -0.600)
-// t=0.6: (-0.556, -0.588)
-// t=0.7: (-0.489, -0.552)
-// t=0.8: (-0.424, -0.492)
-// t=0.9: (-0.361, -0.408)
-// t=1.0: (-0.100, -0.300)
+// PIECE 4
 float piece4[] = {
-    // Hub (centroid)
     -0.55f,-0.20f, 0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.225f,0.40f,
-    // Outline – top-left corner going clockwise
     -1.0f,  0.0f,  0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.0f,  0.50f,
     -1.0f, -0.30f, 0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.0f,  0.35f,
-    // Bézier arc (bottom)
     -0.921f,-0.408f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.040f,0.296f,
     -0.844f,-0.492f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.078f,0.254f,
     -0.769f,-0.552f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.116f,0.224f,
@@ -85,124 +53,76 @@ float piece4[] = {
     -0.424f,-0.492f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.288f,0.254f,
     -0.361f,-0.408f,0.0f, AMBER_R,AMBER_G,AMBER_B,  0.320f,0.296f,
     -0.10f, -0.30f, 0.0f, AMBER_R,AMBER_G,AMBER_B,  0.45f, 0.35f,
-    // back up the right side
     -0.10f,  0.10f, 0.0f, AMBER_R,AMBER_G,AMBER_B,  0.45f, 0.55f,
-    // close to hub (TRIANGLE_FAN closes automatically to first outline vertex)
     -1.0f,  0.0f,  0.0f,  AMBER_R,AMBER_G,AMBER_B,  0.0f,  0.50f,
 };
 
-// =================== PIECE 5 – Amethyst (triangle, centre-right) ==
+// PIECE 5
 float piece5[] = {
-    //  X       Y      Z     R     G     B      U      V
     -0.10f, 0.10f, 0.0f,  0.55f,0.20f,0.70f,  0.45f, 0.55f,
      0.50f, 1.0f,  0.0f,  0.55f,0.20f,0.70f,  0.75f, 1.0f,
      1.0f,  0.10f, 0.0f,  0.55f,0.20f,0.70f,  1.0f,  0.55f,
 };
 
-// =================== PIECE 6 – Teal (large centre, LEFT side curved)
-// Left boundary is a cubic Bézier from top-left to bottom-left.
-// Straight edges: top (-1,1)→(0.5,1), right (0.5,1)→(1.0,-1),
-//                 bottom (1.0,-1)→(-1,-1)
-// Left (curved): (-1,-1) → (-1,1) via control pts (-0.30,-0.5),(-0.30,0.5)
-// Cubic Bézier, 12 steps:
-// P0=(-1,-1), P1=(-0.30,-0.5), P2=(-0.30,0.5), P3=(-1,1)
-// Pre-computed (t from 0→1 gives bottom→top, we list top→bottom for CCW):
+// PIECE 6
 #define TEAL_R 0.05f
 #define TEAL_G 0.55f
 #define TEAL_B 0.60f
 float piece6[] = {
-    // Hub
      0.10f, 0.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.55f,0.50f,
-    // Top-left (start of straight top edge)
     -1.0f,  1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.0f, 1.0f,
      0.50f, 1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.75f,1.0f,
      1.0f,  0.10f, 0.0f,  TEAL_R,TEAL_G,TEAL_B,  1.0f, 0.55f,
      1.0f, -1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  1.0f, 0.0f,
-    // Bottom edge
     -1.0f, -1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.0f, 0.0f,
-    // Curved left side (cubic Bézier bottom→top, 10 steps)
-    // B(t)=(1-t)^3*P0+3(1-t)^2*t*P1+3(1-t)*t^2*P2+t^3*P3
-    // t=0.1: (-0.938,-0.897)
     -0.938f,-0.897f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.031f,0.052f,
-    // t=0.2: (-0.856,-0.776)
     -0.856f,-0.776f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.072f,0.112f,
-    // t=0.3: (-0.757,-0.637)
     -0.757f,-0.637f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.122f,0.182f,
-    // t=0.4: (-0.645,-0.488)
     -0.645f,-0.488f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.178f,0.256f,
-    // t=0.5: (-0.525,-0.250)  [midpoint, slight inward bulge]
     -0.525f,-0.250f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.238f,0.375f,
-    // t=0.6: (-0.432, 0.008)
     -0.432f, 0.008f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.284f,0.504f,
-    // t=0.7: (-0.370, 0.237)
     -0.370f, 0.237f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.315f,0.619f,
-    // t=0.8: (-0.352, 0.424)
     -0.352f, 0.424f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.324f,0.712f,
-    // t=0.9: (-0.389, 0.657)
     -0.389f, 0.657f,0.0f, TEAL_R,TEAL_G,TEAL_B,  0.306f,0.829f,
-    // t=1.0: top-left = close
     -1.0f,  1.0f,  0.0f,  TEAL_R,TEAL_G,TEAL_B,  0.0f, 1.0f,
 };
 
-// =================== PIECE 7 – Dark Crimson (rectangle, bottom-right lower)
+// piece 7
 float piece7[] = {
-    //  X       Y      Z     R     G     B      U      V
     -0.10f,-0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.45f,0.35f,
      1.0f, -0.30f, 0.0f,  0.50f,0.05f,0.10f,  1.0f, 0.35f,
      1.0f, -1.0f,  0.0f,  0.50f,0.05f,0.10f,  1.0f, 0.0f,
     -1.0f, -1.0f,  0.0f,  0.50f,0.05f,0.10f,  0.0f, 0.0f,
     -1.0f, -0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.0f, 0.35f,
-    -0.10f,-0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.45f,0.35f, // close fan
+    -0.10f,-0.30f, 0.0f,  0.50f,0.05f,0.10f,  0.45f,0.35f,
 };
 
-// =================== PIECE 8 – Gold (right rectangle) =============
+// PIECE 8
 float piece8[] = {
-    //  X       Y      Z     R     G     B      U      V
      0.50f, 1.0f,  0.0f,  0.90f,0.75f,0.15f,  0.75f,1.0f,
      1.0f,  1.0f,  0.0f,  0.90f,0.75f,0.15f,  1.0f, 1.0f,
      1.0f, -0.30f, 0.0f,  0.90f,0.75f,0.15f,  1.0f, 0.35f,
     -0.10f,-0.30f, 0.0f,  0.90f,0.75f,0.15f,  0.45f,0.35f,
-     1.0f,  0.10f, 0.0f,  0.90f,0.75f,0.15f,  1.0f, 0.55f, // interior notch vertex
+     1.0f,  0.10f, 0.0f,  0.90f,0.75f,0.15f,  1.0f, 0.55f,
 };
 
-// =================== PIECE 9 – Cyan (tilted quad, curved right side)
-// A tilted quadrilateral where the RIGHT edge bulges outward (convex Bézier).
-// Straight: TL(-0.10,0.10) → TR(-0.10,1.0... wait, piece 9 is small centre-left piece.
-// From image: piece 9 looks like a small square/quad in the centre-left area,
-// slightly rotated, with the right side curving outward.
-// Approximate corners: TL(-0.55,0.40) TR(-0.10,0.65) BR(-0.10,0.10) BL(-0.55,0.10)
-// Right curved edge from TR(-0.10,0.65) → BR(-0.10,0.10) bulging right to (0.15,0.38)
-// Quadratic Bézier, 8 steps:
+// PIECE 9
 #define CYAN_R 0.10f
 #define CYAN_G 0.75f
 #define CYAN_B 0.80f
 float piece9[] = {
-    // Hub (centre)
     -0.325f,0.375f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.338f,0.688f,
-    // TL
     -0.55f, 0.65f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.225f,0.825f,
-    // TR
     -0.10f, 0.65f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.45f, 0.825f,
-    // Curved right edge TR→BR (bulge to x=+0.15)
-    // t=0.125: (-0.076, 0.593)
     -0.076f,0.593f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.462f,0.797f,
-    // t=0.25: (-0.009, 0.531)
     -0.009f,0.531f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.496f,0.766f,
-    // t=0.375: (0.046, 0.475)
      0.046f,0.475f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.523f,0.738f,
-    // t=0.5: (0.075, 0.375)   peak bulge
      0.075f,0.375f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.538f,0.688f,
-    // t=0.625: (0.046, 0.275)
      0.046f,0.275f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.523f,0.638f,
-    // t=0.75: (-0.009, 0.219)
     -0.009f,0.219f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.496f,0.610f,
-    // t=0.875: (-0.076, 0.157)
     -0.076f,0.157f,0.0f, CYAN_R,CYAN_G,CYAN_B,  0.462f,0.579f,
-    // BR
     -0.10f, 0.10f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.45f, 0.55f,
-    // BL
     -0.55f, 0.10f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.225f,0.55f,
-    // close fan back to TL
     -0.55f, 0.65f, 0.0f, CYAN_R,CYAN_G,CYAN_B,  0.225f,0.825f,
 };
 
