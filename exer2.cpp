@@ -168,7 +168,7 @@ float piece_red[] = {
 };
 
 // PIECE 9
-#define PURPLE 1.0f, 0.0f, 1.0f
+#define PURPLE 0.53f, 0.36f, 0.87f
 float piece_purple[] = {
     0.0f, 0.0f, 0.0f, PURPLE, 0.0f, 0.0f, // bottom left
     0.23f, 0.0f, 0.0f, PURPLE, 0.23f, 0.0f, // bottom right
