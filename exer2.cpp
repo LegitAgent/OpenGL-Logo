@@ -231,7 +231,8 @@ GLuint PurpleVao;
 GLuint PurpleVbo;
 GLuint PurpleShader;
 
-GLuint texture;
+GLuint texture1;
+GLuint texture2;
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -382,8 +383,11 @@ bool setup()
         return false;
     }
 
-    texture = gdevLoadTexture("OIP.png", GL_REPEAT, true, true);
-    if (! texture) return false;
+    texture1 = gdevLoadTexture("OIP.png", GL_REPEAT, true, true);
+    if (! texture1) return false;
+
+    texture2 = gdevLoadTexture("OIP2.jpg", GL_REPEAT, true, true);
+    if (! texture2) return false;
     
     return true;
 }
@@ -402,6 +406,14 @@ void render()
     // BLACK PIECE
     glUseProgram(BlackShader);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureB"), 1);
+
     glUniform1f(glGetUniformLocation(BlackShader, "time"), time);
     glUniform1f(glGetUniformLocation(BlackShader, "speed"), speed);
 
@@ -410,6 +422,14 @@ void render()
 
     //CYAN PIECE
     glUseProgram(CyanShader);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(CyanShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(CyanShader, "shaderTextureB"), 1);
 
     glUniform1f(glGetUniformLocation(CyanShader, "time"), time);
     glUniform1f(glGetUniformLocation(CyanShader, "speed"), speed);
@@ -420,6 +440,14 @@ void render()
     // GREEN PIECE
     glUseProgram(GreenShader);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(GreenShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(GreenShader, "shaderTextureB"), 1);
+
     glUniform1f(glGetUniformLocation(GreenShader, "time"), time);
     glUniform1f(glGetUniformLocation(GreenShader, "speed"), speed);
 
@@ -428,6 +456,14 @@ void render()
 
     // ORANGE PIECE
     glUseProgram(OrangeShader);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(OrangeShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(OrangeShader, "shaderTextureB"), 1);
 
     glUniform1f(glGetUniformLocation(OrangeShader, "time"), time);
     glUniform1f(glGetUniformLocation(OrangeShader, "speed"), speed);
@@ -438,6 +474,14 @@ void render()
     // WHITE PIECE
     glUseProgram(WhiteShader);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(WhiteShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(WhiteShader, "shaderTextureB"), 1);
+
     glUniform1f(glGetUniformLocation(WhiteShader, "time"), time);
     glUniform1f(glGetUniformLocation(WhiteShader, "speed"), speed);
 
@@ -446,6 +490,14 @@ void render()
 
     // YELLOW PIECE
     glUseProgram(YellowShader);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(YellowShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(YellowShader, "shaderTextureB"), 1);
 
     glUniform1f(glGetUniformLocation(YellowShader, "time"), time);
     glUniform1f(glGetUniformLocation(YellowShader, "speed"), speed);
@@ -456,6 +508,14 @@ void render()
     // BLUE PIECE
     glUseProgram(BlueShader);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(BlueShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(BlueShader, "shaderTextureB"), 1);
+
     glUniform1f(glGetUniformLocation(BlueShader, "time"), time);
     glUniform1f(glGetUniformLocation(BlueShader, "speed"), speed);
 
@@ -465,6 +525,14 @@ void render()
     // RED PIECE
     glUseProgram(RedShader);
 
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(RedShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(RedShader, "shaderTextureB"), 1);
+
     glUniform1f(glGetUniformLocation(RedShader, "time"), time);
     glUniform1f(glGetUniformLocation(RedShader, "speed"), speed);
 
@@ -473,6 +541,14 @@ void render()
 
     // PURPLE PIECE
     glUseProgram(PurpleShader);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
+    glUniform1i(glGetUniformLocation(PurpleShader, "shaderTextureA"), 0);
+    glUniform1i(glGetUniformLocation(PurpleShader, "shaderTextureB"), 1);
 
     glUniform1f(glGetUniformLocation(PurpleShader, "time"), time);
     glUniform1f(glGetUniformLocation(PurpleShader, "speed"), speed);
