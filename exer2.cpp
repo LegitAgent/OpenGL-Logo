@@ -396,7 +396,7 @@ void render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // compute a value for the glow amount for this frame
-    float time = glfwGetTime();
+    float time = glfwGetTime()/2;
     float speed = 2.0f;
 
     // BLACK PIECE
