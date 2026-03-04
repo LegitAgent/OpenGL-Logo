@@ -228,6 +228,7 @@ GLuint PurpleShader;
 GLuint main_texture;
 GLuint texture2;
 GLuint sea_displacement;
+GLuint troy_texture;
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -387,6 +388,9 @@ bool setup()
     // https://uk.pinterest.com/pin/water-ripples-texture-bump-map--51791464458132407/ 
     sea_displacement = gdevLoadTexture("sea_displacement.jpg", GL_REPEAT, true, true);
     if (! sea_displacement) return false;
+
+    troy_texture = gdevLoadTexture("troy.png", GL_REPEAT, true, true);
+    if (! troy_texture ) return false;
     
     return true;
 }
@@ -442,10 +446,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, troy_texture);
 
-    glUniform1i(glGetUniformLocation(GreenShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(GreenShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(GreenShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(GreenShader, "troyTexture"), 1);
 
     glUniform1f(glGetUniformLocation(GreenShader, "time"), time);
     glUniform1f(glGetUniformLocation(GreenShader, "speed"), speed);
