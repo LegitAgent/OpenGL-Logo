@@ -25,7 +25,7 @@ void main()
     gl_Position.y -= 0.5;
 
     // Translations
-    float x_offset = 0.3;
+    float x_offset = 0.2;
     gl_Position.x += (sin(time) + 1.0) * x_offset;
 
     float y_offset = 0.2;

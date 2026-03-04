@@ -23,6 +23,21 @@ void main()
     gl_Position = vec4(vertexPosition, 1.0);
     gl_Position.x -= 0.5;
     gl_Position.y -= 0.5;
+
+    // Translations
+    float x_offset = 0.4;
+    gl_Position.x += (sin(time) + 1.0) * x_offset;
+
+    float y_offset = -0.1;
+    gl_Position.y += (sin(time) + 1.0) * y_offset;
+
+    // Rotations (based on z axis)
+    float angle = (sin(time) + 1.0) / -12;
+    float origX = gl_Position.x;
+    float origY = gl_Position.y;
+    gl_Position.x = origX * cos(angle) - origY * sin(angle);
+    gl_Position.y = origY * cos(angle) + origX * sin(angle);
+
     shaderColor = vertexColor;
     shaderTexCoord = vertexTexCoord;
 }
