@@ -227,6 +227,9 @@ GLuint PurpleShader;
 
 GLuint main_texture;
 GLuint texture2;
+GLuint black_texture;
+GLuint orange_texture;
+GLuint purple_texture;
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -382,7 +385,16 @@ bool setup()
 
     texture2 = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
     if (! texture2) return false;
-    
+
+    black_texture = gdevLoadTexture("fire.jpg", GL_REPEAT, true, true);
+    if (! black_texture) return false;
+
+    orange_texture = gdevLoadTexture("static.jpg", GL_REPEAT, true, true);
+    if (! orange_texture) return false;
+
+    purple_texture = gdevLoadTexture("spiral.jpg", GL_REPEAT, true, true);
+    if (! purple_texture) return false;
+
     return true;
 }
 
@@ -403,7 +415,7 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, black_texture);
 
     glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureB"), 1);
@@ -454,7 +466,7 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, orange_texture);
 
     glUniform1i(glGetUniformLocation(OrangeShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(OrangeShader, "shaderTextureB"), 1);
@@ -539,7 +551,7 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, purple_texture);
 
     glUniform1i(glGetUniformLocation(PurpleShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(PurpleShader, "shaderTextureB"), 1);
