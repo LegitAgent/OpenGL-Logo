@@ -278,8 +278,8 @@ bool setup()
         BlackVao,
         BlackVbo,
         BlackShader,
-        piece1,
-        sizeof(piece1),
+        piece_black,
+        sizeof(piece_black),
         "black.vs",
         "black.fs"
     )) {
@@ -290,8 +290,8 @@ bool setup()
         CyanVao,
         CyanVbo,
         CyanShader,
-        piece9,
-        sizeof(piece9),
+        piece_cyan,
+        sizeof(piece_cyan),
         "cyan.vs",
         "cyan.fs"
     )) {
@@ -302,8 +302,8 @@ bool setup()
         GreenVao, 
         GreenVbo, 
         GreenShader, 
-        piece2, 
-        sizeof(piece2), 
+        piece_green, 
+        sizeof(piece_green), 
         "green.vs", 
         "green.fs"
     )) {
@@ -314,8 +314,8 @@ bool setup()
         OrangeVao,
         OrangeVbo,
         OrangeShader,
-        piece3,
-        sizeof(piece3),
+        piece_orange,
+        sizeof(piece_orange),
         "orange.vs",
         "orange.fs"
     )) {
@@ -326,8 +326,8 @@ bool setup()
         WhiteVao,
         WhiteVbo,
         WhiteShader,
-        piece4,
-        sizeof(piece4),
+        piece_white,
+        sizeof(piece_white),
         "white.vs",
         "white.fs"
     )) {
@@ -338,8 +338,8 @@ bool setup()
         YellowVao,
         YellowVbo,
         YellowShader,
-        piece5,
-        sizeof(piece5),
+        piece_yellow,
+        sizeof(piece_yellow),
         "yellow.vs",
         "yellow.fs"
     )) {
@@ -350,8 +350,8 @@ bool setup()
         BlueVao,
         BlueVbo,
         BlueShader,
-        piece6,
-        sizeof(piece6),
+        piece_blue,
+        sizeof(piece_blue),
         "blue.vs",
         "blue.fs"
     )) {
@@ -362,8 +362,8 @@ bool setup()
         RedVao,
         RedVbo,
         RedShader,
-        piece7,
-        sizeof(piece7),
+        piece_red,
+        sizeof(piece_red),
         "red.vs",
         "red.fs"
     )) {
@@ -374,8 +374,8 @@ bool setup()
         PurpleVao,
         PurpleVbo,
         PurpleShader,
-        piece8,
-        sizeof(piece8),
+        piece_purple,
+        sizeof(piece_purple),
         "purple.vs",
         "purple.fs"
     )) {
@@ -406,7 +406,7 @@ void render()
     glUniform1f(glGetUniformLocation(BlackShader, "speed"), speed);
 
     glBindVertexArray(BlackVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece1) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_black) / (8 * sizeof(float)));
 
     //CYAN PIECE
     glUseProgram(CyanShader);
@@ -415,7 +415,7 @@ void render()
     glUniform1f(glGetUniformLocation(CyanShader, "speed"), speed);
 
     glBindVertexArray(CyanVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece9) / (8 * sizeof(float)));    
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_cyan) / (8 * sizeof(float)));    
 
     // GREEN PIECE
     glUseProgram(GreenShader);
@@ -424,7 +424,7 @@ void render()
     glUniform1f(glGetUniformLocation(GreenShader, "speed"), speed);
 
     glBindVertexArray(GreenVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece2) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_green) / (8 * sizeof(float)));
 
     // ORANGE PIECE
     glUseProgram(OrangeShader);
@@ -433,7 +433,7 @@ void render()
     glUniform1f(glGetUniformLocation(OrangeShader, "speed"), speed);
 
     glBindVertexArray(OrangeVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece3) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_orange) / (8 * sizeof(float)));
 
     // WHITE PIECE
     glUseProgram(WhiteShader);
@@ -442,7 +442,7 @@ void render()
     glUniform1f(glGetUniformLocation(WhiteShader, "speed"), speed);
 
     glBindVertexArray(WhiteVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece4) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_white) / (8 * sizeof(float)));
 
     // YELLOW PIECE
     glUseProgram(YellowShader);
@@ -451,7 +451,7 @@ void render()
     glUniform1f(glGetUniformLocation(YellowShader, "speed"), speed);
 
     glBindVertexArray(YellowVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece5) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_yellow) / (8 * sizeof(float)));
 
     // BLUE PIECE
     glUseProgram(BlueShader);
@@ -460,7 +460,7 @@ void render()
     glUniform1f(glGetUniformLocation(BlueShader, "speed"), speed);
 
     glBindVertexArray(BlueVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece6) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_blue) / (8 * sizeof(float)));
 
     // RED PIECE
     glUseProgram(RedShader);
@@ -469,7 +469,7 @@ void render()
     glUniform1f(glGetUniformLocation(RedShader, "speed"), speed);
 
     glBindVertexArray(RedVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece7) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_red) / (8 * sizeof(float)));
 
     // PURPLE PIECE
     glUseProgram(PurpleShader);
@@ -478,7 +478,7 @@ void render()
     glUniform1f(glGetUniformLocation(PurpleShader, "speed"), speed);
 
     glBindVertexArray(PurpleVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece8) / (8 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece_purple) / (8 * sizeof(float)));
 
 }
 

@@ -8,16 +8,19 @@
 
 #version 330 core
 
+uniform float time;
+uniform float speed;
+
 layout (location = 0) in vec3 vertexPosition;
 layout (location = 1) in vec3 vertexColor;
+layout (location = 2) in vec2 vertexTexCoord;   
 
 out vec3 shaderColor;
-out vec2 uv;
+out vec2 shaderTexCoord;
 
 void main()
 {
-    gl_Position = vec4(vertexPosition, 1.0f);
-    uv.x = gl_Position.x;
-    uv.y = gl_Position.y;
+    gl_Position = vec4(vertexPosition, 1.0);
     shaderColor = vertexColor;
+    shaderTexCoord = vertexTexCoord;
 }
