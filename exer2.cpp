@@ -9,7 +9,7 @@
 #define WINDOW_TITLE  "Exercise 2"
 GLFWwindow *pWindow;
 
-// PIECE 1 - top left piece
+// PIECE 1 - top left piece (Je)
 #define BLACK 0.3f, 0.3f, 0.3f
 float piece_black[] = {
     0.2f, 1.0f, 0.0f, BLACK, 0.2f, 1.0f, // top right
@@ -29,7 +29,7 @@ float piece_black[] = {
     0.3f, 0.8f, 0.0f, BLACK, 0.3f, 0.8f, // bottom right
 };
 
-// PIECE 2 - middle top
+// PIECE 2 - middle top (Je)
 #define CYAN 0.0f, 1.0f, 1.0f
 float piece_cyan[] = {
     0.6f, 0.8f, 0.0f,  CYAN,  0.6f, 0.8f,  // mid right 
@@ -55,7 +55,7 @@ float piece_cyan[] = {
     0.55f, 0.7f, 0.0f, CYAN,  0.55f, 0.7f, // bottom right
 };
 
-// PIECE 3 - triangle at top left
+// PIECE 3 - triangle at top left (Je)
 #define GREEN 0.0f, 1.0f, 0.0f
 float piece_green[] = {
     0.2f, 1.0f, 0.0f, GREEN, 0.2f, 1.0f, // top left
@@ -74,7 +74,7 @@ float piece_green[] = {
 };
 
 
-// PIECE 4
+// PIECE 4 (J)
 #define ORANGE 1.0f, 0.5f, 0.0f
 float piece_orange[] = {
     0.0f, 0.3f, 0.0f, ORANGE, 0.0f, 0.3f, // bottom left
@@ -95,7 +95,7 @@ float piece_orange[] = {
     0.0f, 0.5f, 0.0f, ORANGE, 0.0f, 0.5f // top left
 };
 
-// PIECE 5
+// PIECE 5 (Alba)
 #define WHITE 0.8f, 1.0f, 1.0f
 float piece_white[] = {
     0.4f, 0.5f, 0.0f,  WHITE, 0.40f, 0.5f, // bottom left
@@ -104,7 +104,7 @@ float piece_white[] = {
 
 };
 
-// PIECE 6
+// PIECE 6 (Alba)
 #define YELLOW 1.0f, 1.0f, 0.0f
 float piece_yellow[] = {
     0.23f, 0.0f, 0.0f, YELLOW, 0.23f, 0.0f, // bottom left
@@ -125,7 +125,7 @@ float piece_yellow[] = {
 };
 
 
-// PIECE 7 - big piece at the top right
+// PIECE 7 - big piece at the top right (Alba)
 #define BLUE 0.0f, 0.0f, 1.0f
 float piece_blue[] = {
     1.0f, 0.0f, 0.0f,  BLUE,  1.0f, 0.0f, // bottom right
@@ -146,7 +146,7 @@ float piece_blue[] = {
 };
 
 
-// PIECE 8 - rectangle at top right
+// PIECE 8 - rectangle at top right (J)
 #define RED 1.0f, 0.0f, 0.0f
 float piece_red[] = {
     1.0f, 0.6f, 0.0f, RED,  1.0f, 0.6f, // bottom right
@@ -167,8 +167,8 @@ float piece_red[] = {
 
 };
 
-// PIECE 9
-#define PURPLE 1.0f, 0.0f, 1.0f
+// PIECE 9 (J)
+#define PURPLE 1.0f, 0.0f, 1.0f 
 float piece_purple[] = {
     0.0f, 0.0f, 0.0f, PURPLE, 0.0f, 0.0f, // bottom left
     0.23f, 0.0f, 0.0f, PURPLE, 0.23f, 0.0f, // bottom right
@@ -225,7 +225,7 @@ GLuint PurpleVao;
 GLuint PurpleVbo;
 GLuint PurpleShader;
 
-GLuint main_texture;
+GLuint texture1;
 GLuint texture2;
 
 // Helper function to setup multiple vaos and vbos
@@ -377,8 +377,8 @@ bool setup()
         return false;
     }
 
-    main_texture = gdevLoadTexture("base.png", GL_REPEAT, true, true);
-    if (! main_texture) return false;
+    texture1 = gdevLoadTexture("base.png", GL_REPEAT, true, true);
+    if (! texture1) return false;
 
     texture2 = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
     if (! texture2) return false;
@@ -401,7 +401,7 @@ void render()
     glUseProgram(BlackShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -418,7 +418,7 @@ void render()
     glUseProgram(CyanShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -435,7 +435,7 @@ void render()
     glUseProgram(GreenShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -452,7 +452,7 @@ void render()
     glUseProgram(OrangeShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -469,7 +469,7 @@ void render()
     glUseProgram(WhiteShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -486,7 +486,7 @@ void render()
     glUseProgram(YellowShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -503,7 +503,7 @@ void render()
     glUseProgram(BlueShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -520,7 +520,7 @@ void render()
     glUseProgram(RedShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -537,7 +537,7 @@ void render()
     glUseProgram(PurpleShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, main_texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 

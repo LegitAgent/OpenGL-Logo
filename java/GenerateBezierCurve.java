@@ -8,7 +8,7 @@ public class GenerateBezierCurve {
     // gets a point in a bezier line
     public static double[] getCubicBezierPoint(Point2D p0, Point2D p1, Point2D p2, Point2D p3, double t) {
         // bernstein polynomial for n = 3 : ((1 - t) ^ 3 * p0) + (3 * (1 - t) ^ 2 * t * p1) + (3 * (1 - t) * t ^ 2 * p2) + (t ^ 3 * p3)
-        double u = 1 - t; // compliment
+        double u = 1 - t; // complement
         double x = u * u * u * p0.getX() + 3 * u * u * t * p1.getX() + 3 * u * t * t * p2.getX() + t * t * t * p3.getX();
         double y = u * u * u * p0.getY() + 3 * u * u * t * p1.getY() + 3 * u * t * t * p2.getY() + t * t * t * p3.getY();
         return new double[]{x, y};
