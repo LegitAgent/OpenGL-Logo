@@ -16,7 +16,8 @@ layout (location = 1) in vec3 vertexColor;
 layout (location = 2) in vec2 vertexTexCoord;   
 
 out vec3 shaderColor;
-out vec2 shaderTexCoord;
+out vec2 mainTexCoord;
+out vec2 seaTexCoord;
 
 void main()
 {
@@ -25,10 +26,10 @@ void main()
     gl_Position.y -= 0.5;
 
     // Translations
-    float x_offset = 0.55;
+    float x_offset = 0.1;
     gl_Position.x += (sin(time) + 1.0) * x_offset;
 
-    float y_offset = -0.1;
+    float y_offset = 0.3;
     gl_Position.y += (sin(time) + 1.0) * y_offset;
 
     // Rotations (based on z axis)
@@ -39,5 +40,6 @@ void main()
     gl_Position.y = origY * cos(angle) + origX * sin(angle);
 
     shaderColor = vertexColor;
-    shaderTexCoord = vertexTexCoord;
+    mainTexCoord = vertexTexCoord;
+    seaTexCoord = vertexTexCoord;
 }
