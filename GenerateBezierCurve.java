@@ -21,7 +21,7 @@ public class GenerateBezierCurve {
         // center point
         res[0] = center.getX();
         res[1] = center.getY();
-        res[2] = 0;
+        res[2] = 0.0;
         res[3] = color;
         res[4] = center.getX();
         res[5] = center.getY();
@@ -30,7 +30,7 @@ public class GenerateBezierCurve {
             double[] bezierPoint = getCubicBezierPoint(p0, p1, p2, p3, t);
             res[idx] = bezierPoint[0];
             res[idx + 1] = bezierPoint[1];
-            res[idx + 2] = 0;
+            res[idx + 2] = 0.0;
             res[idx + 3] = color;
             res[idx + 4] = bezierPoint[0];
             res[idx + 5] = bezierPoint[1];
@@ -46,13 +46,13 @@ public class GenerateBezierCurve {
     }
 
     public static void main(String[] args) {
-        Point2D p0 = new Point2D(0.25, 0.27); // start
-        Point2D p1 = new Point2D(0.24, 0.05); // control point 1
-        Point2D p2 = new Point2D(0.245, 0.2); // control point 2
-        Point2D p3 = new Point2D(0.4, 0.5); // end
-        Point2D center = new Point2D(0, 0);
+        Point2D p0 = new Point2D(1.0, 0.6); // start
+        Point2D p1 = new Point2D(0.8, 0.6); // control point 1
+        Point2D p2 = new Point2D(0.7, 0.8); // control point 2
+        Point2D p3 = new Point2D(0.6, 0.8); // end
+        Point2D center = new Point2D(1.0, 0.6);
         double incSegments = 0.1;
-        String color = "YELLOW";
+        String color = "BLUE";
 
         Object[] res = generateBezierCurve(p0, p1, p2, p3, center, incSegments, color);
         StringBuilder sb = new StringBuilder();
@@ -61,7 +61,7 @@ public class GenerateBezierCurve {
             sb.append(res[i]).append("f, ")
                     .append(res[i + 1]).append("f, ")
                     .append(res[i + 2]).append("f, ")
-                    .append(res[i + 3]).append("f, ")
+                    .append(res[i + 3]).append(", ")
                     .append(res[i + 4]).append("f, ")
                     .append(res[i + 5]).append("f,").append("\n");
         }

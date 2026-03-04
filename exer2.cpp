@@ -11,58 +11,99 @@ GLFWwindow *pWindow;
 
 // PIECE 1 - top left piece
 #define BLACK 0.3f, 0.3f, 0.3f
-float piece1[] = {
+float piece_black[] = {
     0.2f, 1.0f, 0.0f, BLACK, 0.2f, 1.0f, // top right
     0.0f, 1.0f, 0.0f, BLACK, 0.0f, 1.0f, // top left
     0.0f, 0.5f, 0.0f, BLACK, 0.0f, 0.5f, // bottom left
-    0.3f, 0.8f, 0.0f, BLACK, 0.3f, 0.8f  // bottom right
+    0.030000000000000006f, 0.5327000000000001f, 0.0f, BLACK, 0.030000000000000006f, 0.5327000000000001f,
+    0.060000000000000026f, 0.5696000000000001f, 0.0f, BLACK, 0.060000000000000026f, 0.5696000000000001f,
+    0.09f, 0.6089f, 0.0f, BLACK, 0.09f, 0.6089f,
+    0.12000000000000001f, 0.6487999999999999f, 0.0f, BLACK, 0.12000000000000001f, 0.6487999999999999f,
+    0.15000000000000002f, 0.6875f, 0.0f, BLACK, 0.15000000000000002f, 0.6875f,
+    // converge point
+    0.18000000000000002f, 0.7232000000000001f, 0.0f, BLACK, 0.18000000000000002f, 0.7232000000000001f,  
+    0.20999999999999996f, 0.7541f, 0.0f, BLACK, 0.20999999999999996f, 0.7541f,
+    0.24f, 0.7784000000000001f, 0.0f, BLACK, 0.24f, 0.7784000000000001f,
+    0.26999999999999996f, 0.7943f, 0.0f, BLACK, 0.26999999999999996f, 0.7943f,
+    0.29999999999999993f, 0.8f, 0.0f, BLACK, 0.29999999999999993f, 0.8f,
+    0.3f, 0.8f, 0.0f, BLACK, 0.3f, 0.8f, // bottom right
 };
 
 // PIECE 2 - middle top
 #define CYAN 0.0f, 1.0f, 1.0f
-float piece2[] = {
-    0.5f, 1.0f, 0.0f, CYAN, 0.5f, 1.0f,  // top right
-    0.15f, 0.65f, 0.0f, CYAN, 0.15f, 0.65f, // bottom left
+float piece_cyan[] = {
+    0.6f, 0.8f, 0.0f,  CYAN,  0.6f, 0.8f,  // mid right 
+    0.6f, 1.0f, 0.0f, CYAN,  0.6f, 1.0f, // top right
+    0.5f, 1.0f, 0.0f, CYAN, 0.5f, 1.0f, // top left
+    0.4957500000000001f, 0.9822500000000001f, 0.0f, CYAN, 0.4957500000000001f, 0.9822500000000001f,
+    0.48400000000000015f, 0.9600000000000002f, 0.0f, CYAN, 0.48400000000000015f, 0.9600000000000002f,
+    0.46624999999999994f, 0.93475f, 0.0f, CYAN, 0.46624999999999994f, 0.93475f,
+    0.44399999999999995f, 0.908f, 0.0f, CYAN, 0.44399999999999995f, 0.908f,
+    0.41874999999999996f, 0.88125f, 0.0f, CYAN, 0.41874999999999996f, 0.88125f,
+    0.392f, 0.8560000000000001f, 0.0f, CYAN, 0.392f, 0.8560000000000001f,
+    0.36524999999999996f, 0.83375f, 0.0f, CYAN, 0.36524999999999996f, 0.83375f,
+    0.34f, 0.8160000000000001f, 0.0f, CYAN, 0.34f, 0.8160000000000001f,
+    0.31775f, 0.80425f, 0.0f, CYAN, 0.31775f, 0.80425f,
+
+    0.3f, 0.8f, 0.0f, CYAN, 0.3f, 0.8f, // mid left
+    0.29999999999999993f, 0.8f, 0.0f, CYAN, 0.29999999999999993f, 0.8f,
+    0.26999999999999996f, 0.7943f, 0.0f, CYAN, 0.26999999999999996f, 0.7943f,
+    0.24f, 0.7784000000000001f, 0.0f, CYAN, 0.24f, 0.7784000000000001f,
+    0.20999999999999996f, 0.7541f, 0.0f, CYAN, 0.20999999999999996f, 0.7541f,
+    0.18000000000000002f, 0.7232000000000001f, 0.0f, CYAN, 0.18000000000000002f, 0.7232000000000001f,  // bottom left
     0.4f, 0.5f, 0.0f,  CYAN, 0.40f, 0.5f, // peak bottom
     0.55f, 0.7f, 0.0f, CYAN,  0.55f, 0.7f, // bottom right
-    0.6f, 0.8f, 0.0f,  CYAN,  0.6f, 0.8f,  // mid right
-    0.6f, 1.0f, 0.0f, CYAN,  0.6f, 1.0f, // top right
 };
 
 // PIECE 3 - triangle at top left
 #define GREEN 0.0f, 1.0f, 0.0f
-float piece3[] = {
+float piece_green[] = {
     0.2f, 1.0f, 0.0f, GREEN, 0.2f, 1.0f, // top left
     0.3f, 0.8f, 0.0f, GREEN, 0.3f, 0.8f, // bottom
-    0.5f, 1.0f, 0.0f, GREEN, 0.5f, 1.0f  // top right
+    0.31775000869035724f, 0.8042500086903572f, 0.0f, GREEN, 0.31775000869035724f, 0.8042500086903572f,
+    0.34000000610351566f, 0.8160000061035159f, 0.0f, GREEN, 0.34000000610351566f, 0.8160000061035159f,
+    0.36525000408887864f, 0.8337500040888786f, 0.0f, GREEN, 0.36525000408887864f, 0.8337500040888786f,
+    0.3920000025749206f, 0.8560000025749206f, 0.0f, GREEN, 0.3920000025749206f, 0.8560000025749206f,
+    0.4187500014901161f, 0.8812500014901161f, 0.0f, GREEN, 0.4187500014901161f, 0.8812500014901161f,
+    0.44400000076293944f, 0.9080000007629395f, 0.0f, GREEN, 0.44400000076293944f, 0.9080000007629395f,
+    0.46625000032186503f, 0.934750000321865f, 0.0f, GREEN, 0.46625000032186503f, 0.934750000321865f,
+    0.4840000000953674f, 0.9600000000953675f, 0.0f, GREEN, 0.4840000000953674f, 0.9600000000953675f,
+    0.49575000001192093f, 0.9822500000119209f, 0.0f, GREEN, 0.49575000001192093f, 0.9822500000119209f,
+    0.5f, 1.0f, 0.0f, GREEN, 0.5f, 1.0f, // top right
+
 };
 
 
 // PIECE 4
 #define ORANGE 1.0f, 0.5f, 0.0f
-float piece4[] = {
+float piece_orange[] = {
     0.0f, 0.3f, 0.0f, ORANGE, 0.0f, 0.3f, // bottom left
     0.25f, 0.27f, 0.0f, ORANGE, 0.25, 0.27, // bottom right
 
     0.24758500000000006f, 0.21488000000000002f,0.0f, ORANGE, 0.24758500000000006f, 0.21488000000000002f,
-0.24688000000000007f, 0.18064000000000002f,0.0f, ORANGE, 0.24688000000000007f, 0.18064000000000002f,
-0.248695f, 0.16596f,0.0f, ORANGE, 0.248695f, 0.16596f,
-0.25384f, 0.16952f,0.0f, ORANGE, 0.25384f, 0.16952f,
-0.263125f, 0.19f,0.0f, ORANGE, 0.263125f, 0.19f,
-0.27736000000000005f, 0.22608f,0.0f, ORANGE, 0.27736000000000005f, 0.22608f,
-0.2973549999999999f, 0.27643999999999996f,0.0f, ORANGE, 0.2973549999999999f, 0.27643999999999996f,
-0.32392f, 0.33975999999999995f,0.0f, ORANGE, 0.32392f, 0.33975999999999995f,
-0.357865f, 0.4147199999999999f,0.0f, ORANGE, 0.357865f, 0.4147199999999999f,
-0.39999999999999997f, 0.4999999999999999f,0.0f, ORANGE, 0.39999999999999997f, 0.4999999999999999f,// curve
+    0.24688000000000007f, 0.18064000000000002f,0.0f, ORANGE, 0.24688000000000007f, 0.18064000000000002f,
+    0.248695f, 0.16596f,0.0f, ORANGE, 0.248695f, 0.16596f,
+    0.25384f, 0.16952f,0.0f, ORANGE, 0.25384f, 0.16952f,
+    0.263125f, 0.19f,0.0f, ORANGE, 0.263125f, 0.19f,
+    0.27736000000000005f, 0.22608f,0.0f, ORANGE, 0.27736000000000005f, 0.22608f,
+    0.2973549999999999f, 0.27643999999999996f,0.0f, ORANGE, 0.2973549999999999f, 0.27643999999999996f,
+    0.32392f, 0.33975999999999995f,0.0f, ORANGE, 0.32392f, 0.33975999999999995f,
+    0.357865f, 0.4147199999999999f,0.0f, ORANGE, 0.357865f, 0.4147199999999999f,
+    0.39999999999999997f, 0.4999999999999999f,0.0f, ORANGE, 0.39999999999999997f, 0.4999999999999999f,// curve
 
     0.4f, 0.5f, 0.0f,  ORANGE, 0.40f, 0.5f, // top right
-    0.15f, 0.65f, 0.0f, ORANGE, 0.15f, 0.65f, // peak top
+    0.18000000000000002f, 0.7232000000000001f, 0.0f, ORANGE, 0.18000000000000002f, 0.7232000000000001f,  
+    0.15000000000000002f, 0.6875f, 0.0f, ORANGE, 0.15000000000000002f, 0.6875f,
+    0.12000000000000001f, 0.6487999999999999f, 0.0f, ORANGE, 0.12000000000000001f, 0.6487999999999999f,
+    0.09f, 0.6089f, 0.0f, ORANGE, 0.09f, 0.6089f,
+    0.060000000000000026f, 0.5696000000000001f, 0.0f, ORANGE, 0.060000000000000026f, 0.5696000000000001f,
+    0.030000000000000006f, 0.5327000000000001f, 0.0f, ORANGE, 0.030000000000000006f, 0.5327000000000001f,
     0.0f, 0.5f, 0.0f, ORANGE, 0.0f, 0.5f // top left
 };
 
 // PIECE 5
 #define WHITE 0.8f, 1.0f, 1.0f
-float piece5[] = {
+float piece_white[] = {
     0.4f, 0.5f, 0.0f,  WHITE, 0.40f, 0.5f, // bottom left
     0.63f, 0.6f, 0.0f, WHITE, 0.63f, 0.6f, // bottom right
     0.55f, 0.7f, 0.0f, WHITE,  0.55f, 0.7f  // top part
@@ -71,7 +112,7 @@ float piece5[] = {
 
 // PIECE 6
 #define YELLOW 1.0f, 1.0f, 0.0f
-float piece6[] = {
+float piece_yellow[] = {
     0.23f, 0.0f, 0.0f, YELLOW, 0.23f, 0.0f, // bottom left
     1.0f, 0.0f, 0.0f,  YELLOW,  1.0f, 0.0f, // bottom right
     0.63f, 0.6f, 0.0f, YELLOW, 0.63f, 0.6f, // top right
@@ -92,9 +133,20 @@ float piece6[] = {
 
 // PIECE 7 - big piece at the top right
 #define BLUE 0.0f, 0.0f, 1.0f
-float piece7[] = {
+float piece_blue[] = {
     1.0f, 0.0f, 0.0f,  BLUE,  1.0f, 0.0f, // bottom right
-    1.0f, 0.8f, 0.0f,  BLUE,  1.0f, 0.8f, // top right
+    1.0f, 0.6f, 0.0f,  BLUE,  1.0f, 0.6f, // top right
+    1.0f, 0.6f, 0.0f, BLUE, 1.0f, 0.6f,
+    0.9429000000000002f, 0.6056f, 0.0f, BLUE, 0.9429000000000002f, 0.6056f,
+    0.8912000000000003f, 0.6208f, 0.0f, BLUE, 0.8912000000000003f, 0.6208f,
+    0.8442999999999999f, 0.6432f, 0.0f, BLUE, 0.8442999999999999f, 0.6432f,
+    0.8016f, 0.6704f, 0.0f, BLUE, 0.8016f, 0.6704f,
+    0.7625f, 0.7000000000000001f, 0.0f, BLUE, 0.7625f, 0.7000000000000001f,
+    0.7263999999999999f, 0.7296f, 0.0f, BLUE, 0.7263999999999999f, 0.7296f,
+    0.6926999999999999f, 0.7567999999999999f, 0.0f, BLUE, 0.6926999999999999f, 0.7567999999999999f,
+    0.6608f, 0.7792000000000001f, 0.0f, BLUE, 0.6608f, 0.7792000000000001f,
+    0.6301f, 0.7944f, 0.0f, BLUE, 0.6301f, 0.7944f,
+    0.6f, 0.8f, 0.0f, BLUE, 0.6f, 0.8f,
     0.6f, 0.8f, 0.0f,  BLUE,  0.6f, 0.8f,  // top left
     0.55f, 0.7f, 0.0f, BLUE,  0.55f, 0.7f  // bottom left
 };
@@ -102,16 +154,28 @@ float piece7[] = {
 
 // PIECE 8 - rectangle at top right
 #define RED 1.0f, 0.0f, 0.0f
-float piece8[] = {
-    1.0f, 0.8f, 0.0f, RED,  1.0f, 0.8f, // bottom right
+float piece_red[] = {
+    1.0f, 0.6f, 0.0f, RED,  1.0f, 0.6f, // bottom right
     1.0f, 1.0f, 0.0f, RED,  1.0f, 1.0f, // top right
     0.6f, 1.0f, 0.0f, RED,  0.6f, 1.0f, // top left
-    0.6f, 0.8f, 0.0f, RED,  0.6f, 0.8f  // bottom left
+    0.6f, 0.8f, 0.0f, RED,  0.6f, 0.8f,  // bottom left
+    0.6f, 0.8f, 0.0f, RED, 0.6f, 0.8f,
+    0.6301f, 0.7944000000000001f, 0.0f, RED, 0.6301f, 0.7944000000000001f,
+    0.6608f, 0.7792000000000003f, 0.0f, RED, 0.6608f, 0.7792000000000003f,
+    0.6927f, 0.7568f, 0.0f, RED, 0.6927f, 0.7568f,
+    0.7263999999999999f, 0.7295999999999999f, 0.0f, RED, 0.7263999999999999f, 0.7295999999999999f,
+    0.7625f, 0.7f, 0.0f, RED, 0.7625f, 0.7f,
+    0.8016000000000001f, 0.6704000000000001f, 0.0f, RED, 0.8016000000000001f, 0.6704000000000001f,
+    0.8443f, 0.6432f, 0.0f, RED, 0.8443f, 0.6432f,
+    0.8912f, 0.6208f, 0.0f, RED, 0.8912f, 0.6208f,
+    0.9429f, 0.6055999999999999f, 0.0f, RED, 0.9429f, 0.6055999999999999f,
+    0.9999999999999999f, 0.6f, 0.0f, RED, 0.9999999999999999f, 0.6f,
+
 };
 
 // PIECE 9
 #define PURPLE 1.0f, 0.0f, 1.0f
-float piece9[] = {
+float piece_purple[] = {
     0.0f, 0.0f, 0.0f, PURPLE, 0.0f, 0.0f, // bottom left
     0.23f, 0.0f, 0.0f, PURPLE, 0.23f, 0.0f, // bottom right
 
@@ -131,45 +195,41 @@ float piece9[] = {
 
 };
 
-GLuint RubyVao;
-GLuint RubyVbo;
-GLuint RubyShader;
-
-GLuint SapphireVao;
-GLuint SapphireVbo;
-GLuint SapphireShader;
-
-GLuint eyeVao;
-GLuint eyeVbo;
-GLuint eyeShader;
-
-GLuint EmeraldVao;
-GLuint EmeraldVbo;
-GLuint EmeraldShader;
-
-GLuint AmberVao;
-GLuint AmberVbo;
-GLuint AmberShader;
-
-GLuint AmethystVao;
-GLuint AmethystVbo;
-GLuint AmethystShader;
-
-GLuint TealVao;
-GLuint TealVbo;
-GLuint TealShader;
-
-GLuint DarkCrimsonVao;
-GLuint DarkCrimsonVbo;
-GLuint DarkCrimsonShader;
-
-GLuint GoldVao;
-GLuint GoldVbo;
-GLuint GoldShader;
+GLuint BlackVao;
+GLuint BlackVbo;
+GLuint BlackShader;
 
 GLuint CyanVao;
 GLuint CyanVbo;
 GLuint CyanShader;
+
+GLuint GreenVao;
+GLuint GreenVbo;
+GLuint GreenShader;
+
+GLuint OrangeVao;
+GLuint OrangeVbo;
+GLuint OrangeShader;
+
+GLuint WhiteVao;
+GLuint WhiteVbo;
+GLuint WhiteShader;
+
+GLuint YellowVao;
+GLuint YellowVbo;
+GLuint YellowShader;
+
+GLuint BlueVao;
+GLuint BlueVbo;
+GLuint BlueShader;
+
+GLuint RedVao;
+GLuint RedVbo;
+GLuint RedShader;
+
+GLuint PurpleVao;
+GLuint PurpleVbo;
+GLuint PurpleShader;
 
 GLuint texture;
 
@@ -214,100 +274,14 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
 // arrays, shader programs, etc.; returns true if successful, false otherwise
 bool setup()
 {  
-    // setup kettle VOs
     if(!setupVO(
-        RubyVao,
-        RubyVbo,
-        RubyShader,
+        BlackVao,
+        BlackVbo,
+        BlackShader,
         piece1,
         sizeof(piece1),
-        "ruby.vs",
-        "ruby.fs"
-    )) {
-        return false;
-    }
-
-    // setup hole VOs
-    if(!setupVO(
-        SapphireVao, 
-        SapphireVbo, 
-        SapphireShader, 
-        piece2, 
-        sizeof(piece2), 
-        "sapphire.vs", 
-        "sapphire.fs"
-    )) {
-        return false;
-    }
-
-    if(!setupVO(
-        EmeraldVao,
-        EmeraldVbo,
-        EmeraldShader,
-        piece3,
-        sizeof(piece3),
-        "emerald.vs",
-        "emerald.fs"
-    )) {
-        return false;
-    }
-
-    if(!setupVO(
-        AmberVao,
-        AmberVbo,
-        AmberShader,
-        piece4,
-        sizeof(piece4),
-        "amber.vs",
-        "amber.fs"
-    )) {
-        return false;
-    }
-
-    if(!setupVO(
-        AmethystVao,
-        AmethystVbo,
-        AmethystShader,
-        piece5,
-        sizeof(piece5),
-        "amethyst.vs",
-        "amethyst.fs"
-    )) {
-        return false;
-    }
-
-    if(!setupVO(
-        TealVao,
-        TealVbo,
-        TealShader,
-        piece6,
-        sizeof(piece6),
-        "teal.vs",
-        "teal.fs"
-    )) {
-        return false;
-    }
-
-    if(!setupVO(
-        DarkCrimsonVao,
-        DarkCrimsonVbo,
-        DarkCrimsonShader,
-        piece7,
-        sizeof(piece7),
-        "darkcrimson.vs",
-        "darkcrimson.fs"
-    )) {
-        return false;
-    }
-
-    if(!setupVO(
-        GoldVao,
-        GoldVbo,
-        GoldShader,
-        piece8,
-        sizeof(piece8),
-        "gold.vs",
-        "gold.fs"
+        "black.vs",
+        "black.fs"
     )) {
         return false;
     }
@@ -320,6 +294,90 @@ bool setup()
         sizeof(piece9),
         "cyan.vs",
         "cyan.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        GreenVao, 
+        GreenVbo, 
+        GreenShader, 
+        piece2, 
+        sizeof(piece2), 
+        "green.vs", 
+        "green.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        OrangeVao,
+        OrangeVbo,
+        OrangeShader,
+        piece3,
+        sizeof(piece3),
+        "orange.vs",
+        "orange.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        WhiteVao,
+        WhiteVbo,
+        WhiteShader,
+        piece4,
+        sizeof(piece4),
+        "white.vs",
+        "white.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        YellowVao,
+        YellowVbo,
+        YellowShader,
+        piece5,
+        sizeof(piece5),
+        "yellow.vs",
+        "yellow.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        BlueVao,
+        BlueVbo,
+        BlueShader,
+        piece6,
+        sizeof(piece6),
+        "blue.vs",
+        "blue.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        RedVao,
+        RedVbo,
+        RedShader,
+        piece7,
+        sizeof(piece7),
+        "red.vs",
+        "red.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        PurpleVao,
+        PurpleVbo,
+        PurpleShader,
+        piece8,
+        sizeof(piece8),
+        "purple.vs",
+        "purple.fs"
     )) {
         return false;
     }
@@ -341,77 +399,16 @@ void render()
     float time = glfwGetTime();
     float speed = 2.0f;
 
-    // SHADOW SHADER
-    glUseProgram(RubyShader);
+    // BLACK PIECE
+    glUseProgram(BlackShader);
 
-    glUniform1f(glGetUniformLocation(RubyShader, "time"), time);
-    glUniform1f(glGetUniformLocation(RubyShader, "speed"), speed);
+    glUniform1f(glGetUniformLocation(BlackShader, "time"), time);
+    glUniform1f(glGetUniformLocation(BlackShader, "speed"), speed);
 
-    glBindVertexArray(RubyVao);
+    glBindVertexArray(BlackVao);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece1) / (8 * sizeof(float)));
 
-    // KETTLE SHADER
-    glUseProgram(SapphireShader);
-
-    glUniform1f(glGetUniformLocation(SapphireShader, "time"), time);
-    glUniform1f(glGetUniformLocation(SapphireShader, "speed"), speed);
-
-    glBindVertexArray(SapphireVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece2) / (8 * sizeof(float)));
-
-    // HOLE SHADER
-    glUseProgram(EmeraldShader);
-
-    glUniform1f(glGetUniformLocation(EmeraldShader, "time"), time);
-    glUniform1f(glGetUniformLocation(EmeraldShader, "speed"), speed);
-
-    glBindVertexArray(EmeraldVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece3) / (8 * sizeof(float)));
-
-    // EYE SHADER
-    glUseProgram(AmberShader);
-
-    glUniform1f(glGetUniformLocation(AmberShader, "time"), time);
-    glUniform1f(glGetUniformLocation(AmberShader, "speed"), speed);
-
-    glBindVertexArray(AmberVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece4) / (8 * sizeof(float)));
-
-    // LIGHTNING SHADER
-    glUseProgram(AmethystShader);
-
-    glUniform1f(glGetUniformLocation(AmethystShader, "time"), time);
-    glUniform1f(glGetUniformLocation(AmethystShader, "speed"), speed);
-
-    glBindVertexArray(AmethystVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece5) / (8 * sizeof(float)));
-
-    // LIGHTNING SHADER
-    glUseProgram(TealShader);
-
-    glUniform1f(glGetUniformLocation(TealShader, "time"), time);
-    glUniform1f(glGetUniformLocation(TealShader, "speed"), speed);
-
-    glBindVertexArray(TealVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece6) / (8 * sizeof(float)));
-
-
-    glUseProgram(DarkCrimsonShader);
-
-    glUniform1f(glGetUniformLocation(DarkCrimsonShader, "time"), time);
-    glUniform1f(glGetUniformLocation(DarkCrimsonShader, "speed"), speed);
-
-    glBindVertexArray(DarkCrimsonVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece7) / (8 * sizeof(float)));
-
-    glUseProgram(GoldShader);
-
-    glUniform1f(glGetUniformLocation(GoldShader, "time"), time);
-    glUniform1f(glGetUniformLocation(GoldShader, "speed"), speed);
-
-    glBindVertexArray(GoldVao);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece8) / (8 * sizeof(float)));
-
+    //CYAN PIECE
     glUseProgram(CyanShader);
 
     glUniform1f(glGetUniformLocation(CyanShader, "time"), time);
@@ -419,6 +416,70 @@ void render()
 
     glBindVertexArray(CyanVao);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece9) / (8 * sizeof(float)));    
+
+    // GREEN PIECE
+    glUseProgram(GreenShader);
+
+    glUniform1f(glGetUniformLocation(GreenShader, "time"), time);
+    glUniform1f(glGetUniformLocation(GreenShader, "speed"), speed);
+
+    glBindVertexArray(GreenVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece2) / (8 * sizeof(float)));
+
+    // ORANGE PIECE
+    glUseProgram(OrangeShader);
+
+    glUniform1f(glGetUniformLocation(OrangeShader, "time"), time);
+    glUniform1f(glGetUniformLocation(OrangeShader, "speed"), speed);
+
+    glBindVertexArray(OrangeVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece3) / (8 * sizeof(float)));
+
+    // WHITE PIECE
+    glUseProgram(WhiteShader);
+
+    glUniform1f(glGetUniformLocation(WhiteShader, "time"), time);
+    glUniform1f(glGetUniformLocation(WhiteShader, "speed"), speed);
+
+    glBindVertexArray(WhiteVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece4) / (8 * sizeof(float)));
+
+    // YELLOW PIECE
+    glUseProgram(YellowShader);
+
+    glUniform1f(glGetUniformLocation(YellowShader, "time"), time);
+    glUniform1f(glGetUniformLocation(YellowShader, "speed"), speed);
+
+    glBindVertexArray(YellowVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece5) / (8 * sizeof(float)));
+
+    // BLUE PIECE
+    glUseProgram(BlueShader);
+
+    glUniform1f(glGetUniformLocation(BlueShader, "time"), time);
+    glUniform1f(glGetUniformLocation(BlueShader, "speed"), speed);
+
+    glBindVertexArray(BlueVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece6) / (8 * sizeof(float)));
+
+    // RED PIECE
+    glUseProgram(RedShader);
+
+    glUniform1f(glGetUniformLocation(RedShader, "time"), time);
+    glUniform1f(glGetUniformLocation(RedShader, "speed"), speed);
+
+    glBindVertexArray(RedVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece7) / (8 * sizeof(float)));
+
+    // PURPLE PIECE
+    glUseProgram(PurpleShader);
+
+    glUniform1f(glGetUniformLocation(PurpleShader, "time"), time);
+    glUniform1f(glGetUniformLocation(PurpleShader, "speed"), speed);
+
+    glBindVertexArray(PurpleVao);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(piece8) / (8 * sizeof(float)));
+
 }
 
 /*****************************************************************************/
