@@ -225,7 +225,7 @@ GLuint PurpleVao;
 GLuint PurpleVbo;
 GLuint PurpleShader;
 
-GLuint texture1;
+GLuint main_texture;
 GLuint texture2;
 
 // Helper function to setup multiple vaos and vbos
@@ -377,10 +377,10 @@ bool setup()
         return false;
     }
 
-    texture1 = gdevLoadTexture("OIP.png", GL_REPEAT, true, true);
-    if (! texture1) return false;
+    main_texture = gdevLoadTexture("base.png", GL_REPEAT, true, true);
+    if (! main_texture) return false;
 
-    texture2 = gdevLoadTexture("OIP2.jpg", GL_REPEAT, true, true);
+    texture2 = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
     if (! texture2) return false;
     
     return true;
@@ -401,7 +401,7 @@ void render()
     glUseProgram(BlackShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -418,7 +418,7 @@ void render()
     glUseProgram(CyanShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -435,7 +435,7 @@ void render()
     glUseProgram(GreenShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -452,7 +452,7 @@ void render()
     glUseProgram(OrangeShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -469,7 +469,7 @@ void render()
     glUseProgram(WhiteShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -486,7 +486,7 @@ void render()
     glUseProgram(YellowShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -503,7 +503,7 @@ void render()
     glUseProgram(BlueShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -520,7 +520,7 @@ void render()
     glUseProgram(RedShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
@@ -537,7 +537,7 @@ void render()
     glUseProgram(PurpleShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
