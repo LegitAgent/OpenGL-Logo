@@ -229,6 +229,7 @@ GLuint main_texture;
 GLuint texture2;
 GLuint sea_displacement;
 GLuint troy_texture;
+GLuint land_displacement;
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -391,6 +392,9 @@ bool setup()
 
     troy_texture = gdevLoadTexture("troy.png", GL_REPEAT, true, true);
     if (! troy_texture ) return false;
+
+    land_displacement = gdevLoadTexture("land_displacement.jpg", GL_REPEAT, true, true);
+    if (! land_displacement ) return false;
     
     return true;
 }
@@ -531,10 +535,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, land_displacement);
 
-    glUniform1i(glGetUniformLocation(RedShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(RedShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(RedShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(RedShader, "landDisplacementTexture"), 1);
 
     glUniform1f(glGetUniformLocation(RedShader, "time"), time);
     glUniform1f(glGetUniformLocation(RedShader, "speed"), speed);
