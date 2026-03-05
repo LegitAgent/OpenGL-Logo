@@ -23,10 +23,7 @@ out vec4 fragmentColor;
 void main()
 {
     vec4 colorA = texture(mainTexture, mainTexCoord);
-    vec2 troyTexCoordReal = troyTexCoord;
-    troyTexCoordReal.x += time;
-    troyTexCoordReal.y -= time;
-    vec4 colorB = texture(troyTexture, troyTexCoordReal);
-    fragmentColor = vec4(shaderColor, 1.0f) * 
-        mix(colorA, colorB, sin(time)+1.0);
+    colorA *= vec4(shaderColor, 1.0);
+    vec4 colorB = texture(troyTexture, troyTexCoord + time);
+    fragmentColor = mix(colorA, colorB, sin(time)+1.0);
 }
