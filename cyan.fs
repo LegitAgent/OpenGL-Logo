@@ -29,8 +29,8 @@ void main()
     vec2 seaTexCoordReal = seaTexCoord + time/2;
     vec4 seaColor = texture(seaDisplacement, seaTexCoordReal);
 
-    vec2 mainSeaTexCoord = mainTexCoord * seaColor.r;
+    vec2 mainSeaTexCoord = mainTexCoord + seaColor.r;
     vec4 mainSea = texture(mainTexture, mainSeaTexCoord);
     fragmentColor = vec4(shaderColor, 1.0f) * 
-            mix(mainColor, mainSea, sin(time)+1.0f);
+            mix(mainColor, mainSea, time);
 }

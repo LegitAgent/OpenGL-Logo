@@ -31,5 +31,5 @@ void main()
     
 
     fragmentColor = vec4(shaderColor, 1.0f) * 
-        mix(main, land, sin(time)+1.0);
+        mix(main, land, time);
 }

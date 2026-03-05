@@ -25,5 +25,5 @@ void main()
     vec4 colorA = texture(mainTexture, mainTexCoord);
     colorA *= vec4(shaderColor, 1.0);
     vec4 colorB = texture(troyTexture, troyTexCoord + time);
-    fragmentColor = mix(colorA, colorB, sin(time)+1.0);
+    fragmentColor = mix(colorA, colorB, time);
 }

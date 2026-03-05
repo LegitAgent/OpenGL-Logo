@@ -27,13 +27,13 @@ void main()
 
     // Translations
     float x_offset = 0.2;
-    gl_Position.x += (sin(time) + 1.0) * x_offset;
+    gl_Position.x += (time) * x_offset;
 
     float y_offset = 0.2;
-    gl_Position.y += (sin(time) + 1.0) * y_offset;
+    gl_Position.y += (time) * y_offset;
 
     // Rotations
-    float angle = (sin(time) + 1.0) / -9;
+    float angle = (time) / -9;
     float origX = gl_Position.x;
     float origY = gl_Position.y;
     gl_Position.x = origX * cos(angle) - origY * sin(angle);

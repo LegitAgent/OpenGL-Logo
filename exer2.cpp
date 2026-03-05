@@ -126,7 +126,7 @@ float piece_yellow[] = {
 
 
 // PIECE 7 - big piece at the top right (Alba)
-#define BLUE 0.0f, 0.0f, 1.0f
+#define BLUE 0.4f, 0.4f, 1.0f
 float piece_blue[] = {
     1.0f, 0.0f, 0.0f,  BLUE,  1.0f, 0.0f, // bottom right
     1.0f, 0.6f, 0.0f,  BLUE,  1.0f, 0.6f, // top right
@@ -383,7 +383,7 @@ bool setup()
         return false;
     }
 
-    main_texture = gdevLoadTexture("base.png", GL_REPEAT, true, true);
+    main_texture = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
     if (! main_texture) return false;
 
     sigma_texture = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
@@ -415,11 +415,14 @@ bool setup()
 void render()
 {
     // clear the whole frame
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // compute a value for the glow amount for this frame
-    float time = glfwGetTime()/2;
+    float time = sin(glfwGetTime());
+    if (time < 0) {
+        time = 0;
+    }
     float speed = 2.0f;
 
     // BLACK PIECE
