@@ -41,5 +41,5 @@ void main()
 
     shaderColor = vertexColor;
     shaderTexCoord = vertexTexCoord;
-    textureDisplacement = vertexTexCoord;
+    textureDisplacement = vertexTexCoord * 2;
 }
