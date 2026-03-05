@@ -225,8 +225,8 @@ GLuint PurpleVao;
 GLuint PurpleVbo;
 GLuint PurpleShader;
 
-GLuint texture1;
-GLuint texture2;
+GLuint main_texture;
+GLuint sigma_texture;
 GLuint black_texture;
 GLuint orange_texture;
 GLuint purple_texture;
@@ -383,11 +383,11 @@ bool setup()
         return false;
     }
 
-    texture1 = gdevLoadTexture("base.png", GL_REPEAT, true, true);
-    if (! texture1) return false;
+    main_texture = gdevLoadTexture("base.png", GL_REPEAT, true, true);
+    if (! main_texture) return false;
 
-    texture2 = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
-    if (! texture2) return false;
+    sigma_texture = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
+    if (! sigma_texture) return false;
 
     black_texture = gdevLoadTexture("fire.jpg", GL_REPEAT, true, true);
     if (! black_texture) return false;
@@ -426,7 +426,7 @@ void render()
     glUseProgram(BlackShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, black_texture);
 
@@ -443,7 +443,7 @@ void render()
     glUseProgram(CyanShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, sea_displacement);
 
@@ -460,7 +460,7 @@ void render()
     glUseProgram(GreenShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, troy_texture);
 
@@ -477,7 +477,7 @@ void render()
     glUseProgram(OrangeShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, orange_texture);
 
@@ -494,9 +494,9 @@ void render()
     glUseProgram(WhiteShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, sigma_texture);
 
     glUniform1i(glGetUniformLocation(WhiteShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(WhiteShader, "shaderTextureB"), 1);
@@ -511,9 +511,9 @@ void render()
     glUseProgram(YellowShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, sigma_texture);
 
     glUniform1i(glGetUniformLocation(YellowShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(YellowShader, "shaderTextureB"), 1);
@@ -528,9 +528,9 @@ void render()
     glUseProgram(BlueShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, sigma_texture);
 
     glUniform1i(glGetUniformLocation(BlueShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(BlueShader, "shaderTextureB"), 1);
@@ -545,7 +545,7 @@ void render()
     glUseProgram(RedShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, land_displacement);
 
@@ -562,7 +562,7 @@ void render()
     glUseProgram(PurpleShader);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture1);
+    glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, purple_texture);
 
