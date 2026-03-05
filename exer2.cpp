@@ -230,6 +230,9 @@ GLuint texture2;
 GLuint black_texture;
 GLuint orange_texture;
 GLuint purple_texture;
+GLuint sea_displacement;
+GLuint troy_texture;
+GLuint land_displacement;
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -395,6 +398,16 @@ bool setup()
     purple_texture = gdevLoadTexture("spiral.jpg", GL_REPEAT, true, true);
     if (! purple_texture) return false;
 
+    // https://uk.pinterest.com/pin/water-ripples-texture-bump-map--51791464458132407/ 
+    sea_displacement = gdevLoadTexture("sea_displacement.jpg", GL_REPEAT, true, true);
+    if (! sea_displacement) return false;
+
+    troy_texture = gdevLoadTexture("troy.png", GL_REPEAT, true, true);
+    if (! troy_texture ) return false;
+
+    land_displacement = gdevLoadTexture("land_displacement.jpg", GL_REPEAT, true, true);
+    if (! land_displacement ) return false;
+    
     return true;
 }
 
@@ -432,10 +445,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, sea_displacement);
 
-    glUniform1i(glGetUniformLocation(CyanShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(CyanShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(CyanShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(CyanShader, "seaDisplacement"), 1);
 
     glUniform1f(glGetUniformLocation(CyanShader, "time"), time);
     glUniform1f(glGetUniformLocation(CyanShader, "speed"), speed);
@@ -449,10 +462,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, troy_texture);
 
-    glUniform1i(glGetUniformLocation(GreenShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(GreenShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(GreenShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(GreenShader, "troyTexture"), 1);
 
     glUniform1f(glGetUniformLocation(GreenShader, "time"), time);
     glUniform1f(glGetUniformLocation(GreenShader, "speed"), speed);
@@ -534,10 +547,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture1);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, texture2);
+    glBindTexture(GL_TEXTURE_2D, land_displacement);
 
-    glUniform1i(glGetUniformLocation(RedShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(RedShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(RedShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(RedShader, "landDisplacementTexture"), 1);
 
     glUniform1f(glGetUniformLocation(RedShader, "time"), time);
     glUniform1f(glGetUniformLocation(RedShader, "speed"), speed);
