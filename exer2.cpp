@@ -233,6 +233,9 @@ GLuint purple_texture;
 GLuint sea_displacement;
 GLuint troy_texture;
 GLuint land_displacement;
+GLuint wolf_texture;
+GLuint java_texture;
+GLuint ice_texture;
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -402,11 +405,25 @@ bool setup()
     sea_displacement = gdevLoadTexture("sea_displacement.jpg", GL_REPEAT, true, true);
     if (! sea_displacement) return false;
 
+    // no source
     troy_texture = gdevLoadTexture("troy.png", GL_REPEAT, true, true);
     if (! troy_texture ) return false;
 
+    // https://forums.cgarchitect.com/topic/78460-displacement-map-for-gravels-v-ray-for-sketchup/ 
     land_displacement = gdevLoadTexture("land_displacement.jpg", GL_REPEAT, true, true);
     if (! land_displacement ) return false;
+
+    // https://www.facebook.com/photo.php?fbid=510227911217103&set=a.510227887883772&type=3# 
+    wolf_texture = gdevLoadTexture("wolf_texture.jpg", GL_REPEAT, true, true);
+    if (! wolf_texture ) return false;
+
+    // https://www.adm.ee/technologies/java-2/ 
+    java_texture = gdevLoadTexture("java_texture.png", GL_REPEAT, true, true);
+    if (! java_texture ) return false;
+
+    // https://stockcake.com/i/splashing-ice-cubes_1285394_1026618 
+    ice_texture = gdevLoadTexture("ice_texture.jpg", GL_REPEAT, true, true);
+    if (! ice_texture ) return false;
     
     return true;
 }
@@ -499,10 +516,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, sigma_texture);
+    glBindTexture(GL_TEXTURE_2D, java_texture);
 
-    glUniform1i(glGetUniformLocation(WhiteShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(WhiteShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(WhiteShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(WhiteShader, "javaTexture"), 1);
 
     glUniform1f(glGetUniformLocation(WhiteShader, "time"), time);
     glUniform1f(glGetUniformLocation(WhiteShader, "speed"), speed);
@@ -516,10 +533,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, sigma_texture);
+    glBindTexture(GL_TEXTURE_2D, wolf_texture);
 
-    glUniform1i(glGetUniformLocation(YellowShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(YellowShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(YellowShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(YellowShader, "wolfTexture"), 1);
 
     glUniform1f(glGetUniformLocation(YellowShader, "time"), time);
     glUniform1f(glGetUniformLocation(YellowShader, "speed"), speed);
@@ -533,10 +550,10 @@ void render()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, sigma_texture);
+    glBindTexture(GL_TEXTURE_2D, ice_texture);
 
-    glUniform1i(glGetUniformLocation(BlueShader, "shaderTextureA"), 0);
-    glUniform1i(glGetUniformLocation(BlueShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(BlueShader, "mainTexture"), 0);
+    glUniform1i(glGetUniformLocation(BlueShader, "iceTexture"), 1);
 
     glUniform1f(glGetUniformLocation(BlueShader, "time"), time);
     glUniform1f(glGetUniformLocation(BlueShader, "speed"), speed);

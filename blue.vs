@@ -16,7 +16,8 @@ layout (location = 1) in vec3 vertexColor;
 layout (location = 2) in vec2 vertexTexCoord;   
 
 out vec3 shaderColor;
-out vec2 shaderTexCoord;
+out vec2 mainTexCoord;
+out vec2 iceTexCoord;
 
 void main()
 {
@@ -39,5 +40,6 @@ void main()
     gl_Position.y = origY * cos(angle) + origX * sin(angle);
 
     shaderColor = vertexColor;
-    shaderTexCoord = vertexTexCoord;
+    mainTexCoord = vertexTexCoord;
+    iceTexCoord = vertexTexCoord;
 }
