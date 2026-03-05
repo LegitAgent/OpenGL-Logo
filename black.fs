@@ -13,6 +13,7 @@
 
 in vec3 shaderColor;
 in vec2 shaderTexCoord;
+uniform float time;
 uniform sampler2D shaderTextureA;
 uniform sampler2D shaderTextureB;
 out vec4 fragmentColor;
@@ -20,6 +21,6 @@ out vec4 fragmentColor;
 void main()
 {
     vec4 colorA = texture(shaderTextureA, shaderTexCoord);
-    vec4 colorB = texture(shaderTextureB, shaderTexCoord);
-    fragmentColor = vec4(shaderColor, 1.0f) * texture(shaderTextureA, shaderTexCoord);
+    vec4 colorB = texture(shaderTextureB, shaderTexCoord + time * 0.2 + shaderTexCoord.y);
+    fragmentColor = mix(colorA, colorB, sin(time)+1.0);
 }
