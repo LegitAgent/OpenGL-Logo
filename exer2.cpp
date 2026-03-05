@@ -228,6 +228,7 @@ GLuint PurpleShader;
 GLuint main_texture;
 GLuint sigma_texture;
 GLuint black_texture;
+GLuint black_tex_two;
 GLuint orange_texture;
 GLuint purple_texture;
 GLuint sea_displacement;
@@ -395,6 +396,9 @@ bool setup()
     black_texture = gdevLoadTexture("fire.jpg", GL_REPEAT, true, true);
     if (! black_texture) return false;
 
+    black_tex_two = gdevLoadTexture("smoke.jpg", GL_REPEAT, true, true);
+    if (! black_tex_two) return false;
+
     orange_texture = gdevLoadTexture("static.jpg", GL_REPEAT, true, true);
     if (! orange_texture) return false;
 
@@ -449,9 +453,12 @@ void render()
     glBindTexture(GL_TEXTURE_2D, main_texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, black_texture);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, black_tex_two);
 
     glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureA"), 0);
     glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureB"), 1);
+    glUniform1i(glGetUniformLocation(BlackShader, "shaderTextureC"), 2);
 
     glUniform1f(glGetUniformLocation(BlackShader, "time"), time);
     glUniform1f(glGetUniformLocation(BlackShader, "speed"), speed);

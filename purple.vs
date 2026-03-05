@@ -17,6 +17,7 @@ layout (location = 2) in vec2 vertexTexCoord;
 
 out vec3 shaderColor;
 out vec2 shaderTexCoord;
+out vec2 textureDisplacement;
 
 void main()
 {
@@ -40,4 +41,5 @@ void main()
 
     shaderColor = vertexColor;
     shaderTexCoord = vertexTexCoord;
+    textureDisplacement = vertexTexCoord;
 }
