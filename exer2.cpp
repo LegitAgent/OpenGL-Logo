@@ -226,7 +226,6 @@ GLuint PurpleVbo;
 GLuint PurpleShader;
 
 GLuint main_texture;
-GLuint sigma_texture;
 GLuint black_texture;
 GLuint black_tex_two;
 GLuint orange_texture;
@@ -389,9 +388,6 @@ bool setup()
 
     main_texture = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
     if (! main_texture) return false;
-
-    sigma_texture = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
-    if (! sigma_texture) return false;
 
     black_texture = gdevLoadTexture("fire.jpg", GL_REPEAT, true, true);
     if (! black_texture) return false;
