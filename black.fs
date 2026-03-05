@@ -22,11 +22,5 @@ void main()
 {
     vec4 colorA = texture(shaderTextureA, shaderTexCoord);
     vec4 colorB = texture(shaderTextureB, shaderTexCoord + time * 0.2 + shaderTexCoord.y);
-    if (colorB.r < 0.5 && colorB.g < 0.5 && colorB.b < 0.5) {
-        colorB.r = 0.0;
-        colorB.g = 0.0;
-        colorB.b = 0.0;
-    }
-    colorA.rgb *= colorB.rgb;
-    fragmentColor = mix(colorA, colorB, 0.0f);
+    fragmentColor = mix(colorA, colorB, sin(time)+1.0);
 }
