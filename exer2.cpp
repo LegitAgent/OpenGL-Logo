@@ -389,15 +389,19 @@ bool setup()
     main_texture = gdevLoadTexture("sigma.jpg", GL_REPEAT, true, true);
     if (! main_texture) return false;
 
+    // https://www.texturex.com/shop/fire-textures/grey-fire-texture-black-white-flame-blaze-danger-photo/
     black_texture = gdevLoadTexture("fire.jpg", GL_REPEAT, true, true);
     if (! black_texture) return false;
 
+    // https://bgfons.com/download/2714
     black_tex_two = gdevLoadTexture("smoke.jpg", GL_REPEAT, true, true);
     if (! black_tex_two) return false;
 
-    orange_texture = gdevLoadTexture("static.jpg", GL_REPEAT, true, true);
+    // https://www.freepik.com/free-vector/hand-drawn-composition-notebook-pattern_22864682.htm#fromView=keyword&page=1&position=0&uuid=fc6c2d96-85c1-4148-a2a9-579191deb631&query=Static+texture
+    orange_texture = gdevLoadTexture("static.png", GL_REPEAT, true, true);
     if (! orange_texture) return false;
 
+    // https://pngtree.com/freebackground/high-definition-background-spiral-texture-in-black-and-white-noise_13592024.html
     purple_texture = gdevLoadTexture("spiral.jpg", GL_REPEAT, true, true);
     if (! purple_texture) return false;
 
