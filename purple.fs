@@ -25,7 +25,7 @@ void main()
     newTime *= 2;
     vec4 colorA = texture(shaderTextureA, shaderTexCoord);
     vec2 texDisp = textureDisplacement;
-    texDisp.y += sin(texDisp.x * 1.2 + newTime * 1.5) * 0.5;
+    texDisp.y += -sin(texDisp.x * 1.2 + newTime * 1.5) * 0.5;
     texDisp.x *= (1/colorA.r) * 0.2;
     vec4 colorB = texture(shaderTextureB, texDisp);
     fragmentColor = vec4(shaderColor, 1.0) *
