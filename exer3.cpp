@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <gdev.h>
 
-#define WINDOW_WIDTH  720
+#define WINDOW_WIDTH  1080
 #define WINDOW_HEIGHT 720
 #define WINDOW_TITLE  "Exercise 2"
 GLFWwindow *pWindow;
@@ -20,9 +20,54 @@ float vertices[] =
     0.50f, -0.50f, -1.00f, 1.0f, 1.0f, 1.0f
 };
 
+float circleTop[] =  {
+    0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.4854101966249539f, 0.352671151375504f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.1854101966249212f, 0.5706339097771075f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.18541019662503938f, 0.5706339097770691f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.4854101966250268f, 0.35267115137540356f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.6f, -1.2409386426612867E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.48541019662488094f, -0.3526711513756043f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.18541019662480332f, -0.5706339097771458f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.18541019662515737f, -0.5706339097770308f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.48541019662509993f, -0.35267115137530286f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.6f, 2.487206355840774E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.4854101966248075f, 0.35267115137570537f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.1854101966246843f, 0.5706339097771844f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.1854101966252764f, 0.570633909776992f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.48541019662517315f, 0.3526711513752021f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.6f, -3.7281449985020607E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.4854101966247349f, -0.3526711513758053f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.18541019662456729f, -0.5706339097772225f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.18541019662539293f, -0.5706339097769542f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.48541019662524515f, -0.35267115137510296f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    0.6f, 4.953096429608745E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+};
+
+float circleBottom[] = {
+    
+};
+
+float triangleStrip[] = {
+
+};
+
 GLuint squareVAO;
 GLuint squareVBO;
 GLuint squareShader;
+
+GLuint circleTopVAO;
+GLuint circleTopVBO;
+GLuint circleTopShader;
+
+GLuint circleBottomVAO;
+GLuint circleBottomVBO;
+GLuint circleBottomShader;
+
+GLuint triangleStripVAO;
+GLuint triangleStripVBO;
+GLuint triangleStripShader;
+
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -65,13 +110,13 @@ bool setup()
 {  
 
     if(!setupVO(
-        squareVAO,
-        squareVBO,
-        squareShader,
-        vertices,
-        sizeof(vertices),
-        "square.vs",
-        "square.fs"
+        circleTopVAO,
+        circleTopVBO,
+        circleTopShader,
+        circleTop,
+        sizeof(circleTop),
+        "circleTop.vs",
+        "circleTop.fs"
     )) {
         return false;
     }
@@ -86,24 +131,27 @@ void render()
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // compute a value for the glow amount for this frame
-    // float time = glfwGetTime();
-    // float speed = 2.0f;
+    // GLOBALS
+    float time = glfwGetTime();
 
-    // PURPLE PIECE
-    glUseProgram(squareShader);
+    // Specify circleTop matrix operations
+    glUseProgram(circleTopShader);
 
     glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
-    glm::mat4 matrix;
+    glm::mat4 circleMatrix;
 
-    matrix = glm::perspective(glm::radians(60.0f),
+    circleMatrix = glm::perspective(glm::radians(60.0f),
         (float) WINDOW_WIDTH / WINDOW_HEIGHT,
         0.1f,
         100.0f);
 
-    glUniformMatrix4fv(glGetUniformLocation(squareShader, "matrix"),
-        1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(circleTopShader, "matrix"),
+        1, GL_FALSE, glm::value_ptr(circleMatrix));
+
+    glBindVertexArray(circleTopVAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (6 * sizeof(float)));
+
 
     // glActiveTexture(GL_TEXTURE0);
     // glBindTexture(GL_TEXTURE_2D, main_texture);
@@ -115,9 +163,6 @@ void render()
 
     // glUniform1f(glGetUniformLocation(PurpleShader, "time"), time);
     // glUniform1f(glGetUniformLocation(PurpleShader, "speed"), speed);
-
-    glBindVertexArray(squareVAO);
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices) / (6 * sizeof(float)));
 
 }
 
