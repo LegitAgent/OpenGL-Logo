@@ -9,6 +9,16 @@
 #define WINDOW_TITLE  "Exercise 2"
 GLFWwindow *pWindow;
 
+// camera mechanics
+// https://learnopengl.com/Getting-Started/Camera
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+float lastFrame = 0.0f;
+float deltaTime = 0.0f;
+
 float vertices[] =
 {
     // position (x, y, z) color (r, g, b)
@@ -128,7 +138,6 @@ GLuint triangleStripShader;
 // Useful for generating cylinders
 void generateCylinderStrip(const float* topCircle, const float* bottomCircle,
                             int size, float* cylinderStrip) {
-    float 
     int idx = 0;
     for (int i = 0; i < size; i += 8) {
         std::copy(topCircle + i, topCircle + i + 8, cylinderStrip + idx);
@@ -206,17 +215,17 @@ bool setup()
         return false;
     }
 
-    if(!setupVO(
-        triangleStripVAO,
-        triangleStripVBO,
-        triangleStripShader,
-        triangleStrip,
-        sizeof(triangleStrip),
-        "circleTop.vs",
-        "circleTop.fs"
-    )) {
-        return false;
-    }
+    // if(!setupVO(
+    //     triangleStripVAO,
+    //     triangleStripVBO,
+    //     triangleStripShader,
+    //     triangleStrip,
+    //     sizeof(triangleStrip),
+    //     "circleTop.vs",
+    //     "circleTop.fs"
+    // )) {
+    //     return false;
+    // }
 
     return true;
 }
@@ -224,6 +233,23 @@ bool setup()
 // called by the main function to do rendering per frame
 void render()
 {
+    glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+    float cameraSpeed = 2.5f * deltaTime;
+
+    if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
     // clear the whole frame
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -236,17 +262,14 @@ void render()
 
     glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
-    glm::mat4 circleTopMatrix;
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+    
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    
+    glm::mat4 circleTopMatrix = projection * view * model;
 
-    circleTopMatrix = glm::perspective(glm::radians(60.0f),
-        (float) WINDOW_WIDTH / WINDOW_HEIGHT,
-        0.1f,
-        100.0f);
-    
-    circleTopMatrix = glm::translate(circleTopMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
-    circleTopMatrix = glm::rotate(circleTopMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    circleTopMatrix = glm::rotate(circleTopMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    
     glUniformMatrix4fv(glGetUniformLocation(circleTopShader, "matrix"),
         1, GL_FALSE, glm::value_ptr(circleTopMatrix));
 
@@ -258,19 +281,15 @@ void render()
 
     glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
-    glm::mat4 circleBottomMatrix;
-
-    circleBottomMatrix = glm::perspective(glm::radians(60.0f),
-        (float) WINDOW_WIDTH / WINDOW_HEIGHT,
-        0.1f,
-        100.0f);
+    // glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
     
-    circleBottomMatrix = glm::translate(circleBottomMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
-    circleBottomMatrix = glm::rotate(circleBottomMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    circleBottomMatrix = glm::rotate(circleBottomMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    // glm::mat4 model = glm::mat4(1.0f);
+    // model = glm::rotate(model, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    // model = glm::rotate(model, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-    glUniformMatrix4fv(glGetUniformLocation(circleBottomShader, "matrix"),
-        1, GL_FALSE, glm::value_ptr(circleBottomMatrix));
+    glm::mat4 circleBottomMatrix = projection * view * model;
+
+    glUniformMatrix4fv(glGetUniformLocation(circleBottomShader, "matrix"), 1, GL_FALSE, glm::value_ptr(circleBottomMatrix));
 
     glBindVertexArray(circleBottomVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (6 * sizeof(float)));
@@ -290,12 +309,12 @@ void render()
     triangleStripMatrix = glm::translate(triangleStripMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
     triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
     triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
+    
     glUniformMatrix4fv(glGetUniformLocation(triangleStripShader, "matrix"),
         1, GL_FALSE, glm::value_ptr(triangleStripMatrix));
 
-    glBindVertexArray(triangleStripVAO);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(triangleStrip) / (6 * sizeof(float)));
+    // glBindVertexArray(triangleStripVAO);
+    // glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(triangleStrip) / (6 * sizeof(float)));
 
     // glActiveTexture(GL_TEXTURE0);
     // glBindTexture(GL_TEXTURE_2D, main_texture);
