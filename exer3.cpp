@@ -19,8 +19,7 @@ GLFWwindow *pWindow;
 // https://learnopengl.com/Getting-Started/Camera
 float yaw = -90.0f;
 float pitch = 0.0f;
-float lastX = WINDOW_WIDTH / 2.0f;
-float lastY = WINDOW_HEIGHT / 2.0f;
+float lastX = 400, lastY = 300;
 bool firstMouse = true;
 float sensitivity = 0.1f;
 
@@ -378,7 +377,6 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos)
 
     // limits the pitch
     pitch = glm::clamp(pitch, -89.0f, 89.0f);
-    std::cout << "yaw: " << yaw << " pitch: " << pitch << std::endl;
 
     // calculates the camera front vector based on the yaw and pitch values
     glm::vec3 direction;
