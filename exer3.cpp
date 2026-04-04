@@ -21,35 +21,91 @@ float vertices[] =
 };
 
 float circleTop[] =  {
-    0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.4854101966249539f, 0.352671151375504f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.1854101966249212f, 0.5706339097771075f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.18541019662503938f, 0.5706339097770691f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.4854101966250268f, 0.35267115137540356f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.6f, -1.2409386426612867E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.48541019662488094f, -0.3526711513756043f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.18541019662480332f, -0.5706339097771458f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.18541019662515737f, -0.5706339097770308f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.48541019662509993f, -0.35267115137530286f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.6f, 2.487206355840774E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.4854101966248075f, 0.35267115137570537f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.1854101966246843f, 0.5706339097771844f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.1854101966252764f, 0.570633909776992f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.48541019662517315f, 0.3526711513752021f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.6f, -3.7281449985020607E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.4854101966247349f, -0.3526711513758053f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.18541019662456729f, -0.5706339097772225f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.18541019662539293f, -0.5706339097769542f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.48541019662524515f, -0.35267115137510296f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.6f, 4.953096429608745E-13f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+0.0f, 0.0f, -0.3f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+0.9510565162951472f, 0.3090169943749671f, -0.3f, 1.0f, 1.0f, 1.0f, 0.9510565162951472f, 0.3090169943749671f,
+0.8090169943749231f, 0.5877852522925067f, -0.3f, 1.0f, 1.0f, 1.0f, 0.8090169943749231f, 0.5877852522925067f,
+0.5877852522924228f, 0.809016994374984f, -0.3f, 1.0f, 1.0f, 1.0f, 0.5877852522924228f, 0.809016994374984f,
+0.3090169943748687f, 0.9510565162951792f, -0.3f, 1.0f, 1.0f, 1.0f, 0.3090169943748687f, 0.9510565162951792f,
+-1.0341155355510722E-13f, 1.0f, -0.3f, 1.0f, 1.0f, 1.0f, -1.0341155355510722E-13f, 1.0f,
+-0.3090169943750654f, 0.9510565162951152f, -0.3f, 1.0f, 1.0f, 1.0f, -0.3090169943750654f, 0.9510565162951152f,
+-0.5877852522925902f, 0.8090169943748624f, -0.3f, 1.0f, 1.0f, 1.0f, -0.5877852522925902f, 0.8090169943748624f,
+-0.8090169943750447f, 0.5877852522923392f, -0.3f, 1.0f, 1.0f, 1.0f, -0.8090169943750447f, 0.5877852522923392f,
+-0.9510565162952112f, 0.30901699437477015f, -0.3f, 1.0f, 1.0f, 1.0f, -0.9510565162952112f, 0.30901699437477015f,
+-1.0f, -2.072671963200645E-13f, -0.3f, 1.0f, 1.0f, 1.0f, -1.0f, -2.072671963200645E-13f,
+-0.951056516295083f, -0.3090169943751644f, -0.3f, 1.0f, 1.0f, 1.0f, -0.951056516295083f, -0.3090169943751644f,
+-0.8090169943748011f, -0.5877852522926745f, -0.3f, 1.0f, 1.0f, 1.0f, -0.8090169943748011f, -0.5877852522926745f,
+-0.5877852522922549f, -0.809016994375106f, -0.3f, 1.0f, 1.0f, 1.0f, -0.5877852522922549f, -0.809016994375106f,
+-0.3090169943746714f, -0.9510565162952432f, -0.3f, 1.0f, 1.0f, 1.0f, -0.3090169943746714f, -0.9510565162952432f,
+3.1067874987517174E-13f, -1.0f, -0.3f, 1.0f, 1.0f, 1.0f, 3.1067874987517174E-13f, -1.0f,
+0.3090169943752623f, -0.9510565162950513f, -0.3f, 1.0f, 1.0f, 1.0f, 0.3090169943752623f, -0.9510565162950513f,
+0.5877852522927575f, -0.8090169943747408f, -0.3f, 1.0f, 1.0f, 1.0f, 0.5877852522927575f, -0.8090169943747408f,
+0.809016994375166f, -0.5877852522921723f, -0.3f, 1.0f, 1.0f, 1.0f, 0.809016994375166f, -0.5877852522921723f,
+0.9510565162952748f, -0.3090169943745743f, -0.3f, 1.0f, 1.0f, 1.0f, 0.9510565162952748f, -0.3090169943745743f,
+1.0f, 4.1275803580072876E-13f, -0.3f, 1.0f, 1.0f, 1.0f, 1.0f, 4.1275803580072876E-13f,
+0.9510565162950197f, 0.3090169943753594f, -0.3f, 1.0f, 1.0f, 1.0f, 0.9510565162950197f, 0.3090169943753594f,
+0.8090169943746808f, 0.5877852522928401f, -0.3f, 1.0f, 1.0f, 1.0f, 0.8090169943746808f, 0.5877852522928401f,
+0.5877852522920897f, 0.809016994375226f, -0.3f, 1.0f, 1.0f, 1.0f, 0.5877852522920897f, 0.809016994375226f,
+0.3090169943744772f, 0.9510565162953064f, -0.3f, 1.0f, 1.0f, 1.0f, 0.3090169943744772f, 0.9510565162953064f,
+-5.148373217262858E-13f, 1.0f, -0.3f, 1.0f, 1.0f, 1.0f, -5.148373217262858E-13f, 1.0f,
+-0.3090169943754573f, 0.9510565162949879f, -0.3f, 1.0f, 1.0f, 1.0f, -0.3090169943754573f, 0.9510565162949879f,
+-0.5877852522929241f, 0.8090169943746197f, -0.3f, 1.0f, 1.0f, 1.0f, -0.5877852522929241f, 0.8090169943746197f,
+-0.8090169943752876f, 0.587785252292005f, -0.3f, 1.0f, 1.0f, 1.0f, -0.8090169943752876f, 0.587785252292005f,
+-0.951056516295339f, 0.30901699437437674f, -0.3f, 1.0f, 1.0f, 1.0f, -0.951056516295339f, 0.30901699437437674f,
+-1.0f, -6.213574997503435E-13f, -0.3f, 1.0f, 1.0f, 1.0f, -1.0f, -6.213574997503435E-13f,
+-0.951056516294955f, -0.30901699437555863f, -0.3f, 1.0f, 1.0f, 1.0f, -0.951056516294955f, -0.30901699437555863f,
+-0.8090169943745572f, -0.5877852522930103f, -0.3f, 1.0f, 1.0f, 1.0f, -0.8090169943745572f, -0.5877852522930103f,
+-0.5877852522919187f, -0.8090169943753502f, -0.3f, 1.0f, 1.0f, 1.0f, -0.5877852522919187f, -0.8090169943753502f,
+-0.30901699437427543f, -0.9510565162953719f, -0.3f, 1.0f, 1.0f, 1.0f, -0.30901699437427543f, -0.9510565162953719f,
+7.278776777744011E-13f, -1.0f, -0.3f, 1.0f, 1.0f, 1.0f, 7.278776777744011E-13f, -1.0f,
+0.30901699437565994f, -0.951056516294922f, -0.3f, 1.0f, 1.0f, 1.0f, 0.30901699437565994f, -0.951056516294922f,
+0.5877852522930964f, -0.8090169943744946f, -0.3f, 1.0f, 1.0f, 1.0f, 0.5877852522930964f, -0.8090169943744946f,
+0.8090169943754129f, -0.5877852522918325f, -0.3f, 1.0f, 1.0f, 1.0f, 0.8090169943754129f, -0.5877852522918325f,
+0.9510565162954049f, -0.3090169943741741f, -0.3f, 1.0f, 1.0f, 1.0f, 0.9510565162954049f, -0.3090169943741741f,
+1.0f, 8.343978557984588E-13f, -0.3f, 1.0f, 1.0f, 1.0f, 1.0f, 8.343978557984588E-13f,
 };
 
 float circleBottom[] = {
-    
-};
-
-float triangleStrip[] = {
-
+0.0f, 0.0f, 0.3f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+0.9510565162951472f, 0.3090169943749671f, 0.3f, 0.5f, 0.5f, 0.5f, 0.9510565162951472f, 0.3090169943749671f,
+0.8090169943749231f, 0.5877852522925067f, 0.3f, 0.5f, 0.5f, 0.5f, 0.8090169943749231f, 0.5877852522925067f,
+0.5877852522924228f, 0.809016994374984f, 0.3f, 0.5f, 0.5f, 0.5f, 0.5877852522924228f, 0.809016994374984f,
+0.3090169943748687f, 0.9510565162951792f, 0.3f, 0.5f, 0.5f, 0.5f, 0.3090169943748687f, 0.9510565162951792f,
+-1.0341155355510722E-13f, 1.0f, 0.3f, 0.5f, 0.5f, 0.5f, -1.0341155355510722E-13f, 1.0f,
+-0.3090169943750654f, 0.9510565162951152f, 0.3f, 0.5f, 0.5f, 0.5f, -0.3090169943750654f, 0.9510565162951152f,
+-0.5877852522925902f, 0.8090169943748624f, 0.3f, 0.5f, 0.5f, 0.5f, -0.5877852522925902f, 0.8090169943748624f,
+-0.8090169943750447f, 0.5877852522923392f, 0.3f, 0.5f, 0.5f, 0.5f, -0.8090169943750447f, 0.5877852522923392f,
+-0.9510565162952112f, 0.30901699437477015f, 0.3f, 0.5f, 0.5f, 0.5f, -0.9510565162952112f, 0.30901699437477015f,
+-1.0f, -2.072671963200645E-13f, 0.3f, 0.5f, 0.5f, 0.5f, -1.0f, -2.072671963200645E-13f,
+-0.951056516295083f, -0.3090169943751644f, 0.3f, 0.5f, 0.5f, 0.5f, -0.951056516295083f, -0.3090169943751644f,
+-0.8090169943748011f, -0.5877852522926745f, 0.3f, 0.5f, 0.5f, 0.5f, -0.8090169943748011f, -0.5877852522926745f,
+-0.5877852522922549f, -0.809016994375106f, 0.3f, 0.5f, 0.5f, 0.5f, -0.5877852522922549f, -0.809016994375106f,
+-0.3090169943746714f, -0.9510565162952432f, 0.3f, 0.5f, 0.5f, 0.5f, -0.3090169943746714f, -0.9510565162952432f,
+3.1067874987517174E-13f, -1.0f, 0.3f, 0.5f, 0.5f, 0.5f, 3.1067874987517174E-13f, -1.0f,
+0.3090169943752623f, -0.9510565162950513f, 0.3f, 0.5f, 0.5f, 0.5f, 0.3090169943752623f, -0.9510565162950513f,
+0.5877852522927575f, -0.8090169943747408f, 0.3f, 0.5f, 0.5f, 0.5f, 0.5877852522927575f, -0.8090169943747408f,
+0.809016994375166f, -0.5877852522921723f, 0.3f, 0.5f, 0.5f, 0.5f, 0.809016994375166f, -0.5877852522921723f,
+0.9510565162952748f, -0.3090169943745743f, 0.3f, 0.5f, 0.5f, 0.5f, 0.9510565162952748f, -0.3090169943745743f,
+1.0f, 4.1275803580072876E-13f, 0.3f, 0.5f, 0.5f, 0.5f, 1.0f, 4.1275803580072876E-13f,
+0.9510565162950197f, 0.3090169943753594f, 0.3f, 0.5f, 0.5f, 0.5f, 0.9510565162950197f, 0.3090169943753594f,
+0.8090169943746808f, 0.5877852522928401f, 0.3f, 0.5f, 0.5f, 0.5f, 0.8090169943746808f, 0.5877852522928401f,
+0.5877852522920897f, 0.809016994375226f, 0.3f, 0.5f, 0.5f, 0.5f, 0.5877852522920897f, 0.809016994375226f,
+0.3090169943744772f, 0.9510565162953064f, 0.3f, 0.5f, 0.5f, 0.5f, 0.3090169943744772f, 0.9510565162953064f,
+-5.148373217262858E-13f, 1.0f, 0.3f, 0.5f, 0.5f, 0.5f, -5.148373217262858E-13f, 1.0f,
+-0.3090169943754573f, 0.9510565162949879f, 0.3f, 0.5f, 0.5f, 0.5f, -0.3090169943754573f, 0.9510565162949879f,
+-0.5877852522929241f, 0.8090169943746197f, 0.3f, 0.5f, 0.5f, 0.5f, -0.5877852522929241f, 0.8090169943746197f,
+-0.8090169943752876f, 0.587785252292005f, 0.3f, 0.5f, 0.5f, 0.5f, -0.8090169943752876f, 0.587785252292005f,
+-0.951056516295339f, 0.30901699437437674f, 0.3f, 0.5f, 0.5f, 0.5f, -0.951056516295339f, 0.30901699437437674f,
+-1.0f, -6.213574997503435E-13f, 0.3f, 0.5f, 0.5f, 0.5f, -1.0f, -6.213574997503435E-13f,
+-0.951056516294955f, -0.30901699437555863f, 0.3f, 0.5f, 0.5f, 0.5f, -0.951056516294955f, -0.30901699437555863f,
+-0.8090169943745572f, -0.5877852522930103f, 0.3f, 0.5f, 0.5f, 0.5f, -0.8090169943745572f, -0.5877852522930103f,
+-0.5877852522919187f, -0.8090169943753502f, 0.3f, 0.5f, 0.5f, 0.5f, -0.5877852522919187f, -0.8090169943753502f,
+-0.30901699437427543f, -0.9510565162953719f, 0.3f, 0.5f, 0.5f, 0.5f, -0.30901699437427543f, -0.9510565162953719f,
+7.278776777744011E-13f, -1.0f, 0.3f, 0.5f, 0.5f, 0.5f, 7.278776777744011E-13f, -1.0f,
+0.30901699437565994f, -0.951056516294922f, 0.3f, 0.5f, 0.5f, 0.5f, 0.30901699437565994f, -0.951056516294922f,
+0.5877852522930964f, -0.8090169943744946f, 0.3f, 0.5f, 0.5f, 0.5f, 0.5877852522930964f, -0.8090169943744946f,
+0.8090169943754129f, -0.5877852522918325f, 0.3f, 0.5f, 0.5f, 0.5f, 0.8090169943754129f, -0.5877852522918325f,
+0.9510565162954049f, -0.3090169943741741f, 0.3f, 0.5f, 0.5f, 0.5f, 0.9510565162954049f, -0.3090169943741741f,
+1.0f, 8.343978557984588E-13f, 0.3f, 0.5f, 0.5f, 0.5f, 1.0f, 8.343978557984588E-13f,
 };
 
 GLuint squareVAO;
@@ -67,6 +123,21 @@ GLuint circleBottomShader;
 GLuint triangleStripVAO;
 GLuint triangleStripVBO;
 GLuint triangleStripShader;
+
+// This function is to generate the triangle strip between two circles
+// Useful for generating cylinders
+void generateCylinderStrip(const float* topCircle, const float* bottomCircle,
+                            int size, float* cylinderStrip) {
+    float 
+    int idx = 0;
+    for (int i = 0; i < size; i += 8) {
+        std::copy(topCircle + i, topCircle + i + 8, cylinderStrip + idx);
+        idx += 8;
+        std::copy(bottomCircle + i, bottomCircle + i + 8, cylinderStrip + idx);
+        idx += 8;
+    }
+}
+
 
 
 // Helper function to setup multiple vaos and vbos
@@ -86,12 +157,14 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     // - the stride length of the vertex array is 6 floats (6 * sizeof(float))
     // - layout location 0 (position) is 3 floats and starts at the first float of the vertex array (offset 0)
     // - layout location 1 (color) is also 3 floats but starts at the fourth float (offset 3 * sizeof(float))
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) 0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (3 * sizeof(float)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (3 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*) (6 * sizeof(float)));
 
     // enable the layout locations so they can be used by the vertex shader
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     // important: if you have more vertex arrays to draw, make sure you separately define them
     // with unique VAO and VBO IDs, and follow the same process above to upload them to the GPU
@@ -121,6 +194,30 @@ bool setup()
         return false;
     }
 
+    if(!setupVO(
+        circleBottomVAO,
+        circleBottomVBO,
+        circleBottomShader,
+        circleBottom,
+        sizeof(circleBottom),
+        "circleTop.vs",
+        "circleTop.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        triangleStripVAO,
+        triangleStripVBO,
+        triangleStripShader,
+        triangleStrip,
+        sizeof(triangleStrip),
+        "circleTop.vs",
+        "circleTop.fs"
+    )) {
+        return false;
+    }
+
     return true;
 }
 
@@ -134,24 +231,71 @@ void render()
     // GLOBALS
     float time = glfwGetTime();
 
-    // Specify circleTop matrix operations
+    // CIRCLE - TOP
     glUseProgram(circleTopShader);
 
     glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
-    glm::mat4 circleMatrix;
+    glm::mat4 circleTopMatrix;
 
-    circleMatrix = glm::perspective(glm::radians(60.0f),
+    circleTopMatrix = glm::perspective(glm::radians(60.0f),
         (float) WINDOW_WIDTH / WINDOW_HEIGHT,
         0.1f,
         100.0f);
-
+    
+    circleTopMatrix = glm::translate(circleTopMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
+    circleTopMatrix = glm::rotate(circleTopMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    circleTopMatrix = glm::rotate(circleTopMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    
     glUniformMatrix4fv(glGetUniformLocation(circleTopShader, "matrix"),
-        1, GL_FALSE, glm::value_ptr(circleMatrix));
+        1, GL_FALSE, glm::value_ptr(circleTopMatrix));
 
     glBindVertexArray(circleTopVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (6 * sizeof(float)));
 
+    // CIRCLE BOTTOM
+    glUseProgram(circleBottomShader);
+
+    glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
+
+    glm::mat4 circleBottomMatrix;
+
+    circleBottomMatrix = glm::perspective(glm::radians(60.0f),
+        (float) WINDOW_WIDTH / WINDOW_HEIGHT,
+        0.1f,
+        100.0f);
+    
+    circleBottomMatrix = glm::translate(circleBottomMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
+    circleBottomMatrix = glm::rotate(circleBottomMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    circleBottomMatrix = glm::rotate(circleBottomMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    glUniformMatrix4fv(glGetUniformLocation(circleBottomShader, "matrix"),
+        1, GL_FALSE, glm::value_ptr(circleBottomMatrix));
+
+    glBindVertexArray(circleBottomVAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (6 * sizeof(float)));
+
+    // CIRCLE BOTTOM
+    glUseProgram(triangleStripShader);
+
+    glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
+
+    glm::mat4 triangleStripMatrix;
+
+    triangleStripMatrix = glm::perspective(glm::radians(60.0f),
+        (float) WINDOW_WIDTH / WINDOW_HEIGHT,
+        0.1f,
+        100.0f);
+    
+    triangleStripMatrix = glm::translate(triangleStripMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
+    triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    glUniformMatrix4fv(glGetUniformLocation(triangleStripShader, "matrix"),
+        1, GL_FALSE, glm::value_ptr(triangleStripMatrix));
+
+    glBindVertexArray(triangleStripVAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(triangleStrip) / (6 * sizeof(float)));
 
     // glActiveTexture(GL_TEXTURE0);
     // glBindTexture(GL_TEXTURE_2D, main_texture);
@@ -186,6 +330,7 @@ void handleResize(GLFWwindow* pWindow, int width, int height)
 // main function
 int main(int argc, char** argv)
 {
+
     // initialize GLFW and ask for OpenGL 3.3 core
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

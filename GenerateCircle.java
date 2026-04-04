@@ -26,8 +26,8 @@ class GenerateCircle {
             res[i + 3] = red; // r
             res[i + 4] = green; // g
             res[i + 5] = blue; // b
-            res[6] = texCoordX + Math.cos(aheadAngle) * radiusX;;
-            res[7] = texCoordY + + Math.sin(aheadAngle) * radiusY;
+            res[i + 6] = texCoordX + Math.cos(aheadAngle) * radiusX;
+            res[i + 7] = texCoordY + + Math.sin(aheadAngle) * radiusY;
             aheadAngle += angleInc;
         }
         return res;
@@ -43,13 +43,13 @@ class GenerateCircle {
     public static void main(String[] args) {
         double x = 0.0;
         double y = 0.0;
-        double z = 0.0;
+        double z = -0.3;
         double red = 1.0;
         double green = 1.0;
         double blue = 1.0;
-        double radiusX = 0.6;
-        double radiusY = 0.6;
-        int triangleAmount = 10; 
+        double radiusX = 1.0;
+        double radiusY = 1.0;
+        int triangleAmount = 20; 
         double texCoordX = 0.0;
         double texCoordY = 0.0;
         double[] vertices = generateCircleVertex(x, y, z, red, green, blue, radiusX, radiusY, triangleAmount, texCoordX, texCoordY);
