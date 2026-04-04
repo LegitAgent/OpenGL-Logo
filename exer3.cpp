@@ -1,3 +1,9 @@
+// Controls:
+// W to move forward
+// S to move backward
+// A to move to the left
+// D to move to the right
+
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -11,8 +17,15 @@ GLFWwindow *pWindow;
 
 // camera mechanics
 // https://learnopengl.com/Getting-Started/Camera
+float yaw = -90.0f;
+float pitch = 0.0f;
+float lastX = WINDOW_WIDTH / 2.0f;
+float lastY = WINDOW_HEIGHT / 2.0f;
+bool firstMouse = true;
+float sensitivity = 0.1f;
+
+// camera positions
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 
@@ -233,10 +246,18 @@ bool setup()
 // called by the main function to do rendering per frame
 void render()
 {
+    // gets the time elapsed between the current frame and the last frame, and updates the last frame time
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    
+    // view matrix
     glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-    float cameraSpeed = 2.5f * deltaTime;
+    // camera movement speed
+    float cameraSpeed = 1.5f * deltaTime;
 
+    // key inputs for movement
     if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
     if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS)
@@ -245,10 +266,7 @@ void render()
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    
-    float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+
 
     // clear the whole frame
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -262,6 +280,9 @@ void render()
 
     glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
+    // creates model matrix and projection matrix
+    // top circle's matrix is then created by multiplying the projection, view, and model matrices together
+    // same thing with other objects
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
     
     glm::mat4 model = glm::mat4(1.0f);
@@ -281,6 +302,7 @@ void render()
 
     glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
+    // commented out in case it is needed
     // glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
     
     // glm::mat4 model = glm::mat4(1.0f);
@@ -313,6 +335,7 @@ void render()
     glUniformMatrix4fv(glGetUniformLocation(triangleStripShader, "matrix"),
         1, GL_FALSE, glm::value_ptr(triangleStripMatrix));
 
+    // commented out triangle strips since there was an error
     // glBindVertexArray(triangleStripVAO);
     // glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(triangleStrip) / (6 * sizeof(float)));
 
@@ -330,6 +353,40 @@ void render()
 }
 
 /*****************************************************************************/
+// mouse movement function
+void mouseCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    // checks if program just started, gets the last x and y values
+    if(firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+        return;
+    }
+
+    // x and y offsets
+    float xoffset = (xpos - lastX) * sensitivity;
+    float yoffset = (lastY - ypos) * sensitivity;
+
+    // sets the last x and y values to xpos and ypos
+    lastX = xpos;
+    lastY = ypos;
+    
+    // adds the x and y offsets to yaw and pitch
+    yaw += xoffset;
+    pitch += yoffset;
+
+    // limits the pitch
+    pitch = glm::clamp(pitch, -89.0f, 89.0f);
+    std::cout << "yaw: " << yaw << " pitch: " << pitch << std::endl;
+
+    // calculates the camera front vector based on the yaw and pitch values
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    cameraFront = glm::normalize(direction);
+}  
 
 // handler called by GLFW when there is a keyboard event
 void handleKeys(GLFWwindow* pWindow, int key, int scancode, int action, int mode)
@@ -379,6 +436,12 @@ int main(int argc, char** argv)
 
     // don't miss any momentary keypresses
     glfwSetInputMode(pWindow, GLFW_STICKY_KEYS, GLFW_TRUE);
+
+    // set up mouse movement callback and enable raw mouse motion if supported
+    glfwSetCursorPosCallback(pWindow, mouseCallback);
+    if (glfwRawMouseMotionSupported()) {
+        glfwSetInputMode(pWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+    }
 
     // initialize GLAD, which acts as a library loader for the current OS's native OpenGL library
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
