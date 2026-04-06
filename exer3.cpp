@@ -14,7 +14,7 @@
 
 #define WINDOW_WIDTH  1080
 #define WINDOW_HEIGHT 720
-#define WINDOW_TITLE  "Exercise 2"
+#define WINDOW_TITLE  "Exercise 3"
 GLFWwindow *pWindow;
 
 // camera mechanics
@@ -416,6 +416,9 @@ int main(int argc, char** argv)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+    // hides the screen first so that it can be readjusted
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
     // create a GLFW window with the specified width, height, and title
     pWindow = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, NULL, NULL);
     if (! pWindow)
@@ -431,7 +434,18 @@ int main(int argc, char** argv)
     glfwMakeContextCurrent(pWindow);
     glfwSwapInterval(1);
     glfwSetWindowAspectRatio(pWindow, WINDOW_WIDTH, WINDOW_HEIGHT);
-    glfwSetWindowPos(pWindow, lastX, lastY);
+
+    // gets the primary monitor's video mode to calculate the center position of the window, and moves the window there
+    // https://www.glfw.org/docs/latest/monitor_guide.html
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+    int xpos = (mode->width - WINDOW_WIDTH) / 2;
+    int ypos = (mode->height - WINDOW_HEIGHT) / 2;
+
+    // sets the window's position and displays the window
+    glfwSetWindowPos(pWindow, xpos, ypos);
+    glfwShowWindow(pWindow);
 
     // set up callback functions to handle window system events
     glfwSetKeyCallback(pWindow, handleKeys);
@@ -454,7 +468,6 @@ int main(int argc, char** argv)
     glfwSetCursorPos(pWindow, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0);
 
     glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-    glfwWindowHint(GLFW_CENTER_CURSOR, GLFW_TRUE);
 
     // if our initial setup is successful...
     if (setup())
