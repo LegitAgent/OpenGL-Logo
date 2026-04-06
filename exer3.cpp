@@ -3,6 +3,8 @@
 // S to move backward
 // A to move to the left
 // D to move to the right
+// UP to move up
+// DOWN to move down
 
 #include <iostream>
 #include <glad/glad.h>
@@ -19,7 +21,7 @@ GLFWwindow *pWindow;
 // https://learnopengl.com/Getting-Started/Camera
 float yaw = -90.0f;
 float pitch = 0.0f;
-float lastX = 400, lastY = 300;
+float lastX = WINDOW_WIDTH / 2, lastY = WINDOW_HEIGHT / 2;
 bool firstMouse = true;
 float sensitivity = 0.1f;
 
@@ -265,7 +267,10 @@ void render()
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-
+    if (glfwGetKey(pWindow, GLFW_KEY_UP) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraUp;
+    if (glfwGetKey(pWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraUp;
 
     // clear the whole frame
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -316,23 +321,23 @@ void render()
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (6 * sizeof(float)));
 
     // CIRCLE BOTTOM
-    glUseProgram(triangleStripShader);
+    // glUseProgram(triangleStripShader);
 
-    glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
+    // glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
 
-    glm::mat4 triangleStripMatrix;
+    // glm::mat4 triangleStripMatrix;
 
-    triangleStripMatrix = glm::perspective(glm::radians(60.0f),
-        (float) WINDOW_WIDTH / WINDOW_HEIGHT,
-        0.1f,
-        100.0f);
+    // triangleStripMatrix = glm::perspective(glm::radians(60.0f),
+    //     (float) WINDOW_WIDTH / WINDOW_HEIGHT,
+    //     0.1f,
+    //     100.0f);
     
-    triangleStripMatrix = glm::translate(triangleStripMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
-    triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    // triangleStripMatrix = glm::translate(triangleStripMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
+    // triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    // triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     
-    glUniformMatrix4fv(glGetUniformLocation(triangleStripShader, "matrix"),
-        1, GL_FALSE, glm::value_ptr(triangleStripMatrix));
+    // glUniformMatrix4fv(glGetUniformLocation(triangleStripShader, "matrix"),
+    //     1, GL_FALSE, glm::value_ptr(triangleStripMatrix));
 
     // commented out triangle strips since there was an error
     // glBindVertexArray(triangleStripVAO);
@@ -404,7 +409,6 @@ void handleResize(GLFWwindow* pWindow, int width, int height)
 // main function
 int main(int argc, char** argv)
 {
-
     // initialize GLFW and ask for OpenGL 3.3 core
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -427,6 +431,7 @@ int main(int argc, char** argv)
     glfwMakeContextCurrent(pWindow);
     glfwSwapInterval(1);
     glfwSetWindowAspectRatio(pWindow, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glfwSetWindowPos(pWindow, lastX, lastY);
 
     // set up callback functions to handle window system events
     glfwSetKeyCallback(pWindow, handleKeys);
@@ -437,12 +442,19 @@ int main(int argc, char** argv)
 
     // set up mouse movement callback and enable raw mouse motion if supported
     glfwSetCursorPosCallback(pWindow, mouseCallback);
+    
     if (glfwRawMouseMotionSupported()) {
         glfwSetInputMode(pWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
     }
 
     // initialize GLAD, which acts as a library loader for the current OS's native OpenGL library
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+
+    // set the mouse cursor to the center of the window at the start of the program
+    glfwSetCursorPos(pWindow, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0);
+
+    glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    glfwWindowHint(GLFW_CENTER_CURSOR, GLFW_TRUE);
 
     // if our initial setup is successful...
     if (setup())
