@@ -444,48 +444,7 @@ bool setup() {
     return true;
 }
 
-// called by the main function to do rendering per frame
-void render()
-{
-    // gets the time elapsed between the current frame and the last frame, and updates the last frame time
-    float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
-    
-    // view matrix
-    glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-    // camera movement speed
-    float cameraSpeed = 1.5f * deltaTime;
-
-    // key inputs for movement
-    if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraFront;
-    if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraFront;
-    if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS)
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(pWindow, GLFW_KEY_UP) == GLFW_PRESS)
-        cameraPos += cameraSpeed * cameraUp;
-    if (glfwGetKey(pWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
-        cameraPos -= cameraSpeed * cameraUp;
-
-    // clear the whole frame
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
-
-    // GLOBALS
-    float time = glfwGetTime();
-
-    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
-    
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::rotate(model, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
+void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
     // Main saucer: flatter and wider to read more like the Falcon hull.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, base_texture);
@@ -562,17 +521,67 @@ void render()
     lowerThruster = glm::scale(lowerThruster, glm::vec3(0.24f, 0.24f, 0.13f));
     drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * lowerThruster);
+}
 
-    // glActiveTexture(GL_TEXTURE0);
-    // glBindTexture(GL_TEXTURE_2D, main_texture);
-    // glActiveTexture(GL_TEXTURE1);
-    // glBindTexture(GL_TEXTURE_2D, purple_texture);
+// called by the main function to do rendering per frame
+void render()
+{
+    // gets the time elapsed between the current frame and the last frame, and updates the last frame time
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    
+    // view matrix
+    glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-    // glUniform1i(glGetUniformLocation(PurpleShader, "shaderTextureA"), 0);
-    // glUniform1i(glGetUniformLocation(PurpleShader, "shaderTextureB"), 1);
+    // camera movement speed
+    float cameraSpeed = 1.5f * deltaTime;
 
-    // glUniform1f(glGetUniformLocation(PurpleShader, "time"), time);
-    // glUniform1f(glGetUniformLocation(PurpleShader, "speed"), speed);
+    // key inputs for movement
+    if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(pWindow, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(pWindow, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_UP) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraUp;
+    if (glfwGetKey(pWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraUp;
+
+    // clear the whole frame
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+
+    // GLOBALS
+    float time = glfwGetTime();
+
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+    
+    glm::mat4 model1 = glm::mat4(1.0f);
+    model1 = glm::translate(model1, glm::vec3(0.0f, 0.0f, -5.0f));
+    model1 = glm::rotate(model1, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
+    model1 = glm::rotate(model1, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    glm::mat4 model2 = glm::mat4(1.0f);
+    model2 = glm::translate(model2, glm::vec3(5.0f, 0.0f, -5.0f));
+    model2 = glm::rotate(model2, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 1.0f));
+    model2 = glm::rotate(model2, glm::radians(-30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    model2 = glm::scale(model2, glm::vec3(abs(sin(time)), abs(sin(time)), abs(sin(time))));
+    
+
+    glm::mat4 model3 = glm::mat4(1.0f);
+    model3 = glm::translate(model3, glm::vec3(-5.0f, 0.0f, -5.0f));
+    model3 = glm::rotate(model3, glm::radians(time*100), glm::vec3(1.0f, 0.0f, 0.0f));
+    model3 = glm::rotate(model3, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    model3 = glm::scale(model3, glm::vec3(abs(sin(time)), abs(sin(time)), abs(sin(time))));
+
+    drawMilleniumFalcon(model1, view, projection);
+    drawMilleniumFalcon(model2, view, projection);
+    drawMilleniumFalcon(model3, view, projection);
 
 }
 
