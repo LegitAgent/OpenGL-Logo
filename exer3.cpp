@@ -128,68 +128,68 @@ float cylinderStrip[((sizeof(circleTop) / sizeof(float)) - 8) * 2];
 // Millennium Falcon-style front mandibles.
 float frontMandibles[] = {
     // Upper mandible: front face triangle
-    2.05f, 0.40f, -0.06f, 0.78f, 0.78f, 0.80f, 0.0f, 0.0f,
-    -0.10f, 1.08f, -0.06f, 0.78f, 0.78f, 0.80f, 1.0f, 0.0f,
+    0.95f, 0.40f, -0.06f, 0.78f, 0.78f, 0.80f, 0.0f, 0.0f,
+    -0.10f, 0.95f, -0.06f, 0.78f, 0.78f, 0.80f, 1.0f, 0.0f,
     -0.10f, 0.28f, -0.06f, 0.78f, 0.78f, 0.80f, 0.5f, 1.0f,
 
     // Upper mandible: back face triangle
-    2.05f, 0.40f, 0.06f, 0.40f, 0.40f, 0.42f, 0.0f, 0.0f,
+    0.95f, 0.40f, 0.06f, 0.40f, 0.40f, 0.42f, 0.0f, 0.0f,
     -0.10f, 0.28f, 0.06f, 0.40f, 0.40f, 0.42f, 1.0f, 0.0f,
-    -0.10f, 1.08f, 0.06f, 0.40f, 0.40f, 0.42f, 0.5f, 1.0f,
+    -0.10f, 0.95f, 0.06f, 0.40f, 0.40f, 0.42f, 0.5f, 1.0f,
 
     // Upper mandible: side faces
-    -0.10f, 1.08f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
-    2.05f, 0.40f, -0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 0.0f,
-    2.05f, 0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
-    -0.10f, 1.08f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
-    2.05f, 0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
-    -0.10f, 1.08f, 0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 1.0f,
+    -0.10f, 0.95f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
+    0.95f, 0.40f, -0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 0.0f,
+    0.95f, 0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    -0.10f, 0.95f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
+    0.95f, 0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    -0.10f, 0.95f, 0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 1.0f,
 
     -0.10f, 0.28f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
     -0.10f, 0.28f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 0.0f,
-    2.05f, 0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    0.95f, 0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
     -0.10f, 0.28f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
-    2.05f, 0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
-    2.05f, 0.40f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 1.0f,
+    0.95f, 0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    0.95f, 0.40f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 1.0f,
 
-    -0.10f, 1.08f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
-    -0.10f, 1.08f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 0.0f,
+    -0.10f, 0.95f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
+    -0.10f, 0.95f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 0.0f,
     -0.10f, 0.28f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
-    -0.10f, 1.08f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
+    -0.10f, 0.95f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
     -0.10f, 0.28f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
     -0.10f, 0.28f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 1.0f,
 
     // Lower mandible: front face triangle
-    2.05f, -0.40f, -0.06f, 0.78f, 0.78f, 0.80f, 0.0f, 0.0f,
+    0.95f, -0.40f, -0.06f, 0.78f, 0.78f, 0.80f, 0.0f, 0.0f,
     -0.10f, -0.28f, -0.06f, 0.78f, 0.78f, 0.80f, 1.0f, 0.0f,
-    -0.10f, -1.08f, -0.06f, 0.78f, 0.78f, 0.80f, 0.5f, 1.0f,
+    -0.10f, -0.95f, -0.06f, 0.78f, 0.78f, 0.80f, 0.5f, 1.0f,
 
     // Lower mandible: back face triangle
-    2.05f, -0.40f, 0.06f, 0.40f, 0.40f, 0.42f, 0.0f, 0.0f,
-    -0.10f, -1.08f, 0.06f, 0.40f, 0.40f, 0.42f, 1.0f, 0.0f,
+    0.95f, -0.40f, 0.06f, 0.40f, 0.40f, 0.42f, 0.0f, 0.0f,
+    -0.10f, -0.95f, 0.06f, 0.40f, 0.40f, 0.42f, 1.0f, 0.0f,
     -0.10f, -0.28f, 0.06f, 0.40f, 0.40f, 0.42f, 0.5f, 1.0f,
 
     // Lower mandible: side faces
     -0.10f, -0.28f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
-    2.05f, -0.40f, -0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 0.0f,
-    2.05f, -0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    0.95f, -0.40f, -0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 0.0f,
+    0.95f, -0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
     -0.10f, -0.28f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
-    2.05f, -0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    0.95f, -0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
     -0.10f, -0.28f, 0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 1.0f,
 
-    -0.10f, -1.08f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
-    -0.10f, -1.08f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 0.0f,
-    2.05f, -0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
-    -0.10f, -1.08f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
-    2.05f, -0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
-    2.05f, -0.40f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 1.0f,
+    -0.10f, -0.95f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
+    -0.10f, -0.95f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 0.0f,
+    0.95f, -0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    -0.10f, -0.95f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
+    0.95f, -0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    0.95f, -0.40f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 1.0f,
 
     -0.10f, -0.28f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
     -0.10f, -0.28f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 0.0f,
-    -0.10f, -1.08f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
+    -0.10f, -0.95f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
     -0.10f, -0.28f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
-    -0.10f, -1.08f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
-    -0.10f, -1.08f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 1.0f,
+    -0.10f, -0.95f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
+    -0.10f, -0.95f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 1.0f,
 };
 
 // Simple box mesh for add-on details like the center bar.
@@ -346,7 +346,7 @@ void drawCircularSection(GLuint topShader, GLuint bottomShader, GLuint sideShade
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (8 * sizeof(float)));
 }
 
-void drawPrismSection(GLuint shader, const glm::mat4& matrix) {
+void drawPodSection(GLuint shader, const glm::mat4& matrix) {
     glUseProgram(shader);
     glUniformMatrix4fv(glGetUniformLocation(shader, "matrix"),
         1, GL_FALSE, glm::value_ptr(matrix));
@@ -434,22 +434,26 @@ bool setup() {
     if (!top_texture) return false;
 
     mandible_texture = gdevLoadTexture("falcon_mandible.png", GL_REPEAT, true, true);
-    if (!top_texture) return false;
+    if (!mandible_texture) return false;
 
     gun_texture = gdevLoadTexture("falcon_gun.png", GL_REPEAT, true, true);
-    if (!top_texture) return false;
+    if (!gun_texture) return false;
 
     pod_texture = gdevLoadTexture("falcon_pod.png", GL_REPEAT, true, true);
-    if (!top_texture) return false;
+    if (!pod_texture) return false;
     return true;
 }
 
 void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
+    // Normalize the assembled ship so all transformed parts fit inside [-1, 1].
+    model = glm::translate(model, glm::vec3(-0.13f, 0.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.67f, 0.67f, 0.67f));
+
     // Main saucer: flatter and wider to read more like the Falcon hull.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, base_texture);
 
-    glm::mat4 baseHull = glm::scale(model, glm::vec3(1.55f, 1.25f, 0.26f));
+    glm::mat4 baseHull = glm::scale(model, glm::vec3(1.16f, 0.94f, 0.26f));
     drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * baseHull);
 
@@ -460,7 +464,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     // Connector slab so the base hull and middle hull read as one continuous body.
     glm::mat4 centerConnector = glm::translate(model, glm::vec3(-0.18f, 0.0f, -0.07f));
     centerConnector = glm::scale(centerConnector, glm::vec3(1.02f, 0.84f, 0.22f));
-    drawPrismSection(podAttachmentShader, projection * view * centerConnector);
+    drawPodSection(podAttachmentShader, projection * view * centerConnector);
     
     glm::mat4 centerBody = glm::translate(model, glm::vec3(-0.18f, 0.0f, -0.10f));
     centerBody = glm::scale(centerBody, glm::vec3(0.95f, 0.78f, 0.16f));
@@ -474,7 +478,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     // Secondary connector to remove the gap between middle hull and top hump.
     glm::mat4 humpConnector = glm::translate(model, glm::vec3(-0.08f, 0.0f, -0.18f));
     humpConnector = glm::scale(humpConnector, glm::vec3(0.58f, 0.48f, 0.14f));
-    drawPrismSection(podAttachmentShader, projection * view * humpConnector);
+    drawPodSection(podAttachmentShader, projection * view * humpConnector);
     
     glm::mat4 dorsalHump = glm::translate(model, glm::vec3(-0.05f, 0.0f, -0.21f));
     dorsalHump = glm::scale(dorsalHump, glm::vec3(0.50f, 0.44f, 0.11f));
@@ -485,8 +489,8 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, mandible_texture);
     
-    glm::mat4 mandibleModel = glm::translate(model, glm::vec3(0.96f, 0.0f, -0.02f));
-    mandibleModel = glm::scale(mandibleModel, glm::vec3(0.72f, 0.76f, 0.95f));
+    glm::mat4 mandibleModel = glm::translate(model, glm::vec3(0.82f, 0.0f, -0.02f));
+    mandibleModel = glm::scale(mandibleModel, glm::vec3(0.74f, 0.76f, 0.35f));
     glm::mat4 mandibleMatrix = projection * view * mandibleModel;
 
     glUseProgram(frontMandiblesShader);
@@ -506,18 +510,18 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
 
     glm::mat4 centerBar = glm::translate(model, glm::vec3(1.20f, 0.0f, -0.03f));
     centerBar = glm::scale(centerBar, glm::vec3(0.95f, 0.16f, 0.18f));
-    drawPrismSection(podAttachmentShader, projection * view * centerBar);
+    drawPodSection(podAttachmentShader, projection * view * centerBar);
 
     // Pods
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, pod_texture);
     // Side thruster pods mounted near the rear flanks.
-    glm::mat4 upperThruster = glm::translate(model, glm::vec3(-1.05f, 0.92f, 0.02f));
+    glm::mat4 upperThruster = glm::translate(model, glm::vec3(-0.88f, 0.74f, 0.02f));
     upperThruster = glm::scale(upperThruster, glm::vec3(0.24f, 0.24f, 0.13f));
     drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * upperThruster);
 
-    glm::mat4 lowerThruster = glm::translate(model, glm::vec3(-1.05f, -0.92f, 0.02f));
+    glm::mat4 lowerThruster = glm::translate(model, glm::vec3(-0.88f, -0.74f, 0.02f));
     lowerThruster = glm::scale(lowerThruster, glm::vec3(0.24f, 0.24f, 0.13f));
     drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * lowerThruster);
