@@ -6,6 +6,7 @@
 // UP to move up
 // DOWN to move down
 
+#include <algorithm>
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -28,24 +29,14 @@ float sensitivity = 0.1f;
 // camera positions
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 
 float lastFrame = 0.0f;
 float deltaTime = 0.0f;
 
-float vertices[] =
-{
-    // position (x, y, z) color (r, g, b)
-    -0.50f, -0.50f, -1.00f, 1.0f, 1.0f, 1.0f,
-    0.50f, -0.50f, -1.00f, 1.0f, 1.0f, 1.0f,
-    -0.50f, 0.50f, -1.00f, 1.0f, 1.0f, 1.0f,
-    0.50f, 0.50f, -1.00f, 1.0f, 1.0f, 1.0f,
-    -0.50f, 0.50f, -1.00f, 1.0f, 1.0f, 1.0f,
-    0.50f, -0.50f, -1.00f, 1.0f, 1.0f, 1.0f
-};
-
+// Each vertex uses: position (x, y, z), color (r, g, b), uv (s, t)
 float circleTop[] =  {
-0.0f, 0.0f, -0.3f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+0.0f, 0.0f, -0.08f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
 0.9510565162951472f, 0.3090169943749671f, -0.3f, 1.0f, 1.0f, 1.0f, 0.9510565162951472f, 0.3090169943749671f,
 0.8090169943749231f, 0.5877852522925067f, -0.3f, 1.0f, 1.0f, 1.0f, 0.8090169943749231f, 0.5877852522925067f,
 0.5877852522924228f, 0.809016994374984f, -0.3f, 1.0f, 1.0f, 1.0f, 0.5877852522924228f, 0.809016994374984f,
@@ -85,11 +76,11 @@ float circleTop[] =  {
 0.5877852522930964f, -0.8090169943744946f, -0.3f, 1.0f, 1.0f, 1.0f, 0.5877852522930964f, -0.8090169943744946f,
 0.8090169943754129f, -0.5877852522918325f, -0.3f, 1.0f, 1.0f, 1.0f, 0.8090169943754129f, -0.5877852522918325f,
 0.9510565162954049f, -0.3090169943741741f, -0.3f, 1.0f, 1.0f, 1.0f, 0.9510565162954049f, -0.3090169943741741f,
-1.0f, 8.343978557984588E-13f, -0.3f, 1.0f, 1.0f, 1.0f, 1.0f, 8.343978557984588E-13f,
+1.0f, 8.343978557984588E-13f, -0.08f, 1.0f, 1.0f, 1.0f, 1.0f, 8.343978557984588E-13f,
 };
 
 float circleBottom[] = {
-0.0f, 0.0f, 0.3f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+0.0f, 0.0f, 0.08f, 0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
 0.9510565162951472f, 0.3090169943749671f, 0.3f, 0.5f, 0.5f, 0.5f, 0.9510565162951472f, 0.3090169943749671f,
 0.8090169943749231f, 0.5877852522925067f, 0.3f, 0.5f, 0.5f, 0.5f, 0.8090169943749231f, 0.5877852522925067f,
 0.5877852522924228f, 0.809016994374984f, 0.3f, 0.5f, 0.5f, 0.5f, 0.5877852522924228f, 0.809016994374984f,
@@ -129,12 +120,132 @@ float circleBottom[] = {
 0.5877852522930964f, -0.8090169943744946f, 0.3f, 0.5f, 0.5f, 0.5f, 0.5877852522930964f, -0.8090169943744946f,
 0.8090169943754129f, -0.5877852522918325f, 0.3f, 0.5f, 0.5f, 0.5f, 0.8090169943754129f, -0.5877852522918325f,
 0.9510565162954049f, -0.3090169943741741f, 0.3f, 0.5f, 0.5f, 0.5f, 0.9510565162954049f, -0.3090169943741741f,
-1.0f, 8.343978557984588E-13f, 0.3f, 0.5f, 0.5f, 0.5f, 1.0f, 8.343978557984588E-13f,
+1.0f, 8.343978557984588E-13f, 0.08f, 0.5f, 0.5f, 0.5f, 1.0f, 8.343978557984588E-13f,
 };
 
-GLuint squareVAO;
-GLuint squareVBO;
-GLuint squareShader;
+float cylinderStrip[((sizeof(circleTop) / sizeof(float)) - 8) * 2];
+
+// Millennium Falcon-style front mandibles.
+float frontMandibles[] = {
+    // Upper mandible: front face triangle
+    2.05f, 0.40f, -0.06f, 0.78f, 0.78f, 0.80f, 0.0f, 0.0f,
+    -0.10f, 1.08f, -0.06f, 0.78f, 0.78f, 0.80f, 1.0f, 0.0f,
+    -0.10f, 0.28f, -0.06f, 0.78f, 0.78f, 0.80f, 0.5f, 1.0f,
+
+    // Upper mandible: back face triangle
+    2.05f, 0.40f, 0.06f, 0.40f, 0.40f, 0.42f, 0.0f, 0.0f,
+    -0.10f, 0.28f, 0.06f, 0.40f, 0.40f, 0.42f, 1.0f, 0.0f,
+    -0.10f, 1.08f, 0.06f, 0.40f, 0.40f, 0.42f, 0.5f, 1.0f,
+
+    // Upper mandible: side faces
+    -0.10f, 1.08f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
+    2.05f, 0.40f, -0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 0.0f,
+    2.05f, 0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    -0.10f, 1.08f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
+    2.05f, 0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    -0.10f, 1.08f, 0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 1.0f,
+
+    -0.10f, 0.28f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
+    -0.10f, 0.28f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 0.0f,
+    2.05f, 0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    -0.10f, 0.28f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
+    2.05f, 0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    2.05f, 0.40f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 1.0f,
+
+    -0.10f, 1.08f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
+    -0.10f, 1.08f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 0.0f,
+    -0.10f, 0.28f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
+    -0.10f, 1.08f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
+    -0.10f, 0.28f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
+    -0.10f, 0.28f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 1.0f,
+
+    // Lower mandible: front face triangle
+    2.05f, -0.40f, -0.06f, 0.78f, 0.78f, 0.80f, 0.0f, 0.0f,
+    -0.10f, -0.28f, -0.06f, 0.78f, 0.78f, 0.80f, 1.0f, 0.0f,
+    -0.10f, -1.08f, -0.06f, 0.78f, 0.78f, 0.80f, 0.5f, 1.0f,
+
+    // Lower mandible: back face triangle
+    2.05f, -0.40f, 0.06f, 0.40f, 0.40f, 0.42f, 0.0f, 0.0f,
+    -0.10f, -1.08f, 0.06f, 0.40f, 0.40f, 0.42f, 1.0f, 0.0f,
+    -0.10f, -0.28f, 0.06f, 0.40f, 0.40f, 0.42f, 0.5f, 1.0f,
+
+    // Lower mandible: side faces
+    -0.10f, -0.28f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
+    2.05f, -0.40f, -0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 0.0f,
+    2.05f, -0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    -0.10f, -0.28f, -0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 0.0f,
+    2.05f, -0.40f, 0.06f, 0.58f, 0.58f, 0.60f, 1.0f, 1.0f,
+    -0.10f, -0.28f, 0.06f, 0.58f, 0.58f, 0.60f, 0.0f, 1.0f,
+
+    -0.10f, -1.08f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
+    -0.10f, -1.08f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 0.0f,
+    2.05f, -0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    -0.10f, -1.08f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 0.0f,
+    2.05f, -0.40f, 0.06f, 0.54f, 0.54f, 0.56f, 1.0f, 1.0f,
+    2.05f, -0.40f, -0.06f, 0.54f, 0.54f, 0.56f, 0.0f, 1.0f,
+
+    -0.10f, -0.28f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
+    -0.10f, -0.28f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 0.0f,
+    -0.10f, -1.08f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
+    -0.10f, -0.28f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 0.0f,
+    -0.10f, -1.08f, 0.06f, 0.52f, 0.52f, 0.54f, 1.0f, 1.0f,
+    -0.10f, -1.08f, -0.06f, 0.52f, 0.52f, 0.54f, 0.0f, 1.0f,
+};
+
+// Simple box mesh for add-on details like the center bar.
+float podAttachment[] = {
+    // Front
+    0.5f,  0.5f, -0.5f, 0.74f, 0.74f, 0.76f, 0.0f, 0.0f,
+    0.5f, -0.5f, -0.5f, 0.74f, 0.74f, 0.76f, 1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, 0.74f, 0.74f, 0.76f, 1.0f, 1.0f,
+    0.5f,  0.5f, -0.5f, 0.74f, 0.74f, 0.76f, 0.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, 0.74f, 0.74f, 0.76f, 1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f, 0.74f, 0.74f, 0.76f, 0.0f, 1.0f,
+
+    // Back
+    -0.5f,  0.5f, -0.5f, 0.42f, 0.42f, 0.44f, 0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 0.42f, 0.42f, 0.44f, 1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 0.42f, 0.42f, 0.44f, 1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 0.42f, 0.42f, 0.44f, 0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 0.42f, 0.42f, 0.44f, 0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 0.42f, 0.42f, 0.44f, 1.0f, 1.0f,
+
+    // Top
+    -0.5f,  0.5f, -0.5f, 0.62f, 0.62f, 0.64f, 0.0f, 0.0f,
+    0.5f,  0.5f, -0.5f, 0.62f, 0.62f, 0.64f, 1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f, 0.62f, 0.62f, 0.64f, 1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f, 0.62f, 0.62f, 0.64f, 0.0f, 0.0f,
+    0.5f,  0.5f,  0.5f, 0.62f, 0.62f, 0.64f, 1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 0.62f, 0.62f, 0.64f, 0.0f, 1.0f,
+
+    // Bottom
+    -0.5f, -0.5f, -0.5f, 0.50f, 0.50f, 0.52f, 0.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, 0.50f, 0.50f, 0.52f, 1.0f, 1.0f,
+    0.5f, -0.5f, -0.5f, 0.50f, 0.50f, 0.52f, 1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 0.50f, 0.50f, 0.52f, 0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 0.50f, 0.50f, 0.52f, 0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f, 0.50f, 0.50f, 0.52f, 1.0f, 1.0f,
+
+    // Right
+    -0.5f,  0.5f,  0.5f, 0.57f, 0.57f, 0.59f, 0.0f, 0.0f,
+    0.5f,  0.5f,  0.5f, 0.57f, 0.57f, 0.59f, 1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, 0.57f, 0.57f, 0.59f, 1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 0.57f, 0.57f, 0.59f, 0.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, 0.57f, 0.57f, 0.59f, 1.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 0.57f, 0.57f, 0.59f, 0.0f, 1.0f,
+
+    // Left
+    -0.5f,  0.5f, -0.5f, 0.57f, 0.57f, 0.59f, 0.0f, 0.0f,
+    0.5f, -0.5f, -0.5f, 0.57f, 0.57f, 0.59f, 1.0f, 1.0f,
+    0.5f,  0.5f, -0.5f, 0.57f, 0.57f, 0.59f, 1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 0.57f, 0.57f, 0.59f, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 0.57f, 0.57f, 0.59f, 0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f, 0.57f, 0.57f, 0.59f, 1.0f, 1.0f,
+};
+// not used, similar to square.fs and .vs
+// GLuint squareVAO;
+// GLuint squareVBO;
+// GLuint squareShader;
 
 GLuint circleTopVAO;
 GLuint circleTopVBO;
@@ -148,20 +259,33 @@ GLuint triangleStripVAO;
 GLuint triangleStripVBO;
 GLuint triangleStripShader;
 
+GLuint frontMandiblesVAO;
+GLuint frontMandiblesVBO;
+GLuint frontMandiblesShader;
+
+GLuint podAttachmentVAO;
+GLuint podAttachmentVBO;
+GLuint podAttachmentShader;
+
+GLuint base_texture;
+GLuint middle_texture;
+GLuint top_texture;
+GLuint mandible_texture;
+GLuint gun_texture;
+GLuint pod_texture;
+
 // This function is to generate the triangle strip between two circles
 // Useful for generating cylinders
 void generateCylinderStrip(const float* topCircle, const float* bottomCircle,
                             int size, float* cylinderStrip) {
     int idx = 0;
-    for (int i = 0; i < size; i += 8) {
+    for (int i = 8; i < size; i += 8) {
         std::copy(topCircle + i, topCircle + i + 8, cylinderStrip + idx);
         idx += 8;
         std::copy(bottomCircle + i, bottomCircle + i + 8, cylinderStrip + idx);
         idx += 8;
     }
 }
-
-
 
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
@@ -200,10 +324,45 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     return true;
 }
 
+void drawCircularSection(GLuint topShader, GLuint bottomShader, GLuint sideShader,
+                        const glm::mat4& matrix) {
+    // top cap
+    glUseProgram(topShader);
+    // sends exactly one matrix, without transposing it or anything. using the memory address of the glm matrix data.
+    glUniformMatrix4fv(glGetUniformLocation(topShader, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glBindVertexArray(circleTopVAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (8 * sizeof(float)));
+    
+    // bottom cap
+    glUseProgram(bottomShader);
+    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glBindVertexArray(circleBottomVAO);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (8 * sizeof(float)));
+
+    // side walls of the the circles
+    glUseProgram(sideShader);
+    glUniformMatrix4fv(glGetUniformLocation(sideShader, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glBindVertexArray(triangleStripVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (8 * sizeof(float)));
+}
+
+void drawPrismSection(GLuint shader, const glm::mat4& matrix) {
+    glUseProgram(shader);
+    glUniformMatrix4fv(glGetUniformLocation(shader, "matrix"),
+        1, GL_FALSE, glm::value_ptr(matrix));
+    glBindVertexArray(podAttachmentVAO);
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (8 * sizeof(float)));
+}
+
 // called by the main function to do initial setup, such as uploading vertex
 // arrays, shader programs, etc.; returns true if successful, false otherwise
-bool setup()
-{  
+bool setup() {
+    generateCylinderStrip(
+        circleTop,
+        circleBottom,
+        sizeof(circleTop) / sizeof(float),
+        cylinderStrip
+    );
 
     if(!setupVO(
         circleTopVAO,
@@ -229,18 +388,59 @@ bool setup()
         return false;
     }
 
-    // if(!setupVO(
-    //     triangleStripVAO,
-    //     triangleStripVBO,
-    //     triangleStripShader,
-    //     triangleStrip,
-    //     sizeof(triangleStrip),
-    //     "circleTop.vs",
-    //     "circleTop.fs"
-    // )) {
-    //     return false;
-    // }
+    if(!setupVO(
+        triangleStripVAO,
+        triangleStripVBO,
+        triangleStripShader,
+        cylinderStrip,
+        sizeof(cylinderStrip),
+        "circleTop.vs",
+        "circleTop.fs"
+    )) {
+        return false;
+    }
 
+    if(!setupVO(
+        frontMandiblesVAO,
+        frontMandiblesVBO,
+        frontMandiblesShader,
+        frontMandibles,
+        sizeof(frontMandibles),
+        "circleTop.vs",
+        "circleTop.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        podAttachmentVAO,
+        podAttachmentVBO,
+        podAttachmentShader,
+        podAttachment,
+        sizeof(podAttachment),
+        "circleTop.vs",
+        "circleTop.fs"
+    )) {
+        return false;
+    }
+
+    base_texture = gdevLoadTexture("falcon_base.png", GL_REPEAT, true, true);
+    if (!base_texture) return false;
+
+    middle_texture = gdevLoadTexture("falcon_middle.png", GL_REPEAT, true, true);
+    if (!middle_texture) return false;
+
+    top_texture = gdevLoadTexture("falcon_top.png", GL_REPEAT, true, true);
+    if (!top_texture) return false;
+
+    mandible_texture = gdevLoadTexture("falcon_mandible.png", GL_REPEAT, true, true);
+    if (!top_texture) return false;
+
+    gun_texture = gdevLoadTexture("falcon_gun.png", GL_REPEAT, true, true);
+    if (!top_texture) return false;
+
+    pod_texture = gdevLoadTexture("falcon_pod.png", GL_REPEAT, true, true);
+    if (!top_texture) return false;
     return true;
 }
 
@@ -275,73 +475,93 @@ void render()
     // clear the whole frame
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
 
     // GLOBALS
     float time = glfwGetTime();
 
-    // CIRCLE - TOP
-    glUseProgram(circleTopShader);
-
-    glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
-
-    // creates model matrix and projection matrix
-    // top circle's matrix is then created by multiplying the projection, view, and model matrices together
-    // same thing with other objects
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
     
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    // Main saucer: flatter and wider to read more like the Falcon hull.
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, base_texture);
+
+    glm::mat4 baseHull = glm::scale(model, glm::vec3(1.55f, 1.25f, 0.26f));
+    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+        projection * view * baseHull);
+
+    // Raised center body: pulled slightly rearward to mimic the Falcon's top mass.
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, middle_texture);
+
+    // Connector slab so the base hull and middle hull read as one continuous body.
+    glm::mat4 centerConnector = glm::translate(model, glm::vec3(-0.18f, 0.0f, -0.07f));
+    centerConnector = glm::scale(centerConnector, glm::vec3(1.02f, 0.84f, 0.22f));
+    drawPrismSection(podAttachmentShader, projection * view * centerConnector);
     
-    glm::mat4 circleTopMatrix = projection * view * model;
+    glm::mat4 centerBody = glm::translate(model, glm::vec3(-0.18f, 0.0f, -0.10f));
+    centerBody = glm::scale(centerBody, glm::vec3(0.95f, 0.78f, 0.16f));
+    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+        projection * view * centerBody);
 
-    glUniformMatrix4fv(glGetUniformLocation(circleTopShader, "matrix"),
-        1, GL_FALSE, glm::value_ptr(circleTopMatrix));
+    // Highest central hump: smaller and offset so the middle protrudes.
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, top_texture);
 
-    glBindVertexArray(circleTopVAO);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (6 * sizeof(float)));
-
-    // CIRCLE BOTTOM
-    glUseProgram(circleBottomShader);
-
-    glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
-
-    // commented out in case it is needed
-    // glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+    // Secondary connector to remove the gap between middle hull and top hump.
+    glm::mat4 humpConnector = glm::translate(model, glm::vec3(-0.08f, 0.0f, -0.18f));
+    humpConnector = glm::scale(humpConnector, glm::vec3(0.58f, 0.48f, 0.14f));
+    drawPrismSection(podAttachmentShader, projection * view * humpConnector);
     
-    // glm::mat4 model = glm::mat4(1.0f);
-    // model = glm::rotate(model, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    // model = glm::rotate(model, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    glm::mat4 circleBottomMatrix = projection * view * model;
-
-    glUniformMatrix4fv(glGetUniformLocation(circleBottomShader, "matrix"), 1, GL_FALSE, glm::value_ptr(circleBottomMatrix));
-
-    glBindVertexArray(circleBottomVAO);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (6 * sizeof(float)));
-
-    // CIRCLE BOTTOM
-    // glUseProgram(triangleStripShader);
-
-    // glEnable(GL_DEPTH_TEST); // enable OpenGL's hidden surface removal
-
-    // glm::mat4 triangleStripMatrix;
-
-    // triangleStripMatrix = glm::perspective(glm::radians(60.0f),
-    //     (float) WINDOW_WIDTH / WINDOW_HEIGHT,
-    //     0.1f,
-    //     100.0f);
+    glm::mat4 dorsalHump = glm::translate(model, glm::vec3(-0.05f, 0.0f, -0.21f));
+    dorsalHump = glm::scale(dorsalHump, glm::vec3(0.50f, 0.44f, 0.11f));
+    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+        projection * view * dorsalHump);
     
-    // triangleStripMatrix = glm::translate(triangleStripMatrix, glm::vec3(0.0f, 0.0f, -4.0f));
-    // triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(time*100), glm::vec3(0.0f, 1.0f, 0.0f));
-    // triangleStripMatrix = glm::rotate(triangleStripMatrix, glm::radians(40.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    // Mandible
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, mandible_texture);
     
-    // glUniformMatrix4fv(glGetUniformLocation(triangleStripShader, "matrix"),
-    //     1, GL_FALSE, glm::value_ptr(triangleStripMatrix));
+    glm::mat4 mandibleModel = glm::translate(model, glm::vec3(0.96f, 0.0f, -0.02f));
+    mandibleModel = glm::scale(mandibleModel, glm::vec3(0.72f, 0.76f, 0.95f));
+    glm::mat4 mandibleMatrix = projection * view * mandibleModel;
 
-    // commented out triangle strips since there was an error
-    // glBindVertexArray(triangleStripVAO);
-    // glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(triangleStrip) / (6 * sizeof(float)));
+    glUseProgram(frontMandiblesShader);
+    glUniformMatrix4fv(
+        glGetUniformLocation(frontMandiblesShader, "matrix"),
+        1,
+        GL_FALSE,
+        glm::value_ptr(mandibleMatrix)
+    );
+
+    glBindVertexArray(frontMandiblesVAO);
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(frontMandibles) / (8 * sizeof(float)));
+
+    // Center fork bar between the mandibles, extending in the same forward direction.
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, gun_texture);
+
+    glm::mat4 centerBar = glm::translate(model, glm::vec3(1.20f, 0.0f, -0.03f));
+    centerBar = glm::scale(centerBar, glm::vec3(0.95f, 0.16f, 0.18f));
+    drawPrismSection(podAttachmentShader, projection * view * centerBar);
+
+    // Pods
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, pod_texture);
+    // Side thruster pods mounted near the rear flanks.
+    glm::mat4 upperThruster = glm::translate(model, glm::vec3(-1.05f, 0.92f, 0.02f));
+    upperThruster = glm::scale(upperThruster, glm::vec3(0.24f, 0.24f, 0.13f));
+    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+        projection * view * upperThruster);
+
+    glm::mat4 lowerThruster = glm::translate(model, glm::vec3(-1.05f, -0.92f, 0.02f));
+    lowerThruster = glm::scale(lowerThruster, glm::vec3(0.24f, 0.24f, 0.13f));
+    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+        projection * view * lowerThruster);
 
     // glActiveTexture(GL_TEXTURE0);
     // glBindTexture(GL_TEXTURE_2D, main_texture);
