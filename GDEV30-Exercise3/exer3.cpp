@@ -216,10 +216,6 @@ float podAttachment[] = {
 -0.243902f, -0.243902f, -0.243902f, 0.570000f, 0.570000f, 0.590000f, 0.000000f, 1.000000f,
 0.243902f, -0.243902f, -0.243902f, 0.570000f, 0.570000f, 0.590000f, 1.000000f, 1.000000f,
 };
-// not used, similar to square.fs and .vs
-// GLuint squareVAO;
-// GLuint squareVBO;
-// GLuint squareShader;
 
 GLuint circleTopVAO;
 GLuint circleTopVBO;
@@ -298,7 +294,9 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     return true;
 }
 
-void drawCircularSection(GLuint topShader, GLuint bottomShader, GLuint sideShader,
+// draws a cylinder given the model-view-projection matrix and the shaders for each of the three sections.
+// needs diff shaders since cylinders can have different textures.
+void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader,
                         const glm::mat4& matrix) {
     // top cap
     glUseProgram(topShader);
@@ -320,6 +318,7 @@ void drawCircularSection(GLuint topShader, GLuint bottomShader, GLuint sideShade
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (8 * sizeof(float)));
 }
 
+// draws the box section at the center of the falcon. needs a shader and a matrix
 void drawPodSection(GLuint shader, const glm::mat4& matrix) {
     glUseProgram(shader);
     glUniformMatrix4fv(glGetUniformLocation(shader, "matrix"),
@@ -429,7 +428,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     glBindTexture(GL_TEXTURE_2D, base_texture);
 
     glm::mat4 baseHull = glm::scale(model, glm::vec3(1.16f, 0.94f, 0.26f));
-    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * baseHull);
 
     // Raised center body: pulled slightly rearward to mimic the Falcon's top mass.
@@ -443,7 +442,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     
     glm::mat4 centerBody = glm::translate(model, glm::vec3(-0.09f, 0.0f, -0.05f));
     centerBody = glm::scale(centerBody, glm::vec3(0.95f, 0.78f, 0.16f));
-    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * centerBody);
 
     // Highest central hump: smaller and offset so the middle protrudes.
@@ -460,7 +459,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * dorsalHump);
     
-    // Mandible
+    // Mandibles
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, mandible_texture);
     
@@ -493,12 +492,12 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     // Side thruster pods mounted near the rear flanks.
     glm::mat4 upperThruster = glm::translate(model, glm::vec3(-0.43f, 0.36f, 0.01f));
     upperThruster = glm::scale(upperThruster, glm::vec3(0.24f, 0.24f, 0.13f));
-    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * upperThruster);
 
     glm::mat4 lowerThruster = glm::translate(model, glm::vec3(-0.43f, -0.36f, 0.01f));
     lowerThruster = glm::scale(lowerThruster, glm::vec3(0.24f, 0.24f, 0.13f));
-    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * lowerThruster);
 }
 
