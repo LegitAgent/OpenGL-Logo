@@ -307,6 +307,7 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glUniformMatrix4fv(glGetUniformLocation(topShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(topShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(topShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniform3fv(glGetUniformLocation(topShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(circleTopVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (11 * sizeof(float)));
     
@@ -315,6 +316,7 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniform3fv(glGetUniformLocation(bottomShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(circleBottomVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (11 * sizeof(float)));
 
@@ -323,6 +325,7 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniform3fv(glGetUniformLocation(sideShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(triangleStripVAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (11 * sizeof(float)));
 }
@@ -334,6 +337,7 @@ void drawPodSection(GLuint shader, const glm::mat4& projectionMatrix, const glm:
     glUniformMatrix4fv(glGetUniformLocation(shader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(shader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(shader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniform3fv(glGetUniformLocation(shader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(podAttachmentVAO);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (11 * sizeof(float)));
 }
@@ -480,6 +484,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionView));
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleModel));
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleNormal));
+    glUniform3fv(glGetUniformLocation(frontMandiblesShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(frontMandiblesVAO);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(frontMandibles) / (11 * sizeof(float)));
 
