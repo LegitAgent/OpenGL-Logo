@@ -249,11 +249,11 @@ GLuint pod_texture;
 void generateCylinderStrip(const float* topCircle, const float* bottomCircle,
                             int size, float* cylinderStrip) {
     int idx = 0;
-    for (int i = 8; i < size; i += 8) {
-        std::copy(topCircle + i, topCircle + i + 8, cylinderStrip + idx);
-        idx += 8;
-        std::copy(bottomCircle + i, bottomCircle + i + 8, cylinderStrip + idx);
-        idx += 8;
+    for (int i = 11; i < size; i += 11) {
+        std::copy(topCircle + i, topCircle + i + 11, cylinderStrip + idx);
+        idx += 11;
+        std::copy(bottomCircle + i, bottomCircle + i + 11, cylinderStrip + idx);
+        idx += 11;
     }
 }
 
@@ -277,11 +277,13 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*) 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*) (3 * sizeof(float)));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*) (6 * sizeof(float)));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(8 * sizeof(float)));
 
     // enable the layout locations so they can be used by the vertex shader
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
 
     // important: if you have more vertex arrays to draw, make sure you separately define them
     // with unique VAO and VBO IDs, and follow the same process above to upload them to the GPU
