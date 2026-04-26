@@ -121,16 +121,6 @@ void generateTriangleNormals(float* vectorArray, int vectorArraySize) {
   // 
 }
 
-// Generates normals for a vertex array in the format used for GL_TRIANGLE_FAN.
-void generateFanNormals(float* vectorArray) {
-  
-}
-
-// Generates normals for a vertex array in the format used for GL_TRIANGLE_STRIP.
-void generateStripNormals(float* vectorArray) {
-  
-}
-
 int main() {
   generateTriangleNormals(vectorArray, sizeof(vectorArray) / sizeof(float));
 }
