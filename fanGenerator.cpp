@@ -37,8 +37,10 @@ float vectorArray[] = {
 // turns the given array into a string
 string vertexKey(float* arr, int offset) {
     string key;
-    for (int k = 0; k < 8; k++)
+    for (int k = 0; k < 8; k++) {
         key += to_string(arr[offset + k]) + "f, ";
+    }
+    
     return key;
 }
 
