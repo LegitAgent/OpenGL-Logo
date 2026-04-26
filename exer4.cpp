@@ -298,8 +298,7 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
 
 // draws a cylinder given the model-view-projection matrix and the shaders for each of the three sections.
 // needs diff shaders since cylinders can have different textures.
-void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader,
-                    const glm::mat4& projectionMatrix, const glm::mat4& modelMatrix) {
+void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, const glm::mat4& projectionMatrix, const glm::mat4& modelMatrix) {
 
     glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
     // top cap

@@ -11,7 +11,7 @@ out vec4 fragmentColor;
 
 void main() {
   vec3 lightPosition = vec3(2.0, 2.0, 0.0);
-  vec3 l = normalize(lightPosition - worldSpacePosition);
+  vec3 l = normalize(vec3(1.0, 1.0, 0.5));
   vec3 n = normalize(worldSpaceNormal);
   float diffuseColor = max(dot(n, l), 0.0);
   float ambientColor = 0.3f;

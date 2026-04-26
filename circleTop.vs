@@ -16,7 +16,7 @@ out vec2 shaderUV;
 
 void main() {
     worldSpacePosition = (modelMatrix * vec4(vertexPosition, 1.0f)).xyz;
-    worldSpaceNormal = (normalMatrix * vec4(vertexNormal, 1.0f)).xyz;
+    worldSpaceNormal = (normalMatrix * vec4(vertexNormal, 0.0f)).xyz;
     objectColor = vertexColor;
     gl_Position = projectionMatrix * vec4(worldSpacePosition, 1.0f);
     shaderUV = vertexUV;
