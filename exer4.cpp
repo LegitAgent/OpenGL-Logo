@@ -456,7 +456,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     
     glm::mat4 dorsalHump = glm::translate(model, glm::vec3(-0.02f, 0.0f, -0.10f));
     dorsalHump = glm::scale(dorsalHump, glm::vec3(0.50f, 0.44f, 0.11f));
-    drawCircularSection(circleTopShader, circleBottomShader, triangleStripShader,
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
         projection * view * dorsalHump);
     
     // Mandibles
