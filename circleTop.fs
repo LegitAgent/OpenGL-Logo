@@ -1,17 +1,20 @@
 #version 330 core
 
-in vec3 shaderColor;
+in vec3 worldSpacePosition;
+in vec3 worldSpaceNormal;
+in vec3 objectColor;
 in vec2 shaderUV;
-in vec3 fragNormal;
 
 uniform sampler2D top_texture;
 
 out vec4 fragmentColor;
 
 void main() {
-  vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));
-  float diff = max(dot(normalize(fragNormal), lightDir), 0.0);
+  vec3 lightPosition = vec3(2.0, 2.0, 0.0);
+  vec3 l = normalize(lightPosition - worldSpacePosition);
+  vec3 n = normalize(worldSpaceNormal);
+  float diffuseColor = max(dot(n, l), 0.0);
+  float ambientColor = 0.3f;
   vec4 texColor = texture(top_texture, shaderUV);
-  float ambient = 0.3;
-  fragmentColor = texColor * vec4(shaderColor * (ambient + diff), 1.0);
+  fragmentColor = texColor * vec4((diffuseColor + ambientColor) * objectColor, 1.0f);
 }

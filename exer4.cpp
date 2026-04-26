@@ -299,32 +299,42 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
 // draws a cylinder given the model-view-projection matrix and the shaders for each of the three sections.
 // needs diff shaders since cylinders can have different textures.
 void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader,
-                        const glm::mat4& matrix) {
+                    const glm::mat4& projectionMatrix, const glm::mat4& modelMatrix) {
+
+    glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
     // top cap
     glUseProgram(topShader);
     // sends exactly one matrix, without transposing it or anything. using the memory address of the glm matrix data.
-    glUniformMatrix4fv(glGetUniformLocation(topShader, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(topShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(topShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(topShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(circleTopVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (11 * sizeof(float)));
     
     // bottom cap
     glUseProgram(bottomShader);
-    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(circleBottomVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (11 * sizeof(float)));
 
     // side walls of the the circles
     glUseProgram(sideShader);
-    glUniformMatrix4fv(glGetUniformLocation(sideShader, "matrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(sideShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(sideShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(sideShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(triangleStripVAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (11 * sizeof(float)));
 }
 
 // draws the box section at the center of the falcon. needs a shader and a matrix
-void drawPodSection(GLuint shader, const glm::mat4& matrix) {
+void drawPodSection(GLuint shader, const glm::mat4& projectionMatrix, const glm::mat4& modelMatrix) {
+    glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
     glUseProgram(shader);
-    glUniformMatrix4fv(glGetUniformLocation(shader, "matrix"),
-        1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(shader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(shader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(shader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(podAttachmentVAO);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (11 * sizeof(float)));
 }
@@ -422,6 +432,7 @@ bool setup() {
 void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
     // The raw vertex arrays are scaled down to fit [-1, 1], so scale the
     // assembled ship back up here for a readable on-screen size.
+    glm::mat4 projectionView = projection * view;
     model = glm::translate(model, glm::vec3(-0.09f, 0.0f, 0.0f));
     model = glm::scale(model, glm::vec3(1.44f, 1.44f, 1.44f));
 
@@ -430,8 +441,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     glBindTexture(GL_TEXTURE_2D, base_texture);
 
     glm::mat4 baseHull = glm::scale(model, glm::vec3(1.16f, 0.94f, 0.26f));
-    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
-        projection * view * baseHull);
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader, projectionView, baseHull);
 
     // Raised center body: pulled slightly rearward to mimic the Falcon's top mass.
     glActiveTexture(GL_TEXTURE0);
@@ -440,12 +450,11 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     // Connector slab so the base hull and middle hull read as one continuous body.
     glm::mat4 centerConnector = glm::translate(model, glm::vec3(-0.09f, 0.0f, -0.03f));
     centerConnector = glm::scale(centerConnector, glm::vec3(1.02f, 0.84f, 0.22f));
-    drawPodSection(podAttachmentShader, projection * view * centerConnector);
+    drawPodSection(podAttachmentShader, projectionView, centerConnector);
     
     glm::mat4 centerBody = glm::translate(model, glm::vec3(-0.09f, 0.0f, -0.05f));
     centerBody = glm::scale(centerBody, glm::vec3(0.95f, 0.78f, 0.16f));
-    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
-        projection * view * centerBody);
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader, projectionView, centerBody);
 
     // Highest central hump: smaller and offset so the middle protrudes.
     glActiveTexture(GL_TEXTURE0);
@@ -454,12 +463,11 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     // Secondary connector to remove the gap between middle hull and top hump.
     glm::mat4 humpConnector = glm::translate(model, glm::vec3(-0.04f, 0.0f, -0.09f));
     humpConnector = glm::scale(humpConnector, glm::vec3(0.58f, 0.48f, 0.14f));
-    drawPodSection(podAttachmentShader, projection * view * humpConnector);
+    drawPodSection(podAttachmentShader, projectionView, humpConnector);
     
     glm::mat4 dorsalHump = glm::translate(model, glm::vec3(-0.02f, 0.0f, -0.10f));
     dorsalHump = glm::scale(dorsalHump, glm::vec3(0.50f, 0.44f, 0.11f));
-    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
-        projection * view * dorsalHump);
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader, projectionView, dorsalHump);
     
     // Mandibles
     glActiveTexture(GL_TEXTURE0);
@@ -467,16 +475,12 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     
     glm::mat4 mandibleModel = glm::translate(model, glm::vec3(0.34f, 0.0f, -0.01f));
     mandibleModel = glm::scale(mandibleModel, glm::vec3(0.74f, 0.76f, 0.35f));
-    glm::mat4 mandibleMatrix = projection * view * mandibleModel;
+    glm::mat4 mandibleNormal = glm::transpose(glm::inverse(mandibleModel));
 
     glUseProgram(frontMandiblesShader);
-    glUniformMatrix4fv(
-        glGetUniformLocation(frontMandiblesShader, "matrix"),
-        1,
-        GL_FALSE,
-        glm::value_ptr(mandibleMatrix)
-    );
-
+    glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionView));
+    glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleModel));
+    glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleNormal));
     glBindVertexArray(frontMandiblesVAO);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(frontMandibles) / (11 * sizeof(float)));
 
@@ -486,7 +490,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
 
     glm::mat4 centerBar = glm::translate(model, glm::vec3(0.59f, 0.0f, -0.01f));
     centerBar = glm::scale(centerBar, glm::vec3(0.95f, 0.16f, 0.18f));
-    drawPodSection(podAttachmentShader, projection * view * centerBar);
+    drawPodSection(podAttachmentShader, projectionView, centerBar);
 
     // Pods
     glActiveTexture(GL_TEXTURE0);
@@ -494,13 +498,11 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     // Side thruster pods mounted near the rear flanks.
     glm::mat4 upperThruster = glm::translate(model, glm::vec3(-0.43f, 0.36f, 0.01f));
     upperThruster = glm::scale(upperThruster, glm::vec3(0.24f, 0.24f, 0.13f));
-    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
-        projection * view * upperThruster);
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader, projectionView, upperThruster);
 
     glm::mat4 lowerThruster = glm::translate(model, glm::vec3(-0.43f, -0.36f, 0.01f));
     lowerThruster = glm::scale(lowerThruster, glm::vec3(0.24f, 0.24f, 0.13f));
-    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader,
-        projection * view * lowerThruster);
+    drawCylinder(circleTopShader, circleBottomShader, triangleStripShader, projectionView, lowerThruster);
 }
 
 // called by the main function to do rendering per frame
