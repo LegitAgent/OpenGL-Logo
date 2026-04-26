@@ -26,6 +26,11 @@ float lastX = WINDOW_WIDTH / 2, lastY = WINDOW_HEIGHT / 2;
 bool firstMouse = true;
 float sensitivity = 0.1f;
 
+// light
+glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 0.5f);
+glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+float shininess = 64.0f;
+
 // camera positions
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -296,6 +301,13 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     return true;
 }
 
+void applyLight(GLuint shader) {
+    glUniform3fv(glGetUniformLocation(shader, "lightPos"), 1, glm::value_ptr(lightPos));
+    glUniform3fv(glGetUniformLocation(shader, "cameraPos"), 1, glm::value_ptr(cameraPos));
+    glUniform3fv(glGetUniformLocation(shader, "lightColor"), 1, glm::value_ptr(lightColor));
+    glUniform1f(glGetUniformLocation(shader, "shininess"), shininess);
+}
+
 // draws a cylinder given the model-view-projection matrix and the shaders for each of the three sections.
 // needs diff shaders since cylinders can have different textures.
 void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, const glm::mat4& projectionMatrix, const glm::mat4& modelMatrix) {
@@ -304,28 +316,28 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     // top cap
     glUseProgram(topShader);
     // sends exactly one matrix, without transposing it or anything. using the memory address of the glm matrix data.
+    applyLight(topShader);
     glUniformMatrix4fv(glGetUniformLocation(topShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(topShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(topShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
-    glUniform3fv(glGetUniformLocation(topShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(circleTopVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (11 * sizeof(float)));
     
     // bottom cap
     glUseProgram(bottomShader);
+    applyLight(bottomShader);
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
-    glUniform3fv(glGetUniformLocation(bottomShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(circleBottomVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (11 * sizeof(float)));
 
     // side walls of the the circles
     glUseProgram(sideShader);
+    applyLight(sideShader);
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
-    glUniform3fv(glGetUniformLocation(sideShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(triangleStripVAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (11 * sizeof(float)));
 }
@@ -334,10 +346,10 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
 void drawPodSection(GLuint shader, const glm::mat4& projectionMatrix, const glm::mat4& modelMatrix) {
     glm::mat4 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
     glUseProgram(shader);
+    applyLight(shader);
     glUniformMatrix4fv(glGetUniformLocation(shader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(shader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(shader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
-    glUniform3fv(glGetUniformLocation(shader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(podAttachmentVAO);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (11 * sizeof(float)));
 }
@@ -481,10 +493,10 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     glm::mat4 mandibleNormal = glm::transpose(glm::inverse(mandibleModel));
 
     glUseProgram(frontMandiblesShader);
+    applyLight(frontMandiblesShader);
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionView));
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleModel));
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleNormal));
-    glUniform3fv(glGetUniformLocation(frontMandiblesShader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glBindVertexArray(frontMandiblesVAO);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(frontMandibles) / (11 * sizeof(float)));
 
@@ -536,6 +548,39 @@ void render()
         cameraPos += cameraSpeed * cameraUp;
     if (glfwGetKey(pWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
         cameraPos -= cameraSpeed * cameraUp;
+    // light movement
+    if (glfwGetKey(pWindow, GLFW_KEY_J) == GLFW_PRESS)
+        lightPos.x -= cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_L) == GLFW_PRESS)
+        lightPos.x += cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_I) == GLFW_PRESS)
+        lightPos.y += cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_K) == GLFW_PRESS)
+        lightPos.y -= cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_U) == GLFW_PRESS)
+        lightPos.z += cameraSpeed;
+    if (glfwGetKey(pWindow, GLFW_KEY_O) == GLFW_PRESS)
+        lightPos.z -= cameraSpeed;
+    // light color change (limited to only red, green, blue, and mixtures of the three)
+    if (glfwGetKey(pWindow, GLFW_KEY_1) == GLFW_PRESS)
+        lightColor.r = glm::clamp(lightColor.r + 1.0f, 0.0f, 1.0f);
+    if (glfwGetKey(pWindow, GLFW_KEY_2) == GLFW_PRESS)
+        lightColor.g = glm::clamp(lightColor.g + 1.0f, 0.0f, 1.0f);
+    if (glfwGetKey(pWindow, GLFW_KEY_3) == GLFW_PRESS)
+        lightColor.b = glm::clamp(lightColor.b + 1.0f, 0.0f, 1.0f);
+    if (glfwGetKey(pWindow, GLFW_KEY_4) == GLFW_PRESS)
+        lightColor.r = glm::clamp(lightColor.r - 1.0f, 0.0f, 1.0f);
+    if (glfwGetKey(pWindow, GLFW_KEY_5) == GLFW_PRESS)
+        lightColor.g = glm::clamp(lightColor.g - 1.0f, 0.0f, 1.0f);
+    if (glfwGetKey(pWindow, GLFW_KEY_6) == GLFW_PRESS)
+        lightColor.b = glm::clamp(lightColor.b - 1.0f, 0.0f, 1.0f);
+    // shine change
+    if (glfwGetKey(pWindow, GLFW_KEY_Q) == GLFW_PRESS)
+        shininess += 1.0f;
+    if (glfwGetKey(pWindow, GLFW_KEY_E) == GLFW_PRESS)
+        shininess -= 1.0f;
+
+    printf("Light Color: (%f, %f, %f)\n", lightColor.r, lightColor.g, lightColor.b);
 
     // clear the whole frame
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
