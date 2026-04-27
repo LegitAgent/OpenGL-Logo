@@ -15,7 +15,7 @@
 
 #define WINDOW_WIDTH  1080
 #define WINDOW_HEIGHT 720
-#define WINDOW_TITLE  "Exercise 3"
+#define WINDOW_TITLE  "Exercise 4"
 GLFWwindow *pWindow;
 
 // camera mechanics
@@ -38,8 +38,9 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f,  0.0f);
 
 float lastFrame = 0.0f;
 float deltaTime = 0.0f;
+const int TOTAL_VECTOR_POINTS = 11;
 
-// Each vertex uses: position (x, y, z), color (r, g, b), uv (s, t)
+// Each vertex uses: position (x, y, z), color (r, g, b), uv (s, t), lighting (normalX, normalY, normalZ)
 float circleTop[] =  {
 0.000000f, 0.000000f, -0.039024f, 1.000000f, 1.000000f, 1.000000f, 0.000000f, 0.000000f, 0.000830f, 0.001342f, -0.073532f,
 0.463930f, 0.150740f, -0.146341f, 1.000000f, 1.000000f, 1.000000f, 0.951057f, 0.309017f, -0.015121f, -0.005811f, -0.073532f,
@@ -128,7 +129,7 @@ float circleBottom[] = {
 0.487805f, 0.000000f, 0.039024f, 0.500000f, 0.500000f, 0.500000f, 1.000000f, 0.000000f, 0.000000f, -0.052350f, -0.073532f,
 };
 
-float cylinderStrip[((sizeof(circleTop) / sizeof(float)) - 11) * 2];
+float cylinderStrip[((sizeof(circleTop) / sizeof(float)) - TOTAL_VECTOR_POINTS) * 2];
 
 // Millennium Falcon-style front mandibles.
 float frontMandibles[] = {
@@ -254,11 +255,11 @@ GLuint pod_texture;
 void generateCylinderStrip(const float* topCircle, const float* bottomCircle,
                             int size, float* cylinderStrip) {
     int idx = 0;
-    for (int i = 11; i < size; i += 11) {
-        std::copy(topCircle + i, topCircle + i + 11, cylinderStrip + idx);
-        idx += 11;
-        std::copy(bottomCircle + i, bottomCircle + i + 11, cylinderStrip + idx);
-        idx += 11;
+    for (int i = TOTAL_VECTOR_POINTS; i < size; i += TOTAL_VECTOR_POINTS) {
+        std::copy(topCircle + i, topCircle + i + TOTAL_VECTOR_POINTS, cylinderStrip + idx);
+        idx += TOTAL_VECTOR_POINTS;
+        std::copy(bottomCircle + i, bottomCircle + i + TOTAL_VECTOR_POINTS, cylinderStrip + idx);
+        idx += TOTAL_VECTOR_POINTS;
     }
 }
 
@@ -279,10 +280,10 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     // - the stride length of the vertex array is 6 floats (6 * sizeof(float))
     // - layout location 0 (position) is 3 floats and starts at the first float of the vertex array (offset 0)
     // - layout location 1 (color) is also 3 floats but starts at the fourth float (offset 3 * sizeof(float))
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*) 0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*) (3 * sizeof(float)));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*) (6 * sizeof(float)));
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 11 * sizeof(float), (void*)(8 * sizeof(float)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) 0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) (3 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) (6 * sizeof(float)));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) (8 * sizeof(float)));
 
     // enable the layout locations so they can be used by the vertex shader
     glEnableVertexAttribArray(0);
@@ -321,7 +322,7 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glUniformMatrix4fv(glGetUniformLocation(topShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(topShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(circleTopVAO);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (11 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (TOTAL_VECTOR_POINTS * sizeof(float)));
     
     // bottom cap
     glUseProgram(bottomShader);
@@ -330,7 +331,7 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(circleBottomVAO);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (11 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (TOTAL_VECTOR_POINTS * sizeof(float)));
 
     // side walls of the the circles
     glUseProgram(sideShader);
@@ -339,7 +340,7 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(sideShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(triangleStripVAO);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (11 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(cylinderStrip) / (TOTAL_VECTOR_POINTS * sizeof(float)));
 }
 
 // draws the box section at the center of the falcon. needs a shader and a matrix
@@ -351,7 +352,20 @@ void drawPodSection(GLuint shader, const glm::mat4& projectionMatrix, const glm:
     glUniformMatrix4fv(glGetUniformLocation(shader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
     glUniformMatrix4fv(glGetUniformLocation(shader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glBindVertexArray(podAttachmentVAO);
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (11 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (TOTAL_VECTOR_POINTS * sizeof(float)));
+}
+
+void smoothenCylinderStrips(float* vertices, int floatCount) {
+    for(int i = 0; i < floatCount; i+=TOTAL_VECTOR_POINTS) {
+        float x = vertices[i];
+        float y = vertices[i + 1];
+
+        glm::vec3 normalized = glm::normalize(glm::vec3(x, y, 0.0f));
+
+        vertices[i + 8] = normalized.x;
+        vertices[i + 9] = normalized.y;
+        vertices[i + 10] = normalized.z;
+    }
 }
 
 // called by the main function to do initial setup, such as uploading vertex
@@ -363,6 +377,9 @@ bool setup() {
         sizeof(circleTop) / sizeof(float),
         cylinderStrip
     );
+
+    // only smoothen the base circle, can add more i.e. the pods and etc for smoothening ikaw na bahala jerold.
+    smoothenCylinderStrips(cylinderStrip, sizeof(cylinderStrip) / sizeof(float));
 
     if(!setupVO(
         circleTopVAO,
@@ -444,7 +461,7 @@ bool setup() {
     return true;
 }
 
-void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
+void drawMillenniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
     // The raw vertex arrays are scaled down to fit [-1, 1], so scale the
     // assembled ship back up here for a readable on-screen size.
     glm::mat4 projectionView = projection * view;
@@ -498,7 +515,7 @@ void drawMilleniumFalcon(glm::mat4 model, glm::mat4 view, glm::mat4 projection) 
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleModel));
     glUniformMatrix4fv(glGetUniformLocation(frontMandiblesShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(mandibleNormal));
     glBindVertexArray(frontMandiblesVAO);
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(frontMandibles) / (11 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(frontMandibles) / (TOTAL_VECTOR_POINTS * sizeof(float)));
 
     // Center fork bar between the mandibles, extending in the same forward direction.
     glActiveTexture(GL_TEXTURE0);
@@ -534,6 +551,17 @@ void render()
 
     // camera movement speed
     float cameraSpeed = 1.5f * deltaTime;
+    /** LIST OF COMMANDS:
+        W, A, S, D = CAMERA MOVEMENTS
+        UP, DOWN = CAMERA HEIGHT MOVEMENTS
+        J/L = LIGHT X
+        I/K = LIGHT Y
+        U/O = LIGHT Z
+        1, 2, 3 = ON RGB respectively
+        4, 5, 6 = OFF RGB respectively
+        Q/E = SHINE CHANGE
+        F1 = STATS
+     */
 
     // key inputs for movement
     if (glfwGetKey(pWindow, GLFW_KEY_W) == GLFW_PRESS)
@@ -577,10 +605,10 @@ void render()
     // shine change
     if (glfwGetKey(pWindow, GLFW_KEY_Q) == GLFW_PRESS)
         shininess += 1.0f;
-    if (glfwGetKey(pWindow, GLFW_KEY_E) == GLFW_PRESS)
+    if (glfwGetKey(pWindow, GLFW_KEY_E) == GLFW_PRESS && shininess > 1) // tweaks if shine <= 0
         shininess -= 1.0f;
 
-    printf("Light Color: (%f, %f, %f)\n", lightColor.r, lightColor.g, lightColor.b);
+    // debug print
 
     // clear the whole frame
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -614,9 +642,9 @@ void render()
     model3 = glm::rotate(model3, glm::radians(time * 220.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     model3 = glm::scale(model3, glm::vec3(1.5f, 1.5f, 1.5f));
 
-    drawMilleniumFalcon(model1, view, projection);
-    drawMilleniumFalcon(model2, view, projection);
-    drawMilleniumFalcon(model3, view, projection);
+    drawMillenniumFalcon(model1, view, projection);
+    drawMillenniumFalcon(model2, view, projection);
+    drawMillenniumFalcon(model3, view, projection);
 }
 
 /*****************************************************************************/
@@ -660,6 +688,10 @@ void handleKeys(GLFWwindow* pWindow, int key, int scancode, int action, int mode
     // pressing Esc closes the window
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(pWindow, GL_TRUE);
+    // debug print
+    if (key == GLFW_KEY_F1 && action == GLFW_PRESS) 
+        printf("STATS\n Camera Position: (x: %f, y: %f, z: %f)\n Light Positioning: (x: %f, y: %f, z: %f)\n Light Color: (r: %f, g: %f, b: %f)\n Shininess: (shine: %f)\n", 
+                cameraPos.x, cameraPos.y, cameraPos.z, lightPos.x, lightPos.y, lightPos.z, lightColor.r, lightColor.g, lightColor.b, shininess);
 }
 
 // handler called by GLFW when the window is resized
