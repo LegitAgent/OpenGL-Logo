@@ -29,7 +29,8 @@ float sensitivity = 0.1f;
 // light
 glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 0.5f);
 glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-float shininess = 64.0f;
+float shininess = 100.0f;
+float specularStrength = 10.0f;
 
 // camera positions
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -382,6 +383,7 @@ void applyLight(GLuint shader) {
     glUniform3fv(glGetUniformLocation(shader, "cameraPos"), 1, glm::value_ptr(cameraPos));
     glUniform3fv(glGetUniformLocation(shader, "lightColor"), 1, glm::value_ptr(lightColor));
     glUniform1f(glGetUniformLocation(shader, "shininess"), shininess);
+    glUniform1f(glGetUniformLocation(shader, "specularStrength"), specularStrength);
 }
 
 // draws a cylinder given the model-view-projection matrix and the shaders for each of the three sections.
@@ -399,12 +401,13 @@ void drawCylinder(GLuint topShader, GLuint bottomShader, GLuint sideShader, cons
     glBindVertexArray(circleTopVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleTop) / (TOTAL_VECTOR_POINTS * sizeof(float)));
     
+    glm::mat4 flippedNormalMatrix = glm::mat4(-1.0f) * normalMatrix;
     // bottom cap
     glUseProgram(bottomShader);
     applyLight(bottomShader);
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glUniformMatrix4fv(glGetUniformLocation(bottomShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
-    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(bottomShader, "normalMatrix"), 1, GL_FALSE, glm::value_ptr(flippedNormalMatrix));
     glBindVertexArray(circleBottomVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, sizeof(circleBottom) / (TOTAL_VECTOR_POINTS * sizeof(float)));
 
@@ -603,7 +606,7 @@ void render()
     glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
     // camera movement speed
-    float cameraSpeed = 1.5f * deltaTime;
+    float cameraSpeed = 5.0f * deltaTime;
     /** LIST OF COMMANDS:
         W, A, S, D = CAMERA MOVEMENTS
         UP, DOWN = CAMERA HEIGHT MOVEMENTS
@@ -613,6 +616,7 @@ void render()
         1, 2, 3 = ON RGB respectively
         4, 5, 6 = OFF RGB respectively
         Q/E = SHINE CHANGE
+        Z/C = SPECULAR STRENGTH CHANGE
         F1 = STATS
      */
 
@@ -625,9 +629,9 @@ void render()
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(pWindow, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(pWindow, GLFW_KEY_UP) == GLFW_PRESS)
+    if (glfwGetKey(pWindow, GLFW_KEY_R) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraUp;
-    if (glfwGetKey(pWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
+    if (glfwGetKey(pWindow, GLFW_KEY_F) == GLFW_PRESS)
         cameraPos -= cameraSpeed * cameraUp;
     // light movement
     if (glfwGetKey(pWindow, GLFW_KEY_J) == GLFW_PRESS)
@@ -660,7 +664,11 @@ void render()
         shininess += 1.0f;
     if (glfwGetKey(pWindow, GLFW_KEY_E) == GLFW_PRESS && shininess > 1) // tweaks if shine <= 0
         shininess -= 1.0f;
-
+    // specular strength change
+    if (glfwGetKey(pWindow, GLFW_KEY_Z) == GLFW_PRESS)
+        specularStrength += 0.1f;
+    if (glfwGetKey(pWindow, GLFW_KEY_C) == GLFW_PRESS) // tweaks if shine <= 0
+        specularStrength -= 0.1f;
     // debug print
 
     // clear the whole frame
@@ -676,9 +684,7 @@ void render()
     // flight animation
     glm::mat4 model1 = glm::mat4(1.0f);
     model1 = glm::translate(model1, glm::vec3(0.0f, 0.25f, -5.0f));
-    model1 = glm::rotate(model1, glm::radians(45.0f), glm::vec3(1.0f, 1.0f, 0.0f));
-    model1 = glm::rotate(model1, glm::radians(sin(time * 0.75f) * 45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model1 = glm::scale(model1, glm::vec3(sin(time) * 1.8f, sin(time)* 1.8f, sin(time)* 1.8f));
+    model1 = glm::rotate(model1, glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     // rotation animation
     glm::mat4 model2 = glm::mat4(1.0f);

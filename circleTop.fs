@@ -10,7 +10,7 @@ uniform vec3 cameraPos;
 uniform vec3 lightPos;
 uniform vec3 lightColor;
 uniform float shininess;
-
+uniform float specularStrength;
 out vec4 fragmentColor;
 
 void main() {
@@ -19,12 +19,11 @@ void main() {
   vec3 n = normalize(worldSpaceNormal);
   float diffuse = max(dot(n, l), 0.0);
   vec3 diffuseColor = diffuse * lightColor;
-  vec3 ambient = 0.4f * lightColor;
+  vec3 ambient = 0.01f * lightColor;
 
   vec3 viewDir = normalize(cameraPos - worldSpacePosition);
   vec3 reflectDir = reflect(-l, n);
   float specularLight = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
-  float specularStrength = 0.6;
   vec3 specular = specularStrength * specularLight * lightColor;
   vec3 lighting = ambient + diffuseColor + specular;
 

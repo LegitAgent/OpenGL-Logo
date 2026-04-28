@@ -1,3 +1,9 @@
+// This is the normals generator. Apart from calculating for the normals of each vertex,
+// it also "smoothens" out the normals of a single vertex. We do this by
+// map accumulation, or basically getting all the normals
+// calculated for a single vertex, and then averaging them out
+// and normalizing to get one "smoothed" normal.
+
 #include <algorithm>
 #include <map>
 #include <vector>
@@ -344,8 +350,10 @@ int main(int argc, char *argv[]) {
   // DUE TO HOW ./TEST WORKS,
   // You will just have to comment out the ones u dont need.
   
+  // comment this out if your array does not have normals yet
   vectorArraySize = removeNormalsFromArray(vectorArray, vectorArraySize);
 
+  // comment out the ones you don't need here.
   // generateTriangleNormals(vectorArray, vectorArraySize);
   generateStripNormals(vectorArray, vectorArraySize);
   // generateFanNormals(vectorArray, vectorArraySize);

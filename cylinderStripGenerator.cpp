@@ -1,3 +1,10 @@
+// This is a helper c++ program that creates a triangle strip to connect the top and bottom
+// circles of a cylinder. You just need to input the two vertex arrays.
+// What it does is it basically "zig-zags" between each vertex from topCircle to bottomCircle
+// and then returns the array with the intertwined vertices.
+// Note that this does not generate the "smoothed out normals", so will have to 
+// put this back into normalsGenerator.
+
 #include <algorithm>
 #include <map>
 #include <vector>
