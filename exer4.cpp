@@ -255,19 +255,6 @@ GLuint mandible_texture;
 GLuint gun_texture;
 GLuint pod_texture;
 
-// This function is to generate the triangle strip between two circles
-// Useful for generating cylinders
-void generateCylinderStrip(const float* topCircle, const float* bottomCircle,
-                            int size, float* cylinderStrip) {
-    int idx = 0;
-    for (int i = TOTAL_VECTOR_POINTS; i < size; i += TOTAL_VECTOR_POINTS) {
-        std::copy(topCircle + i, topCircle + i + TOTAL_VECTOR_POINTS, cylinderStrip + idx);
-        idx += TOTAL_VECTOR_POINTS;
-        std::copy(bottomCircle + i, bottomCircle + i + TOTAL_VECTOR_POINTS, cylinderStrip + idx);
-        idx += TOTAL_VECTOR_POINTS;
-    }
-}
-
 // Helper function to setup multiple vaos and vbos
 bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t size, const char* vs, const char* fs) {
     // generate the VAO and VBO objects and store their IDs in vao and vbo, respectively
@@ -360,32 +347,23 @@ void drawPodSection(GLuint shader, const glm::mat4& projectionMatrix, const glm:
     glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (TOTAL_VECTOR_POINTS * sizeof(float)));
 }
 
-void smoothenCylinderStrips(float* vertices, int floatCount) {
-    for(int i = 0; i < floatCount; i+=TOTAL_VECTOR_POINTS) {
-        float x = vertices[i];
-        float y = vertices[i + 1];
+// commenting out first because i'll put the smoothening inside cylinder strip generator
+// void smoothenCylinderStrips(float* vertices, int floatCount) {
+//     for(int i = 0; i < floatCount; i+=TOTAL_VECTOR_POINTS) {
+//         float x = vertices[i];
+//         float y = vertices[i + 1];
 
-        glm::vec3 normalized = glm::normalize(glm::vec3(x, y, 0.0f));
+//         glm::vec3 normalized = glm::normalize(glm::vec3(x, y, 0.0f));
 
-        vertices[i + 8] = normalized.x;
-        vertices[i + 9] = normalized.y;
-        vertices[i + 10] = normalized.z;
-    }
-}
+//         vertices[i + 8] = normalized.x;
+//         vertices[i + 9] = normalized.y;
+//         vertices[i + 10] = normalized.z;
+//     }
+// }
 
 // called by the main function to do initial setup, such as uploading vertex
 // arrays, shader programs, etc.; returns true if successful, false otherwise
 bool setup() {
-    generateCylinderStrip(
-        circleTop,
-        circleBottom,
-        sizeof(circleTop) / sizeof(float),
-        cylinderStrip
-    );
-
-    // only smoothen the base circle, can add more i.e. the pods and etc for smoothening ikaw na bahala jerold.
-    smoothenCylinderStrips(cylinderStrip, sizeof(cylinderStrip) / sizeof(float));
-
     if(!setupVO(
         circleTopVAO,
         circleTopVBO,
