@@ -41,6 +41,7 @@ float deltaTime = 0.0f;
 const int TOTAL_VECTOR_POINTS = 11;
 
 // Each vertex uses: position (x, y, z), color (r, g, b), uv (s, t), lighting (normalX, normalY, normalZ)
+// GL_TRIANGLE_FAN
 float circleTop[] =  {
 0.000000f, 0.000000f, -0.039024f, 1.000000f, 1.000000f, 1.000000f, 0.000000f, 0.000000f, 0.000830f, 0.001342f, -0.073532f,
 0.463930f, 0.150740f, -0.146341f, 1.000000f, 1.000000f, 1.000000f, 0.951057f, 0.309017f, -0.015121f, -0.005811f, -0.073532f,
@@ -85,6 +86,7 @@ float circleTop[] =  {
 0.487805f, 0.000000f, -0.039024f, 1.000000f, 1.000000f, 1.000000f, 1.000000f, 0.000000f, 0.000000f, 0.052350f, -0.073532f,
 };
 
+// GL_TRIANGLE_FAN
 float circleBottom[] = {
 0.000000f, 0.000000f, 0.039024f, 0.500000f, 0.500000f, 0.500000f, 0.000000f, 0.000000f, -0.000830f, -0.001342f, -0.073532f,
 0.463930f, 0.150740f, 0.146341f, 0.500000f, 0.500000f, 0.500000f, 0.951057f, 0.309017f, 0.015121f, 0.005811f, -0.073532f,
@@ -129,9 +131,11 @@ float circleBottom[] = {
 0.487805f, 0.000000f, 0.039024f, 0.500000f, 0.500000f, 0.500000f, 1.000000f, 0.000000f, 0.000000f, -0.052350f, -0.073532f,
 };
 
+// GL_TRIANGLE_STRIP
 float cylinderStrip[((sizeof(circleTop) / sizeof(float)) - TOTAL_VECTOR_POINTS) * 2];
 
 // Millennium Falcon-style front mandibles.
+// GL_TRIANGLES
 float frontMandibles[] = {
 1.000000f, 0.195122f, -0.029268f, 0.780000f, 0.780000f, 0.800000f, 0.000000f, 0.000000f, 0.000000f, 0.000000f, -0.409280f, 
 -0.048780f, 0.526829f, -0.029268f, 0.780000f, 0.780000f, 0.800000f, 1.000000f, 0.000000f, 0.000000f, 0.000000f, -0.409280f, 
@@ -184,6 +188,7 @@ float frontMandibles[] = {
 };
 
 // Simple box mesh for add-on details like the center bar.
+// GL_TRIANGLE_FAN
 float podAttachment[] = {
 0.243902f, 0.243902f, -0.243902f, 0.740000f, 0.740000f, 0.760000f, 0.000000f, 0.000000f, 0.237953f, 0.000000f, 0.000000f, 
 0.243902f, -0.243902f, -0.243902f, 0.740000f, 0.740000f, 0.760000f, 1.000000f, 0.000000f, 0.237953f, 0.000000f, 0.000000f, 
