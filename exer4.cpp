@@ -312,6 +312,50 @@ float podAttachment[] = {
 0.243902f, -0.243902f, -0.243902f, 0.570000f, 0.570000f, 0.590000f, 1.000000f, 1.000000f, 0.000000f, 0.000000f, -1.000000f,
 };
 
+float lightSource[] = {
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  0.0f,  0.0f, -1.0f,
+
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  0.0f,  0.0f,  1.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  0.0f,  0.0f,  1.0f,
+
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
+
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
+
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
+
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,  0.0f,  1.0f,  0.0f,
+};
+
 GLuint circleTopVAO;
 GLuint circleTopVBO;
 GLuint circleTopShader;
@@ -331,6 +375,10 @@ GLuint frontMandiblesShader;
 GLuint podAttachmentVAO;
 GLuint podAttachmentVBO;
 GLuint podAttachmentShader;
+
+GLuint lightSourceVAO;
+GLuint lightSourceVBO;
+GLuint lightSourceShader;
 
 GLuint base_texture;
 GLuint middle_texture;
@@ -353,9 +401,11 @@ bool setupVO(GLuint& vao, GLuint& vbo, GLuint& shader, float* vertices, size_t s
     glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 
     // on the VAO, register the current VBO with the following vertex attribute layout:
-    // - the stride length of the vertex array is 6 floats (6 * sizeof(float))
+    // - the stride length of the vertex array is 11 floats (11 * sizeof(float))
     // - layout location 0 (position) is 3 floats and starts at the first float of the vertex array (offset 0)
     // - layout location 1 (color) is also 3 floats but starts at the fourth float (offset 3 * sizeof(float))
+    // - layout location 2 (texture coords) 2 floats but starts at the seventh float (offset 6 * sizeof(float))
+    // - layout location 3 (normalized lighting) is also 3 floats but starts at the ninth float (offset 8 * sizeof(float))
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) 0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) (3 * sizeof(float)));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, TOTAL_VECTOR_POINTS * sizeof(float), (void*) (6 * sizeof(float)));
@@ -433,6 +483,19 @@ void drawPodSection(GLuint shader, const glm::mat4& projectionMatrix, const glm:
     glDrawArrays(GL_TRIANGLES, 0, sizeof(podAttachment) / (TOTAL_VECTOR_POINTS * sizeof(float)));
 }
 
+void drawLightSource(const glm::mat4& projectionMatrix) {
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    modelMatrix = glm::translate(modelMatrix, lightPos);
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(0.18f));
+
+    glUseProgram(lightSourceShader);
+    glUniformMatrix4fv(glGetUniformLocation(lightSourceShader, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(glGetUniformLocation(lightSourceShader, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    glUniform3fv(glGetUniformLocation(lightSourceShader, "lightColor"), 1, glm::value_ptr(lightColor));
+    glBindVertexArray(lightSourceVAO);
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(lightSource) / (TOTAL_VECTOR_POINTS * sizeof(float)));
+}
+
 // called by the main function to do initial setup, such as uploading vertex
 // arrays, shader programs, etc.; returns true if successful, false otherwise
 bool setup() {
@@ -493,6 +556,18 @@ bool setup() {
         sizeof(podAttachment),
         "circleTop.vs",
         "circleTop.fs"
+    )) {
+        return false;
+    }
+
+    if(!setupVO(
+        lightSourceVAO,
+        lightSourceVBO,
+        lightSourceShader,
+        lightSource,
+        sizeof(lightSource),
+        "lightSource.vs",
+        "lightSource.fs"
     )) {
         return false;
     }
@@ -667,7 +742,7 @@ void render()
     // specular strength change
     if (glfwGetKey(pWindow, GLFW_KEY_Z) == GLFW_PRESS)
         specularStrength += 0.1f;
-    if (glfwGetKey(pWindow, GLFW_KEY_C) == GLFW_PRESS) // tweaks if shine <= 0
+    if (glfwGetKey(pWindow, GLFW_KEY_C) == GLFW_PRESS)
         specularStrength -= 0.1f;
     // debug print
 
@@ -680,6 +755,8 @@ void render()
     float time = glfwGetTime();
 
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float) WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projectionView = projection * view;
+    drawLightSource(projectionView);
     
     // flight animation
     glm::mat4 model1 = glm::mat4(1.0f);
@@ -706,7 +783,6 @@ void render()
     drawMillenniumFalcon(model3, view, projection);
 }
 
-/*****************************************************************************/
 // mouse movement function
 void mouseCallback(GLFWwindow* window, double xpos, double ypos)
 {
@@ -749,8 +825,8 @@ void handleKeys(GLFWwindow* pWindow, int key, int scancode, int action, int mode
         glfwSetWindowShouldClose(pWindow, GL_TRUE);
     // debug print
     if (key == GLFW_KEY_F1 && action == GLFW_PRESS) 
-        printf("STATS\n Camera Position: (x: %f, y: %f, z: %f)\n Light Positioning: (x: %f, y: %f, z: %f)\n Light Color: (r: %f, g: %f, b: %f)\n Shininess: (shine: %f)\n", 
-                cameraPos.x, cameraPos.y, cameraPos.z, lightPos.x, lightPos.y, lightPos.z, lightColor.r, lightColor.g, lightColor.b, shininess);
+        printf("STATS\n Camera Position: (x: %f, y: %f, z: %f)\n Light Positioning: (x: %f, y: %f, z: %f)\n Light Color: (r: %f, g: %f, b: %f)\n Shininess: (shine: %f)\n Specular Strength: (strength: %f)\n", 
+                cameraPos.x, cameraPos.y, cameraPos.z, lightPos.x, lightPos.y, lightPos.z, lightColor.r, lightColor.g, lightColor.b, shininess, specularStrength);
 }
 
 // handler called by GLFW when the window is resized
